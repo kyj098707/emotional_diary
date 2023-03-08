@@ -1,0 +1,5 @@
+__pycache__
+db.sqlite3
+SENDGRID_API_KEY
+/static
+/media
