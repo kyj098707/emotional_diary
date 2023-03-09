@@ -1,7 +1,15 @@
 {% extends "../base.html" %}
 
 {% block content %}
-    <html>
-    위에 처럼 extends를 사용하면 html을 불러올 수 있습니다. 그리고 main 작업 해주시면 됩니당.
-    </html>
+    {% if diary_list %}
+        {% for diary in diary_list %}
+            {{ diary.title }}
+
+            {{ diary.cotent }}
+            
+            <br>
+        {% endfor %}
+    {% else %}
+        암것도 없음
+    {% endif %}
 {% endblock %}
