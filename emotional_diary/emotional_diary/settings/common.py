@@ -59,7 +59,7 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         #CHAGNGED
         "DIRS": [
-            os.path.join(BASE_DIR,'emotional_diary',"templates")
+            os.path.join(BASE_DIR,"__templates")
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -122,10 +122,12 @@ USE_TZ = True
 
 #CHANGED--->
 STATIC_URL = '/static/'
+
+STATIC_DIR = os.path.join(BASE_DIR,'__static')
+STATIC_ROOT = os.path.join(BASE_DIR,'__collect_static')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'emotional_diary','static')
+    ("static",STATIC_DIR)
 ]
-STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
