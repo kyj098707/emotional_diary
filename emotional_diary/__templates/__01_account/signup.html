@@ -1,0 +1,12 @@
+<form method="post">
+{% csrf_token %}
+<input type="email" name="email" placeholder="이메일"/>
+<input type="name" name="username" placeholder="이름"/>
+<input type="password" name="password1" placeholder="비밀번호"/>
+<input type="password" name="password2" placeholder="비밀번호 확인"/>
+<select name="gender">
+    <option value="남">남</option>
+    <option value="여">여</option>
+</select>
+<button class="btn btn-primary btn-block" type="submit">Register</button>
+</form>

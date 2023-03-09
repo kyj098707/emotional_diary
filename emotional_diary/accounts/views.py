@@ -1,19 +1,22 @@
 from django.contrib import messages
 from django.shortcuts import redirect, render
-from .forms import SignupForm
-# Create your views here.
+from django.http import HttpResponse
+from .models import User
+from django.db import transaction
+
+import json
 
 def signup(request):
-    if request.method == 'POST':
-        form = SignupForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request,"회원가입 환영합니다.")
-            next_url = request.GET.get('next','/')
-            return redirect(next_url)
-    else:
-        form = SignupForm()
-    return render(request,'accounts/signup_form.html',{
-        'form': form,
+    if request.POST:
+        email = request.POST['email']
+        username = request.POST['username']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        gender = request.POST['gender']
+        if password1 == password2:
+            with transaction.atomic():
+                User.objects.create_user(email=email, username=username, password=password1)
 
-    })
+        return render(request,"__02_intro/main.html")
+    
+    return render(request,"__01_account/signup.html")
