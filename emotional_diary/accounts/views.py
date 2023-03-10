@@ -15,8 +15,8 @@ def signup(request):
         gender = request.POST['gender']
         if password1 == password2:
             with transaction.atomic():
-                User.objects.create_user(email=email, username=username, password=password1)
-
+                user = User.objects.create_user(email=email, username=username, password=password1)
+                user.send_welcomemail()
         return render(request,"__02_intro/main.html")
     
     return render(request,"__01_account/signup.html")
