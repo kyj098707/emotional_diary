@@ -1,7 +1,9 @@
 import os
 from os.path import abspath, dirname
 from pathlib import Path
-
+import configparser
+configs = configparser.ConfigParser()
+configs.read('./keys.conf', encoding = "utf-8")
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = dirname(dirname(dirname(abspath(__file__))))
 # 현재 파일의 절대 경로의 부모,부모,부모 폴더  
@@ -19,10 +21,10 @@ ALLOWED_HOSTS = []
 
 
 ## Email 관련
-SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+
 EMAIL_HOST = "smtp.sendgrid.net"
 EMAIL_HOST_USER = "apikey"
-EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+EMAIL_HOST_PASSWORD = configs["KEYS"]["SEND_GRID_KEYS"]
 EMAIL_PORT = 587
 EMAIL_USE_TLS= True
 WELCOME_EMAIL_SENDER = "a036129@aivle.kt.co.kr"
