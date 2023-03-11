@@ -1,0 +1,8 @@
+<form method="post">
+  {% csrf_token %}
+  <h2>새로운 비밀번호 입력</h2>
+  <input type="password" name="password1" placeholder="새 비밀번호 입력">
+  <input type="password" name="password2" placeholder="비밀번호 확인">
+  <button type="submit">확인</button>
+  
+</form>
