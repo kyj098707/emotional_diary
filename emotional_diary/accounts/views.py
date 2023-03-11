@@ -3,8 +3,16 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from .models import User
 from django.db import transaction
+<<<<<<< HEAD
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.utils.encoding import force_bytes, force_str
+=======
 from django.contrib.auth import authenticate, login
 
+>>>>>>> f875a68ab81036562ff89d5753c7e85b6023946f
 import json
 
 def signup(request):
@@ -17,11 +25,28 @@ def signup(request):
         if password1 == password2:
             with transaction.atomic():
                 user = User.objects.create_user(email=email, username=username, password=password1)
-                user.send_welcomemail()
+                domain = get_current_site(request)
+                uid = urlsafe_base64_encode(force_bytes(user.pk)).encode().decode()
+                token = default_token_generator.make_token(user)
+                user.send_welcomemail(domain,uid,token)
+                print("succ")
         return render(request,"__02_intro/main.html")
     
     return render(request,"__01_account/signup.html")
 
+<<<<<<< HEAD
+def activate(request,pk,token):
+    pk = force_str(urlsafe_base64_decode(pk))
+    user = User.objects.get(pk=pk)
+    
+    if user and default_token_generator.check_token(user, token): 
+        user.is_active = True
+        user.save()
+        messages.info(request, '메일 인증이 완료 되었습니다. 회원가입을 축하드립니다!')
+        return redirect('diary:intro')
+    else:
+        return HttpResponse('비정상적인 접근입니다.')
+=======
 
 def login(request):
     return render(request, '__01_account/login.html')
@@ -33,3 +58,4 @@ def forget_password(request):
 
 def reset_confirm(request):
     return render(request, '__01_account/reset_confirm.html')
+>>>>>>> f875a68ab81036562ff89d5753c7e85b6023946f
