@@ -6,7 +6,3 @@ from .models import Diary,Comment
 class DiaryAdmin(admin.ModelAdmin):
     pass
 
-
-@admin.register(Comment)
-class CommentAdmin(admin.ModelAdmin):
-    pass
