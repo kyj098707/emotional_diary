@@ -3,16 +3,13 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from .models import User
 from django.db import transaction
-<<<<<<< HEAD
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.utils.encoding import force_bytes, force_str
-=======
 from django.contrib.auth import authenticate, login
 
->>>>>>> f875a68ab81036562ff89d5753c7e85b6023946f
 import json
 
 def signup(request):
@@ -34,7 +31,6 @@ def signup(request):
     
     return render(request,"__01_account/signup.html")
 
-<<<<<<< HEAD
 def activate(request,pk,token):
     pk = force_str(urlsafe_base64_decode(pk))
     user = User.objects.get(pk=pk)
@@ -46,7 +42,6 @@ def activate(request,pk,token):
         return redirect('diary:intro')
     else:
         return HttpResponse('비정상적인 접근입니다.')
-=======
 
 def login(request):
     return render(request, '__01_account/login.html')
@@ -58,4 +53,3 @@ def forget_password(request):
 
 def reset_confirm(request):
     return render(request, '__01_account/reset_confirm.html')
->>>>>>> f875a68ab81036562ff89d5753c7e85b6023946f
