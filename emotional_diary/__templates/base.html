@@ -1,7 +1,19 @@
-<html>
-아래 block content에 확장 구문들이 나오게 됩니다<br>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'static/css/bootstrap.min.css' %}">
+</head>
+<body>
+    {% include 'header.html' %}
+    {% block content %}
+    {% endblock %}
+    <!-- for dropdown -->
+    <script src="{% static 'static/js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'static/js/bootstrap.bundle.min.js' %}"></script>
+</body>
 </html>
-
-{% block content %}
-
-{% endblock %}
