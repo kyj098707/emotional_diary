@@ -9,6 +9,7 @@ from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth import login as auth_login
+from django.contrib.auth import authenticate
 from django.contrib.auth.views import logout_then_login
 from django.contrib.auth.decorators import login_required
 
@@ -49,6 +50,17 @@ def activate(request,pk,token):
         return HttpResponse('비정상적인 접근입니다.')
 
 def login(request):
+    if request.POST:
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        print(email,password)
+        user= authenticate(email=email,password=password)
+        print(user)
+        if user:
+            auth_login(request, user)
+            return redirect('diary:intro')
+        else:
+            return redirect('account:login')
     return render(request, '__01_account/login.html')
 
 def logout(request):
