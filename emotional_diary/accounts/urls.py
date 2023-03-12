@@ -9,5 +9,5 @@ urlpatterns = [
     path('forget_password/',views.forget_password, name='forget_password'),
     path('reset_confirm/', views.reset_confirm, name='reset_confirm/'),
     path('logout/',views.logout, name='logout'),
-    path('send_mail/',views.send_email_test, name='send'),
+    path('send_mail/',views.send_mail, name='send'),
 ]
