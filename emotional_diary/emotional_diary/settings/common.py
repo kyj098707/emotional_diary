@@ -24,7 +24,7 @@ ALLOWED_HOSTS = []
 
 EMAIL_HOST = "smtp.sendgrid.net"
 EMAIL_HOST_USER = "apikey"
-EMAIL_HOST_PASSWORD = "api_"
+EMAIL_HOST_PASSWORD = "api_key"
 EMAIL_PORT = 587
 EMAIL_USE_TLS= True
 WELCOME_EMAIL_SENDER = "a036129@aivle.kt.co.kr"
