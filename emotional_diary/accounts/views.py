@@ -25,22 +25,21 @@ def signup(request):
             user = None
             with transaction.atomic():
                 user = User.objects.create_user(email=email, username=username, password=password1)
-                domain = get_current_site(request)
-                uid = urlsafe_base64_encode(force_bytes(user.pk)).encode().decode()
-                token = default_token_generator.make_token(user)
-                user.send_welcomemail(domain,uid,token)
-                auth_login(request,user)
+                auth_login(request,user=user)
         return render(request,"__02_intro/main.html")
     
     return render(request,"__01_account/signup.html")
 
-def send_email_test(request):
-    user = User.objects.get(name="김윤츙")
-    print(user.email)
+def send_mail(request):
+    user = request.user
+    domain = get_current_site(request)
+    uid = urlsafe_base64_encode(force_bytes(user.pk)).encode().decode()
+    token = default_token_generator.make_token(user)
+    user.send_welcomemail(domain,uid,token)
+
 def activate(request,pk,token):
     pk = force_str(urlsafe_base64_decode(pk))
     user = User.objects.get(pk=pk)
-    
     if user and default_token_generator.check_token(user, token): 
         user.is_active = True
         user.save()
