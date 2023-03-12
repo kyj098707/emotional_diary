@@ -119,12 +119,12 @@
     <form method="post">
         {% csrf_token %}
       <div class="txt_field">
-        <input type="text" required>
+        <input type="email" name="email" required>
         <span></span>
         <label>E-mail</label>
       </div>
       <div class="txt_field">
-        <input type="password" required>
+        <input type="password" name="password" required>
         <span></span>
         <label>Password</label>
       </div>
