@@ -23,16 +23,15 @@ def signup(request):
         password2 = request.POST['password2']
         gender = request.POST['gender']
         if password1 == password2:
-            user = None
             with transaction.atomic():
-                user = User.objects.create_user(email=email, username=username, password=password1)
-                auth_login(request,user=user)
+                User.objects.create_user(email=email, username=username, password=password1)
+            send_mail(request,email)
         return render(request,"__02_intro/main.html")
     
     return render(request,"__01_account/signup.html")
 
-def send_mail(request):
-    user = request.user
+def send_mail(request,email):
+    user = User.objects.get(email=email)
     domain = get_current_site(request)
     uid = urlsafe_base64_encode(force_bytes(user.pk)).encode().decode()
     token = default_token_generator.make_token(user)
@@ -53,14 +52,20 @@ def login(request):
     if request.POST:
         email = request.POST.get("email")
         password = request.POST.get("password")
-        print(email,password)
-        user= authenticate(email=email,password=password)
-        print(user)
+        if not User.objects.filter(email=email).exists():
+            return HttpResponse('등록되지 않은 이메일입니다.')
+        
+        user = User.objects.get(email=email)
+        ## 아이디가 비활성화 일 때
+        if not user.is_active:
+            return render(request,'__00_exception/non_activate_accounts.html')
+        
+        ## 활성된 아이디일 경우
+        user = authenticate(email=email, password=password)
         if user:
             auth_login(request, user)
             return redirect('diary:intro')
-        else:
-            return redirect('account:login')
+        return HttpResponse('아이디와 비밀번호가 틀렸습니다.')     
     return render(request, '__01_account/login.html')
 
 def logout(request):
