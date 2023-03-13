@@ -1,0 +1,89 @@
+{% extends "../base.html" %}
+{% load static %}
+
+{% block css %}
+<svg xmlns="http://www.w3.org/2000/svg" id="eye-fill" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+</svg>
+{% endblock %}
+
+{% block content %}
+    <div id="content">
+        <use href="#eye-fill"/>
+        <p class="h2">DashBoard</p>
+
+        <div class="container mt-5">
+            
+            <!-- 간단 수치 지표 -->
+            <div class="row row-cols-4 gx-5">
+                <div class="col">
+                    <div class="d-flex align-items-center px-4 border border-2 rounded">
+                        <img src="{% static 'static/img/eye-fill.svg' %}" alt="today" width="32" height="32"/>
+                        <div class="mx-4 my-2">
+                            <p class="fs-4 fw-bold m-0">방문자수</p>
+                            <p class="text-muted m-0">TODAY</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="d-flex align-items-center px-4 border border-2 rounded">
+                        <img src="{% static 'static/img/people-fill.svg' %}" alt="followers" width="32" height="32"/>
+                        <div class="mx-4 my-2">
+                            <p class="fs-4 fw-bold m-0">팔로워수</p>
+                            <p class="text-muted m-0">FOLLOWERS</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="d-flex align-items-center px-4 border border-2 rounded">
+                        <img src="{% static 'static/img/suit-heart-fill.svg' %}" alt="liked" width="32" height="32"/>
+                        <div class="mx-4 my-2">
+                            <p class="fs-4 fw-bold m-0">좋아요수</p>
+                            <p class="text-muted m-0">LIKED</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="d-flex align-items-center px-4 border border-2 rounded">
+                        <img src="{% static 'static/img/file-earmark-arrow-up-fill.svg' %}" alt="posts" width="32" height="32"/>
+                        <div class="mx-4 my-2">
+                            <p class="fs-4 fw-bold m-0">포스팅수</p>
+                            <p class="text-muted m-0">POSTS</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Graph -->
+            <div class="row row-cols-2 gx-5 mt-4">
+                <div class="col-8">
+                    <div class="p-3 border border-2 rounded">
+                        <p class="fs-5">월별 감정 추이</p>
+                        <a href="#">bar chart</a>
+                        <a href="#">pie chart</a>
+
+                        <!-- bar chart -->
+                        <div id="chart_div"></div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="p-3 border border-2 rounded">
+                        <p>누가 당신을 힘들게 했나요?</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Addition (Badge) -->
+            <div class="row gx-5 mt-4">
+                <div class="col border border-2 rounded">
+                    HiHi This is blank
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+<!-- Google Charts -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+{% endblock %}

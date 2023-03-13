@@ -10,4 +10,6 @@ urlpatterns = [
     path('reset_confirm/', views.reset_confirm, name='reset_confirm/'),
     path('logout/',views.logout, name='logout'),
     path('send_mail/',views.send_mail, name='send'),
+
+    path('statistics/',views.statistics_test, name='statistics'),
 ]
