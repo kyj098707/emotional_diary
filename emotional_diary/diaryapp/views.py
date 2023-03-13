@@ -21,6 +21,9 @@ def profile_test(request,pk):
         })        
     return 
 
+@login_required
+def diary_new(request):
+    pass
 
 ### db 관리
 def delete_qs(request):
