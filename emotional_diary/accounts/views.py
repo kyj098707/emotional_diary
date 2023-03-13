@@ -78,3 +78,6 @@ def forget_password(request):
 
 def reset_confirm(request):
     return render(request, '__01_account/reset_confirm.html')
+
+def statistics_test(request):
+    return render(request, '__01_account/statistics.html')
