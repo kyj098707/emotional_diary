@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "accounts",
     "django_bootstrap5",
     "debug_toolbar",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
