@@ -28,3 +28,8 @@ def diary_new(request):
 ### db 관리
 def delete_qs(request):
     Diary.objects.all().delete()
+
+
+## 개인 블로그 페이지
+def personal(request):
+    return render(request, "__03_personal/personal_blog.html")

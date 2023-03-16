@@ -1,0 +1,102 @@
+body {
+    font-family: "Open Sans", sans-serif;
+    color: #272829;
+  }
+  
+  #right-side {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+    padding: 48px 0 0;
+    transition: all ease-in-out 0.5s;
+    transition: all 0.5s;
+    padding: 0 20px;
+    background: #ededed;
+    overflow-y: auto;
+  }
+  
+  #right-side .profile img {
+    margin: 30px auto;
+    display: block;
+    width: 190px;
+    border: 8px solid #2c2f3f;
+  }
+  
+  #right-side .profile h1 {
+    font-size: 30px;
+    margin: 0;
+    padding: 0;
+    font-weight: 600;
+    -moz-text-align-last: center;
+    text-align-last: center;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  #right-side .profile h1 a, #header .profile h1 a:hover {
+    color: black;
+    text-decoration: none;
+  }
+  
+  #right-side .profile .social-links a {
+    font-size: 25px;
+    display: inline-block;
+    background: #212431;
+    color: #fff;
+    line-height: 1;
+    padding: 8px 0;
+    margin-right: 4px;
+    border-radius: 50%;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    transition: 0.3s;
+  }
+  
+  #right-side .profile .social-links a:hover {
+    background: #149ddd;
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  
+  #box{
+    width : 80%;
+    height : 20%;
+    background-color: #999;
+    text-align : center;
+    line-height: 360px;
+    font-size : 36px;
+    font-weight : bold;
+  }
+  
+  .cell{
+      float : left;
+  }
+  .row ::after{
+      clear : both;
+      display : block;
+      content : "";
+  }
+  
+  /* 박스 스타일 */
+  
+  
+  #wrap {
+      width: 100%;
+      height: 100vh;
+      overflow: auto;
+      scroll-snap-type: mandatory;}
+      
+  #wrap .page {
+      scroll-snap-align: center;
+      display: inline-block;
+      width: 100%;
+      height: 100vh;
+      padding: 100px;
+      font-size: 70px;
+      text-align: center;
+      box-sizing: border-box;
+      color: #fff;}
+  
