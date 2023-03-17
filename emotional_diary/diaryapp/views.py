@@ -1,7 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .models import Diary
+from .serializers import DiarySerializers
 from accounts.models import User
+from rest_framework.viewsets import ModelViewSet
 # Create your views here.
 
 
