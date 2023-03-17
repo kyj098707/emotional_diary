@@ -10,4 +10,5 @@ urlpatterns = [
     path('profile/<int:pk>/', views.profile_test,name="profile"),
     path('delete/',views.delete_qs,name="delete"),
     path('diary/new',views.diary_new,name="diary_new"),
+    path('personal/personal_blog/',views.personal, name ='personal_blog')
 ]
