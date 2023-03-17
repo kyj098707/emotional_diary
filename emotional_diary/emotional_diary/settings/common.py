@@ -24,28 +24,30 @@ ALLOWED_HOSTS = []
 
 EMAIL_HOST = "smtp.sendgrid.net"
 EMAIL_HOST_USER = "apikey"
-EMAIL_HOST_PASSWORD = "api_key"
+EMAIL_HOST_PASSWORD = "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"
 EMAIL_PORT = 587
 EMAIL_USE_TLS= True
 WELCOME_EMAIL_SENDER = "a036129@aivle.kt.co.kr"
 # Application definition
 
 INSTALLED_APPS = [
+    # django apps
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    
+    # third apps
+    "django_bootstrap5",
+    "rest_framework",
+    #local apps
     "diaryapp",
     "accounts",
-    "django_bootstrap5",
-    "debug_toolbar",
-    "rest_framework",
 ]
 
 MIDDLEWARE = [
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
