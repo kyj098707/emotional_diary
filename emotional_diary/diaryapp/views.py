@@ -28,8 +28,9 @@ def diary_new(request):
     pass
 
 ### db 관리
-def delete_qs(request):
-    Diary.objects.all().delete()
+class DiaryViewSet(ModelViewSet):
+    queryset = Diary.objects.all()
+    serializer_class = DiarySerializers
 
 
 ## 개인 블로그 페이지
