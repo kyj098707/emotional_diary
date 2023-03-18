@@ -1,12 +1,37 @@
-<form method="post">
-{% csrf_token %}
-<input type="email" name="email" placeholder="이메일"/>
-<input type="name" name="username" placeholder="이름"/>
-<input type="password" name="password1" placeholder="비밀번호"/>
-<input type="password" name="password2" placeholder="비밀번호 확인"/>
-<select name="gender">
-    <option value="남">남</option>
-    <option value="여">여</option>
-</select>
-<button class="btn btn-primary btn-block" type="submit">Register</button>
-</form>
+<div class="modal fade" id='modal_signup' tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h3 class='modal-title'>Sign up</h3>
+        </div>
+        <div class="modal-body">
+            <div class="input-group mb-3">
+              <span class="input-group-text">Email</span>
+              <input type="email" class="form-control" name="email">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">Username</span>
+                <input type="text" class="form-control" name="username">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Password</span>
+                <input type="password" class="form-control" placeholder="Create Password" name="password1">
+                <input type="password" class="form-control" placeholder="Confirm Password" name="password2">
+            </div>
+            <br>
+  
+            <div class="input-group mb-3">
+              <label class="input-group-text">Gender</label>
+              <select class="form-select" name="gender">
+                <option selected>Choose..</option>
+                <option value="1">Male</option>
+                <option value="0">Female</option>
+              </select>
+            </div>
+
+            <button type="button" class="btn btn-primary my-4" id='submit_join'>JOIN</button>
+        </div>
+      </div>
+    </div>
+</div>
