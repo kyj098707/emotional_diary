@@ -1,4 +1,14 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aivlary</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'static/css/bootstrap.min.css' %}">
+    <script src="{% static 'static/jquery-3.6.3.min.js' %}"></script>
+    <script src="{% static 'static/js/bootstrap.bundle.min.js' %}"></script>
     <style>
         body{
             margin : 0;
@@ -6,9 +16,17 @@
             font-family: montserrat;
             background: red;
             height: 100vh;
-            overflow: hidden;
+            overflow-x: hidden;
 
         }
+        body{
+                -ms-overflow-style: none;
+                }
+                
+            ::-webkit-scrollbar {
+                display: none;
+            }
+
         .center{
             position : absolute;
             top : 50%;
@@ -17,11 +35,6 @@
             width : 400px;
             background : white;
             border-radius : 10px;
-        }
-        .center h1{
-            text-align : center;
-            padding : 0 0 50px 0;
-            border-bottom : 1px solid silver;
         }
         .center form{
             padding : 0 40px;
@@ -112,27 +125,41 @@
 
     </style>
 </head>
-
-<body>
-<div class="center">
-    <h1>Emotionary Diary</h1>
+    {% include '__01_account/signup.html' %}
+    <div class="center" id="container_login">
+        <div class="d-flex justify-content-center">
+            <img src="{% static 'static/img/__logo/logo_test_bk.webp' %}" alt="" width="200" class="align-item-center my-4">
+        </div>
+    <hr class="mt-0">
     <form method="post">
         {% csrf_token %}
-      <div class="txt_field">
-        <input type="email" name="email" required>
-        <span></span>
-        <label>E-mail</label>
-      </div>
-      <div class="txt_field">
-        <input type="password" name="password" required>
-        <span></span>
-        <label>Password</label>
-      </div>
-      <div class="pass">비밀번호를 잊으셨나요?</div>
-      <input type="submit" value = "Login"> 
-      <div class="signup_link">
-      <a href="#">계정이 없으신가요?</a>
-      </div>
+        <div class="txt_field">
+            <input type="email" name="email" required>
+            <span></span>
+            <label>E-mail</label>
+        </div>
+        <div class="txt_field">
+            <input type="password" name="password" required>
+            <span></span>
+            <label>Password</label>
+        </div>
+        <div class="pass">
+            <a href="../forget_password">비밀번호를 잊으셨나요?</a>
+        </div>
+        <input type="submit" value = "Login">
+        <div class="signup_link">
+            <button type="button" id="to_signup">계정이 없으신가요?</button>
+        </div>
     </form>
 </div>
+
+
+<script type="text/javascript">
+    $(document).on("click","#to_signup", function(){
+        const modals = document.querySelector('#modal_signup');
+        let modal = bootstrap.Modal.getOrCreateInstance(modals)  
+        modal.show()
+    })
+</script>
 </body>
+</html>
