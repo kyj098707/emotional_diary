@@ -55,14 +55,21 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_lable):
         return True
 
-    def send_welcomemail(self,domain,pk,token):
+    def send_welcomemail(self,pk,token):
         title = "안녕"
         content = render_to_string('__01_account/activate_email.html',
                                     {
-                                    'domain':domain,
                                     'pk': pk,
                                     'token': token,
                                     })
         sender = settings.WELCOME_EMAIL_SENDER
-        print(sender,self.email)
         send_mail(title,content,sender,[self.email],fail_silently=False)
+### 유저 다대다 Following
+
+class Following(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="fing_usr")
+    following = models.ForeignKey(User,on_delete=models.CASCADE,related_name="fing_fing")
+
+class Follower(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="fer_usr")
+    follower = models.ForeignKey(User,on_delete=models.CASCADE,related_name="fer_fer")

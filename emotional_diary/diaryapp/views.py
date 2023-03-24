@@ -4,6 +4,7 @@ from .models import Diary
 from .serializers import DiarySerializers
 from accounts.models import User
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import AllowAny
 # Create your views here.
 
 
@@ -31,8 +32,9 @@ def diary_new(request):
 class DiaryViewSet(ModelViewSet):
     queryset = Diary.objects.all()
     serializer_class = DiarySerializers
-
+    permission_classes = [AllowAny]
 
 ## 개인 블로그 페이지
 def personal(request):
     return render(request, "__03_personal/personal_blog.html")
+

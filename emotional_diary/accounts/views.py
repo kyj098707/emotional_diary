@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from .models import User
+from .models import User, Following, Follower
 from django.db import transaction
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
@@ -9,33 +9,19 @@ from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth import login as auth_login
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate,get_user_model
 from django.contrib.auth.views import logout_then_login
 from django.contrib.auth.decorators import login_required
 
+from rest_framework.decorators import api_view
+from rest_framework.generics import CreateAPIView, get_object_or_404
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import SignupSerializer
+
 import json
 
-def signup(request):
-    if request.POST:
-        email = request.POST['email']
-        username = request.POST['username']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
-        gender = request.POST['gender']
-        if password1 == password2:
-            with transaction.atomic():
-                User.objects.create_user(email=email, username=username, password=password1)
-            send_mail(request,email)
-        return render(request,"__02_intro/main.html")
-    
-    return render(request,"__01_account/signup.html")
-
-def send_mail(request,email):
-    user = User.objects.get(email=email)
-    domain = get_current_site(request)
-    uid = urlsafe_base64_encode(force_bytes(user.pk)).encode().decode()
-    token = default_token_generator.make_token(user)
-    user.send_welcomemail(domain,uid,token)
 
 def activate(request,pk,token):
     pk = force_str(urlsafe_base64_decode(pk))
@@ -81,3 +67,58 @@ def reset_confirm(request):
 
 def statistics_test(request):
     return render(request, '__01_account/statistics.html')
+
+## restapi_framework test
+
+class SignupView(CreateAPIView):
+    model = get_user_model()
+    serializer_class = SignupSerializer
+    permission_classes = [AllowAny,]
+
+@api_view(['GET'])
+def email_validate(request):
+    ## 유저 이메일 중복 체크
+    email = request.GET.get("email")
+    try:
+        if User.objects.get(email=email):
+            result = {'response':'complete'}
+    except:
+        result = {'response':'email_valid_fail'}
+    return HttpResponse(result, content_type="application/json")
+
+
+@api_view(['GET'])
+def login(request):
+    email = request.GET.get("email")
+    password = request.GET.get("email")
+    user = authenticate(email,password)
+    if user :
+        auth_login(request,user)
+        result = {'response':'complete'}
+    else:
+        result = {'response':'fail'}
+    return HttpResponse(result, content_type="application/json")
+
+@api_view(['POST'])
+def user_follow(request):
+    username = request.data["username"]
+    fan = get_object_or_404(User,username=username)
+    celeb = request.user
+    with transaction.atomic():        
+        Following.objects.create(user=fan, following=celeb)
+        Follower.objects.create(user=celeb,follower=fan)
+    return Response(status.HTTP_204_NO_CONTENT)
+
+@api_view(['POST'])
+def user_unfollow(request):
+    username = request.data["username"]
+    fan = get_object_or_404(User,username=username)
+    celeb = request.user
+    with transaction.atomic(): 
+        Following.objects.get(user=fan, following=celeb).delete()
+        Follower.objects.get(user=celeb,follower=fan).delete()
+    return Response(status.HTTP_204_NO_CONTENT)
+
+@api_view(['POST'])
+def user_like(request):
+    pass
