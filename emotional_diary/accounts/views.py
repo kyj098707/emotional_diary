@@ -86,6 +86,16 @@ def email_validate(request):
         result = {'response':'email_valid_fail'}
     return HttpResponse(result, content_type="application/json")
 
+@api_view(['GET'])
+def email_validate(request):
+    ## 유저 이메일 중복 체크
+    email = request.GET.get("email")
+    try:
+        if User.objects.get(email=email):
+            result = {'response':'complete'}
+    except:
+        result = {'response':'email_valid_fail'}
+    return HttpResponse(result, content_type="application/json")
 
 @api_view(['GET'])
 def login(request):
@@ -99,26 +109,5 @@ def login(request):
         result = {'response':'fail'}
     return HttpResponse(result, content_type="application/json")
 
-@api_view(['POST'])
-def user_follow(request):
-    username = request.data["username"]
-    fan = get_object_or_404(User,username=username)
-    celeb = request.user
-    with transaction.atomic():        
-        Following.objects.create(user=fan, following=celeb)
-        Follower.objects.create(user=celeb,follower=fan)
-    return Response(status.HTTP_204_NO_CONTENT)
 
-@api_view(['POST'])
-def user_unfollow(request):
-    username = request.data["username"]
-    fan = get_object_or_404(User,username=username)
-    celeb = request.user
-    with transaction.atomic(): 
-        Following.objects.get(user=fan, following=celeb).delete()
-        Follower.objects.get(user=celeb,follower=fan).delete()
-    return Response(status.HTTP_204_NO_CONTENT)
 
-@api_view(['POST'])
-def user_like(request):
-    pass
