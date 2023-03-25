@@ -21,6 +21,14 @@ def intro_test(request):
         "diary_list":qs
     })
 
+def intro_test2(request):
+    diary_qs = Diary.objects.all()
+    user_qs = User.objects.all()
+    return render(request,"__test/main.html",{
+        "diary_list":diary_qs,
+        "user_list":user_qs
+    })
+
 def profile_test(request,pk):
     if User.objects.filter(pk=pk).exists():
         user = User.objects.get(pk=pk)

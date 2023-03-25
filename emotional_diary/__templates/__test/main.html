@@ -1,0 +1,52 @@
+{% extends "../base.html" %}
+
+{% block content %}
+    <!-- 일기 리스트 -->
+    <div id="content">
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            {% if diary_list %}
+                {% for diary in diary_list %}
+                <div class="col">
+                    <div class="card h-100">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ diary.title }}</h5>
+                        <p class="card-text">{{ diary.cotent }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">2023.03.10</small>
+                    </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col">
+                    <div class="card h-100">
+                        오늘의 일기 작성하기
+                    </div>
+                </div>
+            {% endif %}
+        </div>  
+    </div>
+    <div>
+        {% if user_list %}
+            {% for user in user_list %}
+            <div>
+                {{ user.username }}
+                <button id="follow-btn-{{ user.username }}" onclick="handleFollowClick(this.id)">
+                    follow
+                </button>
+            </div>
+            {% endfor %}
+        {% endif %}
+
+        <script type="text/javascript">
+            const handleFollowClick = (buttonId) => {
+                const followBtn = document.getElementById(buttonId)
+                console.log(followBtn.textContent);
+
+            }
+        </script>
+    </div>
+
+{% endblock %}
