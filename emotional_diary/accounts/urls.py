@@ -11,6 +11,4 @@ urlpatterns = [
     path('reset_confirm/', views.reset_confirm, name='reset_confirm/'),
     path('logout/',views.logout, name='logout'),
     path('statistics/',views.statistics_test, name='statistics'),
-    path("follow/", views.user_follow, name="user_follow"),
-    path("unfollow/", views.user_unfollow, name="user_unfollow"),
 ]
