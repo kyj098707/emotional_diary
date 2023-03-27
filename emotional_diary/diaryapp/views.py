@@ -12,6 +12,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view
 from rest_framework.generics import get_object_or_404
 from rest_framework import status
+from rest_framework.views import APIView
 # Create your views here.
 
 
@@ -46,8 +47,8 @@ def diary_new(request):
 ### diary로 옮기기
 @api_view(['POST'])
 def user_follow(request):
-    username = request.POST.get("username")
-    fan = get_object_or_404(User,username=username)
+    uid = request.POST.get("id")
+    fan = get_object_or_404(User,pk=uid)
     celeb = request.user
     with transaction.atomic():        
         Following.objects.create(user=fan, following=celeb)
@@ -72,11 +73,8 @@ def user_like(request):
     Like_user_diary.objects.create(user=user, diary=diary,like=True)
     return Response(status.HTTP_204_NO_CONTENT)
 
-### db 관리
-class DiaryViewSet(ModelViewSet):
-    queryset = Diary.objects.all()
-    serializer_class = DiarySerializers
-    permission_classes = [AllowAny]
+class DiaryDetailAPIView(APIView):
+    pass
 
 ## 개인 블로그 페이지
 def personal(request):
