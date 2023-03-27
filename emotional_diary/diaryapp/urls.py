@@ -17,4 +17,9 @@ urlpatterns = [
     path('personal/personal_blog/',views.personal, name ='personal_blog'),
     path('api/',include(router.urls)),
 
+
+    path('intro_test/',views.intro_test2,name='intro_2'),
+    path('user/<int:pk>/follow/',views.user_follow,name='follow'),
+    path('user/<int:pk>/unfollow/',views.user_unfollow,name='unfollow'),
+    
 ]
