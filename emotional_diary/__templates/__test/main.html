@@ -2,6 +2,12 @@
 
 {% block content %}
     <!-- 일기 리스트 -->
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
+        $.ajaxSetup({
+            headers: { "X-CSRFToken": '{{csrf_token}}' }
+        });
+    </script>
     <div id="content">
         <div class="row row-cols-1 row-cols-md-4 g-4">
             {% if diary_list %}
@@ -33,7 +39,7 @@
             {% for user in user_list %}
             <div>
                 {{ user.username }}
-                <button id="follow-btn-{{ user.username }}" onclick="handleFollowClick(this.id)">
+                <button id="follow-btn-{{ user.pk }}" onclick="handleFollowClick(this.id)">
                     follow
                 </button>
             </div>
@@ -41,10 +47,29 @@
         {% endif %}
 
         <script type="text/javascript">
+            function request_ajax(url, method, data_dic) {
+                $.ajax({
+                    url:url,
+                    type:method,
+                    async:false,
+                    data:data_dic,
+                    success: function (response) {
+                            result = response
+                            },
+                error: function (e) {
+                        alert("connenction error")
+                        result = "error"
+                        }
+                        });
+                    return result;
+            }
+                
             const handleFollowClick = (buttonId) => {
-                const followBtn = document.getElementById(buttonId)
-                console.log(followBtn.textContent);
-
+                id = buttonId.split("-").pop()
+                let ajax_url = "{% url 'diary:follow' %}"
+                data_dic = {"id":id}
+                result = request_ajax(ajax_url,"POST",data_dic)
+                console.log(ajax_url)
             }
         </script>
     </div>
