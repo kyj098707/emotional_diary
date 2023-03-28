@@ -70,6 +70,9 @@ class Following(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="fing_usr")
     following = models.ForeignKey(User,on_delete=models.CASCADE,related_name="fing_fing")
 
+    def __str__(self):
+        return f"{self.user},{self.following}"
+
 class Follower(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="fer_usr")
     follower = models.ForeignKey(User,on_delete=models.CASCADE,related_name="fer_fer")

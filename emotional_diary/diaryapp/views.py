@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.db import transaction
 from django.http import HttpResponse
 from rest_framework.response import Response
-from .models import Diary, Like_user_diary, Re_diary_tag, Comment,Tag
+from .models import Diary, Like, Re_diary_tag, Comment,Tag
 from accounts.models import Follower,Following
 from .serializers import DiarySerializers
 from accounts.models import User
@@ -50,28 +50,43 @@ def user_follow(request):
     uid = request.POST.get("id")
     fan = get_object_or_404(User,pk=uid)
     celeb = request.user
-    with transaction.atomic():        
-        Following.objects.create(user=fan, following=celeb)
-        Follower.objects.create(user=celeb,follower=fan)
+    with transaction.atomic():
+        if not Following.objects.filter(user=fan, following=celeb).exists() and fan != celeb:
+            Following.objects.create(user=fan, following=celeb)
+            Follower.objects.create(user=celeb,follower=fan)
     return Response(status.HTTP_204_NO_CONTENT)
 
 @api_view(['POST'])
 def user_unfollow(request):
-    username = request.POST.get("username")
-    fan = get_object_or_404(User,username=username)
+    uid = request.POST.get("id")
+    fan = get_object_or_404(User,pk=uid)
     celeb = request.user
-    with transaction.atomic(): 
-        Following.objects.get(user=fan, following=celeb).delete()
-        Follower.objects.get(user=celeb,follower=fan).delete()
+    with transaction.atomic():
+        if Following.objects.filter(user=fan, following=celeb).exists():  
+            Following.objects.get(user=fan, following=celeb).delete()
+            Follower.objects.get(user=celeb,follower=fan).delete()
     return Response(status.HTTP_204_NO_CONTENT)
 
 @api_view(['POST'])
-def user_like(request):
-    diary_name = request.POST.get("diary_name")
-    diary = get_object_or_404(diary_name)
+def diary_like(request):
+    print("11")
+    diary_id = request.POST.get("diary_id")
+    diary = get_object_or_404(Diary,pk=diary_id)
     user = request.user
-    Like_user_diary.objects.create(user=user, diary=diary,like=True)
+    if not Like.objects.filter(user=user, diary=diary):
+        Like.objects.create(user=user, diary=diary)
     return Response(status.HTTP_204_NO_CONTENT)
+
+@api_view(['POST'])
+def diary_dislike(request):
+    diary_id = request.POST.get("diary_id")
+    diary = get_object_or_404(Diary,pk=diary_id)
+    user = request.user
+    if Like.objects.filter(user=user, diary=diary):
+        Like.objects.get(user=user, diary=diary).delete()
+    return Response(status.HTTP_204_NO_CONTENT)
+
+
 
 class DiaryDetailAPIView(APIView):
     pass

@@ -27,10 +27,9 @@ class Comment(models.Model):
     
 ## 다대다 필드
 
-class Like_user_diary(models.Model):
+class Like(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     diary = models.ForeignKey(Diary,on_delete=models.CASCADE)
-    like = models.BooleanField()
 
 class Re_diary_tag(models.Model):
     diary = models.ForeignKey(Diary,on_delete=models.CASCADE)
