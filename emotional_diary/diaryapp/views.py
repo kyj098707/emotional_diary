@@ -45,10 +45,10 @@ def diary_new(request):
     pass
 
 ### diary로 옮기기
+@login_required
 @api_view(['POST'])
-def user_follow(request):
-    uid = request.POST.get("id")
-    fan = get_object_or_404(User,pk=uid)
+def user_follow(request,pk):
+    fan = get_object_or_404(User,pk=pk)
     celeb = request.user
     with transaction.atomic():
         if not Following.objects.filter(user=fan, following=celeb).exists() and fan != celeb:
@@ -56,10 +56,10 @@ def user_follow(request):
             Follower.objects.create(user=celeb,follower=fan)
     return Response(status.HTTP_204_NO_CONTENT)
 
+@login_required
 @api_view(['POST'])
-def user_unfollow(request):
-    uid = request.POST.get("id")
-    fan = get_object_or_404(User,pk=uid)
+def user_unfollow(request,pk):
+    fan = get_object_or_404(User,pk=pk)
     celeb = request.user
     with transaction.atomic():
         if Following.objects.filter(user=fan, following=celeb).exists():  
@@ -68,8 +68,7 @@ def user_unfollow(request):
     return Response(status.HTTP_204_NO_CONTENT)
 
 @api_view(['POST'])
-def diary_like(request):
-    print("11")
+def diary_like(request,pk):
     diary_id = request.POST.get("diary_id")
     diary = get_object_or_404(Diary,pk=diary_id)
     user = request.user
@@ -78,7 +77,7 @@ def diary_like(request):
     return Response(status.HTTP_204_NO_CONTENT)
 
 @api_view(['POST'])
-def diary_dislike(request):
+def diary_dislike(request,pk):
     diary_id = request.POST.get("diary_id")
     diary = get_object_or_404(Diary,pk=diary_id)
     user = request.user

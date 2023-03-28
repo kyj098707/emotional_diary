@@ -77,29 +77,29 @@
                 
             const handleFollowClick = (buttonId) => {
                 id = buttonId.split("-").pop()
-                let ajax_url = "{% url 'diary:follow' %}"
-                data_dic = {"id":id}
+                let ajax_url = "{% url 'diary:profile' %}"+id+"/follow/"
+                data_dic = {}
                 result = request_ajax(ajax_url,"POST",data_dic)
                 console.log(ajax_url)
             }
             const handleUnfollowClick = (buttonId) => {
                 id = buttonId.split("-").pop()
-                let ajax_url = "{% url 'diary:unfollow' %}"
-                data_dic = {"id":id}
+                let ajax_url = "{% url 'diary:profile' %}"+id+"/unfollow/"
+                data_dic = {}
                 result = request_ajax(ajax_url,"POST",data_dic)
                 console.log(ajax_url)
             }
             const handleLikeClick = (buttonId) => {
                 
                 id = buttonId.split("-").pop()
-                let ajax_url = "{% url 'diary:like' %}"
+                let ajax_url = "{% url 'diary:diary' %}"+id+"/like/"
                 data_dic = {"diary_id":id}
                 result = request_ajax(ajax_url,"POST",data_dic)
             }
 
             const handleDislikeClick = (buttonId) => {
                 id = buttonId.split("-").pop()
-                let ajax_url = "{% url 'diary:dislike' %}"
+                let ajax_url = "{% url 'diary:diary' %}"+id+"/dislike/"
                 data_dic = {"diary_id":id}
                 result = request_ajax(ajax_url,"POST",data_dic)
             }
