@@ -17,5 +17,7 @@ urlpatterns = [
     path('intro_test/',views.intro_test2,name='intro_2'),
     path('user/follow/',views.user_follow,name='follow'),
     path('user/unfollow/',views.user_unfollow,name='unfollow'),
+    path('diary/like/',views.diary_like,name='like'),
+    path('diary/dislike/',views.diary_dislike,name='dislike'),
     
 ]
