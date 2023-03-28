@@ -8,6 +8,10 @@
     <title>Aivlary</title>
     <link rel="stylesheet" type="text/css" href="{% static 'static/css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'static/css/style.css' %}">
+     <script src="{% static 'static/js/bootstrap.bundle.js' %}"></script>
+     <script src="{% static 'static/js/bootstrap.bundle.min.js' %}"></script>
+
+    {% include "./_symbol.html" %}
     {% block style %}
     {% endblock %}
 </head>
@@ -20,8 +24,5 @@
             {% endblock %}
         </div>
     </div>
-    <!-- for dropdown -->
-    <script src="{% static 'static/js/bootstrap.bundle.js' %}"></script>
-    <script src="{% static 'static/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
