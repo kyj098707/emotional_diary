@@ -15,9 +15,12 @@ urlpatterns = [
     path('personal/personal_blog/',views.personal, name ='personal_blog'),
     #path('diary/',views.handle_diary,name="handle_diary"),
     path('intro_test/',views.intro_test2,name='intro_2'),
-    path('user/follow/',views.user_follow,name='follow'),
-    path('user/unfollow/',views.user_unfollow,name='unfollow'),
-    path('diary/like/',views.diary_like,name='like'),
-    path('diary/dislike/',views.diary_dislike,name='dislike'),
+    path('diary/',views.diary_like,name='diary'),
+    
+    path('profile/',views.user_follow,name='profile'),
+    path('profile/<int:pk>/follow/',views.user_follow,name='follow'),
+    path('profile/<int:pk>/unfollow/',views.user_unfollow,name='unfollow'),
+    path('diary/<int:pk>/like/',views.diary_like,name='like'),
+    path('diary/<int:pk>/dislike/',views.diary_dislike,name='dislike'),
     
 ]
