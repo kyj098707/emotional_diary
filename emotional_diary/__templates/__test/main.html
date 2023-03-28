@@ -21,6 +21,14 @@
                     </div>
                     <div class="card-footer">
                         <small class="text-muted">2023.03.10</small>
+                        
+                        <button id="like-btn-{{ diary.pk }}" onclick="handleLikeClick(this.id)">
+                            like
+                        </button>
+                        <button id="unlike-btn-{{ diary.pk }}" onclick="handleDislikeClick(this.id)">
+                            Dislike
+                        </button>
+
                     </div>
                     </div>
                 </div>
@@ -41,6 +49,9 @@
                 {{ user.username }}
                 <button id="follow-btn-{{ user.pk }}" onclick="handleFollowClick(this.id)">
                     follow
+                </button>
+                <button id="follow-btn-{{ user.pk }}" onclick="handleUnfollowClick(this.id)">
+                    unfollow
                 </button>
             </div>
             {% endfor %}
@@ -70,6 +81,27 @@
                 data_dic = {"id":id}
                 result = request_ajax(ajax_url,"POST",data_dic)
                 console.log(ajax_url)
+            }
+            const handleUnfollowClick = (buttonId) => {
+                id = buttonId.split("-").pop()
+                let ajax_url = "{% url 'diary:unfollow' %}"
+                data_dic = {"id":id}
+                result = request_ajax(ajax_url,"POST",data_dic)
+                console.log(ajax_url)
+            }
+            const handleLikeClick = (buttonId) => {
+                
+                id = buttonId.split("-").pop()
+                let ajax_url = "{% url 'diary:like' %}"
+                data_dic = {"diary_id":id}
+                result = request_ajax(ajax_url,"POST",data_dic)
+            }
+
+            const handleDislikeClick = (buttonId) => {
+                id = buttonId.split("-").pop()
+                let ajax_url = "{% url 'diary:dislike' %}"
+                data_dic = {"diary_id":id}
+                result = request_ajax(ajax_url,"POST",data_dic)
             }
         </script>
     </div>
