@@ -92,5 +92,21 @@ class DiaryDetailAPIView(APIView):
 
 ## 개인 블로그 페이지
 def personal(request):
+    '''posts : PostModel.objects.all()
+    if request.method == 'POST' :
+        form = PostModelForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.author = reqeust.user
+            instance.save()
+            return redirect('personal_blog')
+
+    else : 
+        form = PostModelForm()
+    form = PostModelForm()
+    context = {
+        'post' : posts,
+        'form' : form
+    }'''
     return render(request, "__03_personal/personal_blog.html")
 
