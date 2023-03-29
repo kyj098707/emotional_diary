@@ -86,7 +86,7 @@
                 id = buttonId.split("-").pop()
                 let ajax_url = "{% url 'diary:profile' %}"+id+"/unfollow/"
                 data_dic = {}
-                result = request_ajax(ajax_url,"POST",data_dic)
+                result = request_ajax(ajax_url,"DELETE",data_dic)
                 console.log(ajax_url)
             }
             const handleLikeClick = (buttonId) => {
@@ -101,8 +101,9 @@
                 id = buttonId.split("-").pop()
                 let ajax_url = "{% url 'diary:diary' %}"+id+"/dislike/"
                 data_dic = {"diary_id":id}
-                result = request_ajax(ajax_url,"POST",data_dic)
+                result = request_ajax(ajax_url,"DELETE",data_dic)
             }
+
         </script>
     </div>
 

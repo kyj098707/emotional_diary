@@ -10,8 +10,10 @@ from django.utils.encoding import force_bytes, force_str
 
 User = get_user_model()
 
-
-
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'email']
 
 class SignupSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -23,7 +25,6 @@ class SignupSerializer(serializers.ModelSerializer):
         user.send_welcomemail(uid,token)
 
     def create(self, validated_data):
-        
         user = User.objects.create_user(email=validated_data["email"],
                                 username=validated_data["username"],
                                 password=validated_data["password"])
