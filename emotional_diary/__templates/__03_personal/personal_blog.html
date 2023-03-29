@@ -14,7 +14,7 @@
     <header id="right-side">
     <div id="d-flex flex-column">
       <div class="profile">
-        <img src=".jpg" alt="" class="img-fluid rounded-circle">
+        <img src="{% static 'static/img/__logo/logo_test_bk.webp' %}"  alt="" class="img-fluid rounded-circle">
         <h1 class="text-light"><a href="personal_blog.html">이름</a></h1>
         <br><br>
 
@@ -22,20 +22,45 @@
       </div>
     </header>
 
-  <div id="wrap">
-    <div class="page" style="background:red;">01</div>
-        <div class="page" style="background:orange;">02</div>
-        <div class="page" style="background:yellow;">03</div>
-        <div class="page" style="background:green;">04</div>
-        <div class="page" style="background:blue;">05</div>
-        <div class="page" style="background:palegreen;">06</div>
-        <div class="page" style="background:darkgreen;">07</div>
-        <div class="page" style="background:sienna;">08</div>
-        <div class="page" style="background:khaki;">09</div>
-        <div class="page" style="background:salmon;">10</div>
-
-  </div>
-
+ <div class="container">
+    <div class="row mt-5 pt-3">
+        <div class="col-md-3">
+          <div class = "card shadow my-3">
+              <div class = "card-body">
+                    <form action = "" method = "POST" class = "ui form">
+                      {% csrf_token %}
+                      {{  form  }} <!--포스트 모델-->
+                      <input class = "btn btn-primary" type = "submit" value = "게시">
+                    </form>
+              </div>
+          </div>
+          
+        </div>
+        <div class="col-md-8">
+            {% for post in posts %}  <!--게시 버튼을 누르면 생성-->
+            <div class="card shadow my-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="" alt="img">
+                        </div>
+                        <div class="col-md-8">
+                            <small>{{post.date_created}}</small>  <!--포스트 날짜-->
+                            <hr>
+                            <a class="h3" href="">{{post.title}}</a>
+                            <p class="text-justify my-3">
+                              {{post.content}}  <!--포스트 내용-->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{% endfor % }}
+      </div>
+  
+        </div>
+    </div>
+</div>
 
 
 </body>
