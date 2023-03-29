@@ -3,14 +3,13 @@ from django.shortcuts import render
 from django.db import transaction
 from django.http import HttpResponse
 from rest_framework.response import Response
-from .models import Diary, Like, Re_diary_tag, Comment,Tag
-from accounts.models import Follower,Following
-from .serializers import DiarySerializers
+from .models import Diary,Comment,Tag
+from .serializers import DiaryListSerializers,DiaryRetrieveSerializers,CommentSerializers,DiaryLikeSerializers
 from accounts.models import User
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view
-from rest_framework.generics import get_object_or_404
+from rest_framework.generics import get_object_or_404,ListAPIView,RetrieveAPIView,CreateAPIView,UpdateAPIView
 from rest_framework import status
 from rest_framework.views import APIView
 # Create your views here.
@@ -44,51 +43,29 @@ def profile_test(request,pk):
 def diary_new(request):
     pass
 
-### diary로 옮기기
-@login_required
-@api_view(['POST'])
-def user_follow(request,pk):
-    fan = get_object_or_404(User,pk=pk)
-    celeb = request.user
-    with transaction.atomic():
-        if not Following.objects.filter(user=fan, following=celeb).exists() and fan != celeb:
-            Following.objects.create(user=fan, following=celeb)
-            Follower.objects.create(user=celeb,follower=fan)
-    return Response(status.HTTP_204_NO_CONTENT)
+class DiaryListAPIView(ListAPIView):
+    queryset = Diary.objects.all()
+    serializer_class = DiaryListSerializers
 
-@login_required
-@api_view(['POST'])
-def user_unfollow(request,pk):
-    fan = get_object_or_404(User,pk=pk)
-    celeb = request.user
-    with transaction.atomic():
-        if Following.objects.filter(user=fan, following=celeb).exists():  
-            Following.objects.get(user=fan, following=celeb).delete()
-            Follower.objects.get(user=celeb,follower=fan).delete()
-    return Response(status.HTTP_204_NO_CONTENT)
+class DiaryRetrieveAPIView(RetrieveAPIView):
+    queryset = Diary.objects.all()
+    serializer_class = DiaryRetrieveSerializers
+
+class CommentCreateAPIView(CreateAPIView):
+    queryset = Comment.objects.all()    
+    serializer_class = CommentSerializers
 
 @api_view(['POST'])
 def diary_like(request,pk):
-    diary_id = request.POST.get("diary_id")
-    diary = get_object_or_404(Diary,pk=diary_id)
-    user = request.user
-    if not Like.objects.filter(user=user, diary=diary):
-        Like.objects.create(user=user, diary=diary)
-    return Response(status.HTTP_204_NO_CONTENT)
-
-@api_view(['POST'])
-def diary_dislike(request,pk):
-    diary_id = request.POST.get("diary_id")
-    diary = get_object_or_404(Diary,pk=diary_id)
-    user = request.user
-    if Like.objects.filter(user=user, diary=diary):
-        Like.objects.get(user=user, diary=diary).delete()
-    return Response(status.HTTP_204_NO_CONTENT)
+    diary = get_object_or_404(Diary, pk=pk)
+    if diary.like.filter(pk=request.user.id).exists():
+        diary.like.remove(request.user) 
+    else:
+        diary.like.add(request.user)
+    serializer = DiaryLikeSerializers(diary)
+    return Response(serializer.data)
 
 
-
-class DiaryDetailAPIView(APIView):
-    pass
 
 ## 개인 블로그 페이지
 def personal(request):

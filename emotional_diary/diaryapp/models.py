@@ -7,9 +7,11 @@ class Tag(models.Model):
 
 class Diary(models.Model):
     title = models.CharField(max_length=20)
-    cotent = models.TextField()
+    content = models.TextField()
     user =  models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now=True)
+    like = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name="like_diary",blank=True)
+    tag = models.ManyToManyField(Tag, related_name="diary_tag",blank=True)
 
     def __str__(self):
         return self.title
@@ -20,17 +22,7 @@ class Comment(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now=True)
 
-
-
     def __str__(self):
         return self.name
     
-## 다대다 필드
 
-class Like(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
-    diary = models.ForeignKey(Diary,on_delete=models.CASCADE)
-
-class Re_diary_tag(models.Model):
-    diary = models.ForeignKey(Diary,on_delete=models.CASCADE)
-    tag = models.ForeignKey(Tag,on_delete = models.CASCADE)
