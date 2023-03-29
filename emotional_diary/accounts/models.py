@@ -36,6 +36,7 @@ class User(AbstractBaseUser):
     username = models.CharField(max_length=10, unique=True)
     email = models.EmailField(unique=True)
     nickname = models.CharField(max_length=10)
+    follower = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
 
     is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
@@ -64,15 +65,3 @@ class User(AbstractBaseUser):
                                     })
         sender = settings.WELCOME_EMAIL_SENDER
         send_mail(title,content,sender,[self.email],fail_silently=False)
-### 유저 다대다 Following
-
-class Following(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="fing_usr")
-    following = models.ForeignKey(User,on_delete=models.CASCADE,related_name="fing_fing")
-
-    def __str__(self):
-        return f"{self.user},{self.following}"
-
-class Follower(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="fer_usr")
-    follower = models.ForeignKey(User,on_delete=models.CASCADE,related_name="fer_fer")

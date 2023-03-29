@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from .models import User, Following, Follower
+from .models import User
 from django.db import transaction
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
@@ -17,11 +17,13 @@ from rest_framework.decorators import api_view
 from rest_framework.generics import CreateAPIView, get_object_or_404
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework import status
-from .serializers import SignupSerializer
+from rest_framework import status 
+from rest_framework.viewsets import ModelViewSet
+from .serializers import UserSerializer, SignupSerializer
 
 import json
 
+User = get_user_model()
 
 def activate(request,pk,token):
     pk = force_str(urlsafe_base64_decode(pk))
@@ -33,6 +35,10 @@ def activate(request,pk,token):
         return redirect('diary:intro')
     else:
         return HttpResponse('비정상적인 접근입니다.')
+
+class UserViewSet(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 def login(request):
     if request.POST:

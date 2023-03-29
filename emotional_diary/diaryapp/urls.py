@@ -3,6 +3,11 @@ from . import views
 from django.contrib.auth.views import LoginView
 from django.urls import path, include
 from . import views
+from diaryapp.views import DiaryListAPIView,DiaryRetrieveAPIView,CommentCreateAPIView
+
+# router = DefaultRouter()
+# router.register(r'diary',DiaryViewSet)
+# router.register(r'comment',CommentViewSet)
 
 
 app_name = "diary"
@@ -15,12 +20,17 @@ urlpatterns = [
     path('personal/personal_blog/',views.personal, name ='personal_blog'),
     #path('diary/',views.handle_diary,name="handle_diary"),
     path('intro_test/',views.intro_test2,name='intro_2'),
-    path('diary/',views.diary_like,name='diary'),
     
-    path('profile/',views.user_follow,name='profile'),
-    path('profile/<int:pk>/follow/',views.user_follow,name='follow'),
-    path('profile/<int:pk>/unfollow/',views.user_unfollow,name='unfollow'),
-    path('diary/<int:pk>/like/',views.diary_like,name='like'),
-    path('diary/<int:pk>/dislike/',views.diary_dislike,name='dislike'),
+    # path('profile/',views.user_follow,name='profile'),
+    # path('profile/<int:pk>',views.user_follow,name='profile_detail'),
+    # path('profile/<int:pk>/follow/',views.user_follow,name='follow'),
+    # path('profile/<int:pk>/unfollow/',views.user_unfollow,name='unfollow'),
+
+    #path('diary/',views.diary_like,name='diary'),
+    path('diary/',views.DiaryListAPIView.as_view(),name="diary-list"),
+    path('diary/<int:pk>/like/',views.diary_like,name='diary-like'),
+    path('diary/<int:pk>/',views.DiaryRetrieveAPIView.as_view(),name="diary-list"),
+    path('comment/',views.CommentCreateAPIView.as_view(),name="comment-list"),
+    #path('diary/<int:pk>/dislike/',views.diary_dislike,name='dislike'),
     
 ]
