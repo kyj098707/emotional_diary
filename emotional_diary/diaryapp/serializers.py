@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from accounts.serializers import UserSerializer
-from diaryapp.models import Diary,Comment
+from diaryapp.models import Diary,Comment,Tag
 
 class DiaryListSerializers(serializers.ModelSerializer):
     class Meta:
@@ -15,9 +15,19 @@ class DiaryRetrieveSerializers(serializers.ModelSerializer):
         fields = "__all__"
 
     def get_comment(self, diary):
-        comment = Comment.objects.filter(diary=diary)
-        serializers = CommentSerializers(instance=comment,many=True)
+        comment = Comment.objects.filter(diary=diary).order_by("-created_at")
+        serializers = DiaryCommentSerializers(instance=comment,many=True)
         return serializers.data
+
+class DiaryCommentSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ["id","user","content","created_at"]
+
+class DiaryLikeSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Diary
+        fields = ["like"]
 
 class CommentSerializers(serializers.ModelSerializer):
     user = UserSerializer(required=False)
@@ -26,9 +36,7 @@ class CommentSerializers(serializers.ModelSerializer):
         model = Comment
         fields = "__all__"
 
-
-class DiaryLikeSerializers(serializers.ModelSerializer):
+class TagSerializers(serializers.ModelSerializer):
     class Meta:
-        model = Diary
-        fields = ["like"]
-
+        model = Tag
+        fields = "__all__"
