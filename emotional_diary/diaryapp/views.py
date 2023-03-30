@@ -51,9 +51,23 @@ class DiaryRetrieveAPIView(RetrieveAPIView):
     queryset = Diary.objects.all()
     serializer_class = DiaryRetrieveSerializers
 
-class CommentCreateAPIView(CreateAPIView):
-    queryset = Comment.objects.all()    
-    serializer_class = CommentSerializers
+@api_view(['POST'])
+def comment_create(request,pk):
+    diary = get_object_or_404(Diary,pk=pk)
+    comment_serializer = CommentSerializers(data=request.data)
+
+    if comment_serializer.is_valid(raise_exception=True):
+        comment_serializer.save(user=request.user,diary=diary)
+        diary_serializer = DiaryRetrieveSerializers(diary)
+    return Response(diary_serializer.data)
+
+@api_view(['POST'])
+def attach_tag(request,diary_pk):
+    pass
+
+@api_view(['POST'])
+def create_tag(request):
+    pass
 
 @api_view(['POST'])
 def diary_like(request,pk):
