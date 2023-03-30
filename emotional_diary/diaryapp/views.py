@@ -4,7 +4,7 @@ from django.db import transaction
 from django.http import HttpResponse
 from rest_framework.response import Response
 from .models import Diary,Comment,Tag
-from .serializers import DiaryListSerializers,DiaryRetrieveSerializers,CommentSerializers,DiaryLikeSerializers
+from .serializers import DiaryListSerializers,DiaryRetrieveSerializers,CommentSerializers,DiaryLikeSerializers,TagSerializers
 from accounts.models import User
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny
@@ -51,9 +51,24 @@ class DiaryRetrieveAPIView(RetrieveAPIView):
     queryset = Diary.objects.all()
     serializer_class = DiaryRetrieveSerializers
 
-class CommentCreateAPIView(CreateAPIView):
-    queryset = Comment.objects.all()    
-    serializer_class = CommentSerializers
+class TagCreateAPIView(CreateAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializers
+
+@api_view(['POST'])
+def comment_create(request,pk):
+    diary = get_object_or_404(Diary,pk=pk)
+    comment_serializer = CommentSerializers(data=request.data)
+
+    if comment_serializer.is_valid(raise_exception=True):
+        comment_serializer.save(user=request.user,diary=diary)
+        diary_serializer = DiaryRetrieveSerializers(diary)
+    return Response(diary_serializer.data)
+
+@api_view(['POST'])
+def attach_tag(request,pk):
+    pass
+
 
 @api_view(['POST'])
 def diary_like(request,pk):

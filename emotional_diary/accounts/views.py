@@ -103,6 +103,7 @@ def email_validate(request):
         result = {'response':'email_valid_fail'}
     return HttpResponse(result, content_type="application/json")
 
+"""
 @api_view(['GET'])
 def login(request):
     email = request.GET.get("email")
@@ -114,6 +115,6 @@ def login(request):
     else:
         result = {'response':'fail'}
     return HttpResponse(result, content_type="application/json")
-
+"""
 
 
