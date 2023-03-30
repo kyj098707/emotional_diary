@@ -5,3 +5,7 @@ from .models import Diary,Comment
 @admin.register(Diary)
 class DiaryAdmin(admin.ModelAdmin):
     pass
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    pass

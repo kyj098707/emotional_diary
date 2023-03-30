@@ -49,7 +49,7 @@ model = ElectraForSequenceClassification.from_pretrained("monologg/koelectra-bas
 text = df['발화문'].tolist()
 encode_txt = tokenizer(text, padding=True, truncation=True, return_tensors="pt")
 encode_df = pd.DataFrame({key: encode_txt[key].tolist() for key in encode_txt})
-
+print(encode_df)
 
 # =============== 데이터 분리
 train_encodings, test_encodings, train_labels, test_labels = train_test_split(encode_df, encode_label, test_size=0.2, random_state=42)
@@ -77,9 +77,24 @@ trainer = Trainer(model=model,
                   train_dataset=train_dataset,
                   eval_dataset=test_dataset,
                   compute_metrics=compute_metrics)
-
-
+"""
+# Train 1에폭마다 validation을 통과해 best model을 선정합니다.
+# 그러므로 train을 진행할 때는 train과 validation 함수를 같이 지정해줘야합니다.
+# Trainer에서 해당 작업을 다해주기는 하지만 이후에 validation에서 평가방식을 바꾸거나
+# 커스터마이징하고 싶을 때 매우 번거롭기 때문에 만들 때 부터 지정해주어야 합니다.
+def validation(model, criterion, val_loader, device):
+    # 평가때 필요없는 layer를 꺼줌
+    model.eval()
+    # validation 평가에 사용할 loss와 acc를 지정
+    # 보통 validation loss가 가장 낮은 모델을 best model로 선택
+    # 기호에 따라서 f1_score, recall 값 등을 구해서 best model 선택하기도 함 
+    val_loss = []
+    val_acc = []
+    # 평가 때 경사하강법이 작동x 
+    #with torch.no_grad():
+    #    for sentence, label = 
 #학습
+"""
 trainer.train()
 
 
