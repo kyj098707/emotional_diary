@@ -18,6 +18,8 @@ urlpatterns = [
     path('profile/<int:pk>/', views.profile_test,name="profile"),
     path('personal/personal_blog/',views.personal, name ='personal_blog'),
     path('intro_test/',views.intro_test2,name='intro_2'),
+
+    
     path('diary/',views.DiaryListAPIView.as_view(),name="diary-list"),
     path('diary/<int:pk>/like/',views.diary_like,name='diary-like'),
     path('diary/<int:pk>/',views.DiaryRetrieveAPIView.as_view(),name="diary-detail"),
