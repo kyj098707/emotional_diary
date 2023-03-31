@@ -3,7 +3,7 @@ from . import views
 from django.contrib.auth.views import LoginView
 from django.urls import path, include
 from . import views
-from diaryapp.views import DiaryListAPIView,DiaryRetrieveAPIView,comment_create,attach_tag,TagCreateAPIView
+from diaryapp.views import DiaryListAPIView,DiaryRetrieveAPIView,comment_create,attach_tag,TagListCreateAPIView
 
 # router = DefaultRouter()
 # router.register(r'diary',DiaryViewSet)
@@ -24,7 +24,7 @@ urlpatterns = [
     path('diary/<int:pk>/like/',views.diary_like,name='diary-like'),
     path('diary/<int:pk>/',views.DiaryRetrieveAPIView.as_view(),name="diary-detail"),
     path('diary/<int:pk>/comment/',views.comment_create,name="comment-create"),
-    path('tag/',views.TagCreateAPIView.as_view(),name="tag-create"),
+    path('tag/',views.TagListCreateAPIView.as_view(),name="tag-create"),
     path('diary/<int:pk>/tag/',views.attach_tag,name="tag_attach"),
     #path('diary/<int:pk>/dislike/',views.diary_dislike,name='dislike'),
     

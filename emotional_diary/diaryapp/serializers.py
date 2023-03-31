@@ -7,8 +7,15 @@ class DiaryListSerializers(serializers.ModelSerializer):
         model = Diary
         fields = ["id","title","content","user"]
 
+
+class TagSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ["name"]
+
 class DiaryRetrieveSerializers(serializers.ModelSerializer):
     comment = serializers.SerializerMethodField()
+    tag = TagSerializers(many=True)
 
     class Meta:
         model = Diary
@@ -18,6 +25,8 @@ class DiaryRetrieveSerializers(serializers.ModelSerializer):
         comment = Comment.objects.filter(diary=diary).order_by("-created_at")
         serializers = DiaryCommentSerializers(instance=comment,many=True)
         return serializers.data
+
+
 
 class DiaryCommentSerializers(serializers.ModelSerializer):
     class Meta:
@@ -36,7 +45,3 @@ class CommentSerializers(serializers.ModelSerializer):
         model = Comment
         fields = "__all__"
 
-class TagSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = Tag
-        fields = "__all__"
