@@ -9,7 +9,7 @@ from accounts.models import User
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view
-from rest_framework.generics import get_object_or_404,ListAPIView,RetrieveAPIView,CreateAPIView,UpdateAPIView
+from rest_framework.generics import get_object_or_404,ListAPIView,RetrieveAPIView,CreateAPIView,UpdateAPIView,ListCreateAPIView
 from rest_framework import status
 from rest_framework.views import APIView
 # Create your views here.
@@ -51,7 +51,7 @@ class DiaryRetrieveAPIView(RetrieveAPIView):
     queryset = Diary.objects.all()
     serializer_class = DiaryRetrieveSerializers
 
-class TagCreateAPIView(CreateAPIView):
+class TagListCreateAPIView(ListCreateAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializers
 
@@ -67,7 +67,15 @@ def comment_create(request,pk):
 
 @api_view(['POST'])
 def attach_tag(request,pk):
-    pass
+    diary = get_object_or_404(Diary,pk=pk)
+    tag = get_object_or_404(Tag,name=request.data["name"])
+    print(tag.name)
+    if not diary.tag.filter(name=tag.name).exists():
+        print(tag.name)
+        diary.tag.add(tag)
+    return HttpResponse(status=200)
+
+        
 
 
 @api_view(['POST'])
