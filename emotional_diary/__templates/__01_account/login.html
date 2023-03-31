@@ -122,9 +122,51 @@
         .singup_link a:hover{
             text-decoration : underline;
         }
+        
+        .bg-img-container {
+        position: relative;
+        width: 100% !important; 
+        height: 100% !important;
+        overflow: hidden;
+        }
+
+        .bg-img {
+        position: absolute;
+        width: 150% !important;
+        height: 150% !important;
+        top: -25%;
+        left: -25%;
+        background-image: url("{% static 'static/img/account/background.webp' %}");
+        background-size: cover;
+        background-position: center;
+        animation: moveDiamond 60s cubic-bezier(.5,.28,.86,.69) infinite;
+        }
+
+
+        @keyframes moveDiamond {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+            25% {
+                transform: translateY(8%) translateX(8%);
+            }
+            50% {
+                transform: translateY(16%) translateX(0);
+            }
+            75% {
+                transform: translateY(8%) translateX(-8%);
+            }
+            100% {
+                transform: translateY(0) translateX(0);
+            }
+        }
 
     </style>
 </head>
+<body>
+    <div class="bg-img-container">
+    <div class="bg-img"></div>
+    </div>
     {% include '__01_account/signup.html' %}
     <div class="center" id="container_login">
         <div class="d-flex justify-content-center">
@@ -151,6 +193,7 @@
             <button type="button" id="to_signup">계정이 없으신가요?</button>
         </div>
     </form>
+
 </div>
 
 
