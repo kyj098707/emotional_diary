@@ -74,12 +74,14 @@ def reset_confirm(request):
 
 def statistics_test(request):
     test_data = {}
-    test_data['cnt_today'] = 7 # 오늘 방문 수
-    test_data['cnt_yester'] = 10 # 어제 방문 수
-    test_data['cnt_total'] = 10 # 누적 방문 수
+    test_data['cnt_today'] = 1512 # 오늘 방문 수
+    test_data['cnt_yester'] = 15120 # 어제 방문 수
+    test_data['cnt_total'] = 1120 # 누적 방문 수
 
-    test_data['num_like'] = 10 # 좋아요 수
-    test_data['num_follow'] = 13 # 팔로우 수
+    test_data['num_like'] = 1410 # 좋아요 수
+    test_data['num_follower'] = 134 # 팔로우 수
+    test_data['num_following'] = 1341 # 팔로우 수
+    test_data['num_post'] = 1243 # 총 포스트 수
 
     # 감정 반환 API 필요,
     # 수치순으로 반환 + 각 감정 라벨링할것인지
@@ -94,7 +96,7 @@ def statistics_test(request):
     test_data['feel4'] = test_feels[3]
     test_data['feel5'] = test_feels[4]
 
-    return render(request,"__01_account/statistics.html",{
+    return render(request,"temp_dashboard_pack/base_temp.html",{
         "data":test_data
     })
 

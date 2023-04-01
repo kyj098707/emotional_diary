@@ -3,26 +3,145 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aivlary</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'static/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'static/css/style.css' %}">
-     <script src="{% static 'static/js/bootstrap.bundle.js' %}"></script>
-     <script src="{% static 'static/js/bootstrap.bundle.min.js' %}"></script>
-
-    {% include "./_symbol.html" %}
-    {% block style %}
-    {% endblock %}
+    <title>Dashboard Example</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <style>
+        body {
+        overflow-x: hidden; 
+        overflow-y: hidden;
+        background-image: url("{% static 'static/img/account/background.webp' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        padding: 20px;
+        height: 100vh;
+    }
+    .container-fluid {
+        height: 100%;
+    }
+    .row {
+        height: 100%;
+    }
+    .custom-row {
+    margin: 0;
+    }
+    .sidebar {
+        background-color: #fff;
+        border-radius: 10px;
+        transition: all 0.5s;
+        height: 100%;
+        padding:20px;
+    }
+    .logo_img {
+        display: block;
+        margin: 10px auto;
+    }
+    .sidebar-divider {
+    background-color: gray;
+    height: 1px;
+    width: 85%;
+    opacity : 40%;
+    margin: 20px auto;
+    }
+    .statistics {
+        background-color: #fff;
+        border-radius: 10px;
+        margin-left: 30px;
+        transition: all 0.5s;
+        height: 100%;
+        padding:15px
+    }
+    .stats-row {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+    .stats-item {
+        text-align: center;
+    }
+    @media (max-width: 767px) {
+        .sidebar {
+            display: none;
+        }
+    }
+    </style>
 </head>
 <body>
-    <div id="container">
-        {% include 'sidebar.html' %}
-        <div id="main-content">
-            {% include 'header.html' %}
-            {% block content %}
-            {% endblock %}
+    <div class="container-fluid">
+        <div class="row custom-row">
+            <div class="col-md-2 sidebar">
+                <!-- LOGO IMG -->
+                <img class='logo_img w-75' src="{% static 'static/img/__logo/logo_test_bk.webp' %}" alt="Logo" class="img-fluid logo">
+
+                <div class="sidebar-divider"></div>
+
+                <!-- Dropdown menu -->
+                <div class="dropdown">
+                    <a class="btn btn-outline-dark btn-sm dropdown-toggle w-100" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        바로가기
+                    </a>
+
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </div>
+                <!-- Sidebar content -->
+            </div>
+            <div class="col offset-md-2 statistics">
+                <div class="stats-row">
+                    <div class="stats-item">
+                        <h3>Yesterday's Visitors</h3>
+                        <p>{{data.cnt_yester}}</p>
+                    </div>
+                    <div class="stats-item">
+                        <h3>Today's Visitors</h3>
+                        <p>{{data.cnt_today}}</p>
+                    </div>
+                    <div class="stats-item">
+                        <h3>Total Visitors</h3>
+                        <p>{{data.cnt_total}}</p>
+                    </div>
+                </div>
+                <div class="stats-row">
+                    <div class="stats-item">
+                        <h3>Followers</h3>
+                        <p>{{data.num_follower}}</p>
+                    </div>
+                    <div class="stats-item">
+                        <h3>Likes</h3>
+                        <p>{{data.num_like}}</p>
+                    </div>
+                    <div class="stats-item">
+                        <h3>Following</h3>
+                        <p>{{data.num_following}}</p>
+                    </div>
+                    <div class="stats-item">
+                        <h3>Posts</h3>
+                        <p>{{data.num_post}}</p>
+                    </div>
+                </div>
+                <!-- Insert charts here -->
+            </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            $('.sidebar').css('opacity', '0').css('transform', 'translateX(-50px)');
+            $('.statistics').css('opacity', '0').css('transform', 'translateX(50px)');
+
+            setTimeout(function () {
+                $('.sidebar').css('opacity', '1').css('transform', 'translateX(0)');
+                $('.statistics').css('opacity', '1').css('transform', 'translateX(0)');
+            }, 500);
+        });
+
+    </script>
 </body>
 </html>
