@@ -53,7 +53,8 @@
         margin-left: 30px;
         transition: all 0.5s;
         height: 100%;
-        padding:15px
+        padding:15px;
+        z-index : -1;
     }
     .stats-row {
         display: flex;
@@ -69,30 +70,65 @@
             display: none;
         }
     }
+
+    .sidebar_menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    }
+
+    .menu_item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+    }
+
+    .menu_item:hover {
+    background-color: #333;
+    color: #fff;
+    }
+
+    .active {
+    background-color: #333;
+    color: #fff;
+    }
+
+    .menu_container {
+    height: 100%;
+    }
+
+
     </style>
 </head>
 <body>
     <div class="container-fluid">
         <div class="row custom-row">
+        
+            <!-- SIDEBAR -->
             <div class="col-md-2 sidebar">
                 <!-- LOGO IMG -->
                 <img class='logo_img w-75' src="{% static 'static/img/__logo/logo_test_bk.webp' %}" alt="Logo" class="img-fluid logo">
 
                 <div class="sidebar-divider"></div>
 
-                <!-- Dropdown menu -->
-                <div class="dropdown">
-                    <a class="btn btn-outline-dark btn-sm dropdown-toggle w-100" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                        바로가기
+                <div class="sidebar_menu menu_container">
+                    <a href="#" class="menu_item active">
+                        <span>Dashboard</span>
                     </a>
-
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
+                    <a href="#" class="menu_item">
+                        <span>My Post</span>
+                    </a>
+                    <a href="#" class="menu_item">
+                        <span>Social</span>
+                    </a>
+                    <a href="#" class="menu_item">
+                        <span>Settings</span>
+                    </a>
                 </div>
-                <!-- Sidebar content -->
+
+            <!-- STTS -->
             </div>
             <div class="col offset-md-2 statistics">
                 <div class="stats-row">
