@@ -64,14 +64,13 @@
         margin-left: 30px;
         transition: all 0.5s;
         height: 100%;
-        padding:15px;
+        padding:25px;
         z-index : -1;
     }
     .stats-row {
         display: flex;
         justify-content: space-around;
         align-items: center;
-        margin-bottom: 30px;
     }
     .stats-item {
         text-align: center;
@@ -106,10 +105,27 @@
     color: #fff;
     }
 
-    .menu_container {
-    height: 100%;
+    .chart-container {
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        padding: 20px;
+        margin-bottom: 20px;
     }
 
+    .chart-title {
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .chart-title {
+        font-size : 1.2rem;
+        margin-bottom : 15px !important;
+    }
+
+    .dash_chart{
+        margin-top : 0px;
+    }
 
     </style>
 </head>
@@ -142,47 +158,83 @@
             <!-- STTS -->
             </div>
             <div class="col offset-md-2 statistics">
-                <div class="stats-row">
+                <div class="chart-container p-0 pt-3">
+                    <div class="stats-row">
                     <div class="stats-item">
-                        <h3>Yesterday's Visitors</h3>
-                        <p>{{data.cnt_yester}}</p>
-                    </div>
-                    <div class="stats-item">
-                        <h3>Today's Visitors</h3>
-                        <p>{{data.cnt_today}}</p>
-                    </div>
-                    <div class="stats-item">
-                        <h3>Total Visitors</h3>
-                        <p>{{data.cnt_total}}</p>
-                    </div>
-                </div>
-                <div class="stats-row">
-                    <div class="stats-item">
-                        <h3>Followers</h3>
+                        <h6>Followers</h6>
                         <p>{{data.num_follower}}</p>
                     </div>
                     <div class="stats-item">
-                        <h3>Likes</h3>
+                        <h6>Likes</h6>
                         <p>{{data.num_like}}</p>
                     </div>
                     <div class="stats-item">
-                        <h3>Following</h3>
+                        <h6>Following</h6>
                         <p>{{data.num_following}}</p>
                     </div>
                     <div class="stats-item">
-                        <h3>Posts</h3>
+                        <h6>Posts</h6>
                         <p>{{data.num_post}}</p>
                     </div>
                 </div>
-                
-                <div class="row">
-                    <div class="col-md-8">
-                    <canvas id="barChart" class='dash_chart'></canvas>
+                    {% comment %} <div class="stats-row m-0 p-0">
+                    <div class="stats-item m-0 p-0">
+                        <h6>Yesterday's Visitors</h6>
+                        <p>{{data.cnt_yester}}</p>
                     </div>
-                    <div class="col-md-4">
-                    <canvas id="doughnutChart" class='dash_chart'></canvas>
+                    <div class="stats-item">
+                        <h6>Today's Visitors</h6>
+                        <p>{{data.cnt_today}}</p>
                     </div>
+                    <div class="stats-item">
+                        <h6>Total Visitors</h6>
+                        <p>{{data.cnt_total}}</p>
+                    </div>
+                    </div> {% endcomment %}
                 </div>
+                <div class="container p-0">
+                    <div class="chart-container p-2">
+                    <div class="row">
+                        <div class="col-md-8">
+                                <h5 class="chart-title">방문자 및 포스팅 추이 (가제)</h5>
+                                <canvas id="lineChart" height='50px'></canvas>
+                        </div>
+                        <div class="col-md-4 stats-row">
+                            <table class="table table-hover w-75">
+                                <tr>
+                                    <td>yesterday's visitor</td>
+                                    <td>10</td>
+                                </tr>
+                                <tr>
+                                    <td>today's visitor</td>
+                                    <td>15</td>
+                                </tr>
+                                <tr>
+                                    <td>total visitor</td>
+                                    <td>25</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    </div>
+
+                    
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="chart-container p-1">
+                                <h5 class="chart-title">최근 감정점수 CNT (가제)</h5>
+                                    <canvas id="barChart" class='dash_chart' height="170"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="chart-container p-1">
+                                <h5 class="chart-title">분포 추이</h5>
+                                    <canvas id="doughnutChart" class='dash_chart'></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+            </div>
             </div>
         </div>
     </div>
@@ -198,96 +250,165 @@
         });
 
 
-document.addEventListener("DOMContentLoaded", function () {
-  const ctx = document.getElementById("barChart").getContext("2d");
+    function delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
-  const data = {
-    labels: ["Bar 1", "Bar 2", "Bar 3", "Bar 4", "Bar 5"],
-    datasets: [
-      {
-        label: "Data",
-        data: [10, 20, 30, 40, 50],
-        backgroundColor: [
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-        ],
-        borderColor: [
-          "rgba(75, 192, 192, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(255, 99, 132, 1)",
-          "rgba(255, 159, 64, 1)",
-          "rgba(153, 102, 255, 1)",
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
+    document.addEventListener("DOMContentLoaded", function () {
 
-  const options = {
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
-    },
-  };
+        <!-- BAR -->
 
-  const barChart = new Chart(ctx, {
-    type: "bar",
-    data: data,
-    options: options,
-  });
+        const barctx = document.getElementById("barChart").getContext("2d");
 
-    const doughnutCtx = document.getElementById("doughnutChart").getContext("2d");
+        const bardata = {
+            labels: ["Bar 1", "Bar 2", "Bar 3", "Bar 4", "Bar 5"],
+            datasets: [
+                {
+                    label: "Data",
+                    data: [10, 20, 30, 40, 50],
+                    backgroundColor: [
+                        "rgba(75, 192, 192, 0.2)",
+                        "rgba(255, 206, 86, 0.2)",
+                        "rgba(255, 99, 132, 0.2)",
+                        "rgba(255, 159, 64, 0.2)",
+                        "rgba(153, 102, 255, 0.2)",
+                    ],
+                    borderColor: [
+                        "rgba(75, 192, 192, 1)",
+                        "rgba(255, 206, 86, 1)",
+                        "rgba(255, 99, 132, 1)",
+                        "rgba(255, 159, 64, 1)",
+                        "rgba(153, 102, 255, 1)",
+                    ],
+                    borderWidth: 1,
+                },
+            ],
+        };
 
-  const doughnutData = {
-    labels: ["Label 1", "Label 2", "Label 3"],
-    datasets: [
-      {
-        data: [50, 30, 20],
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
+        const baroptions = {
+            legend: {
+                position: 'left'
+            },
+            scales: {
+                y: {
+                beginAtZero: true,
+                },
+            },
+        };
 
-  const doughnutOptions = {
-  };
+        
+        <!-- BAR LOAD + Delay -->
+        async function loadbarChart() {
+            await delay(500);
+            const barChart = new Chart(barctx, {
+                type: "bar",
+                data: bardata,
+                options: baroptions,
+            });
+        }
+        loadbarChart();
 
-  const doughnutChart = new Chart(doughnutCtx, {
-    type: "doughnut",
-    data: doughnutData,
-    options: doughnutOptions,
-  });
-});
+
+        <!-- DN CHART -->
+        const doughnutCtx = document.getElementById("doughnutChart").getContext("2d");
+
+        const doughnutData = {
+            labels: ["Label 1", "Label 2", "Label 3"],
+            datasets: [
+                {
+                data: [50, 30, 20],
+                backgroundColor: [
+                    "rgba(255, 99, 132, 0.2)",
+                    "rgba(54, 162, 235, 0.2)",
+                    "rgba(255, 206, 86, 0.2)",
+                ],
+                borderColor: [
+                    "rgba(255, 99, 132, 1)",
+                    "rgba(54, 162, 235, 1)",
+                    "rgba(255, 206, 86, 1)",
+                ],
+                borderWidth: 1,
+                },
+            ],
+        };
+
+        const doughnutOptions = {
+            legend: {
+                position: 'left',
+            },
+        };
+
+
+        <!-- DN LOAD + Delay -->
+        async function loadDNChart() {
+            await delay(500);
+            const doughnutChart = new Chart(doughnutCtx, {
+            type: "doughnut",
+            data: doughnutData,
+            options: doughnutOptions,
+        });
+        }
+        loadDNChart();
+
+
+    const lineCtx = document.getElementById("lineChart").getContext("2d");
+
+    const lineData = {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [
+            {
+                label: "Line 1",
+                data: [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65],
+                fill: false,
+                borderColor: "rgb(255, 99, 132)",
+                tension: 0.1
+            },
+            {
+                label: "Line 2",
+                data: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60],
+                fill: false,
+                borderColor: "rgb(54, 162, 235)",
+                tension: 0.1
+            }
+        ]
+    };
+
+    const lineOptions = {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    };
+
+    const lineChart = new Chart(lineCtx, {
+        type: "line",
+        data: lineData,
+        options: lineOptions
+    });
+
+    });
+
+
+
 
     function resizeCharts() {
-    if (window.innerWidth < 768) { 
-        $('#doughnutChart').hide(); 
-        $('#barChart').css('height', 'auto'); 
-    } else {
-        $('#doughnutChart').show();
-        $('#barChart').css('height', '300px');
+        if (window.innerWidth < 768) { 
+            $('#doughnutChart').hide(); 
+            $('#barChart').css('height', 'auto'); 
+        } else {
+            $('#doughnutChart').show();
+            $('#barChart').css('height', '300px');
+        }
     }
-    }
+
 
     $(document).ready(function() {
-    resizeCharts();
-
-    $(window).resize(function() {
         resizeCharts();
-    });
+
+        $(window).resize(function() {
+            resizeCharts();
+        });
     });
 
     </script>
