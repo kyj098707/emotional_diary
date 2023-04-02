@@ -71,8 +71,34 @@ def forget_password(request):
 def reset_confirm(request):
     return render(request, '__01_account/reset_confirm.html')
 
+
 def statistics_test(request):
-    return render(request, '__01_account/statistics.html')
+    test_data = {}
+    test_data['cnt_today'] = 1512 # 오늘 방문 수
+    test_data['cnt_yester'] = 15120 # 어제 방문 수
+    test_data['cnt_total'] = 1120 # 누적 방문 수
+
+    test_data['num_like'] = 1410 # 좋아요 수
+    test_data['num_follower'] = 134 # 팔로우 수
+    test_data['num_following'] = 1341 # 팔로우 수
+    test_data['num_post'] = 1243 # 총 포스트 수
+
+    # 감정 반환 API 필요,
+    # 수치순으로 반환 + 각 감정 라벨링할것인지
+    # 감정 순서는 고정, 수치로만 반환할지 등
+    # 비율이 아닌 수치로 맵할지 몰라서 일단 수치로 테스트했어요.
+
+    test_feels = [25, 17, 31, 46, 11]
+    test_data['total_feel'] = sum(test_feels)
+    test_data['feel1'] = test_feels[0]
+    test_data['feel2'] = test_feels[1]
+    test_data['feel3'] = test_feels[2]
+    test_data['feel4'] = test_feels[3]
+    test_data['feel5'] = test_feels[4]
+
+    return render(request,"temp_dashboard_pack/base_temp.html",{
+        "data":test_data
+    })
 
 ## restapi_framework test
 
