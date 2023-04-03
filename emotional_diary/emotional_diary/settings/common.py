@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     # third apps
     "django_bootstrap5",
     "rest_framework",
+    "rest_framework.authtoken",
+
     #local apps
     "diaryapp",
     "accounts",
@@ -144,5 +146,9 @@ INTERNAL_IPS = [
 ]
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
     "DEFAULT_PERMISSION_CLASSES":['rest_framework.permissions.IsAuthenticated',],
 }
