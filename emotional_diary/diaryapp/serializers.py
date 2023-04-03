@@ -13,6 +13,9 @@ class TagSerializers(serializers.ModelSerializer):
         model = Tag
         fields = ["name"]
 
+
+
+
 class DiaryRetrieveSerializers(serializers.ModelSerializer):
     comment = serializers.SerializerMethodField()
     tag = TagSerializers(many=True)
