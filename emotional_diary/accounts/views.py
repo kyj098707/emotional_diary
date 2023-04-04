@@ -19,7 +19,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status 
 from rest_framework.viewsets import ModelViewSet
-from .serializers import UserSerializer, SignupSerializer, StatsSerializer
+from .serializers import UserSerializer, SignupSerializer, StatsSerializer, UserRetrieveSerializers
 
 import json
 
@@ -120,6 +120,18 @@ def user_follow(request,pk):
         else:
             user.follower.remove(request.user)
     return HttpResponse(status=200)
+
+
+class UserRetrieveAPIView(RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserRetrieveSerializers
+
+
+@api_view(['GET'])
+def my_page(request):
+    user = request.user
+    user_serializer = UserRetrieveSerializers(instance=user)
+    return Response(user_serializer.data)
 
 
 class StatsRetrieveAPIView(RetrieveAPIView):
