@@ -23,6 +23,12 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['username', 'email']
 
 
+class UserRetrieveSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = "__all__"
+
+
 # Like 개수, Follower 수, Posting 수, 감정 추이
 # 나중에 리펙토링
 class StatsSerializer(serializers.ModelSerializer):
