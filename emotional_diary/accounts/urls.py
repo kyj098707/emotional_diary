@@ -6,9 +6,7 @@ from . import views
 from .views import StatsRetrieveAPIView
 
 
-
-
-app_name='account'
+app_name = 'account'
 
 urlpatterns = [
     path('signup/',views.SignupView.as_view(),name='signup'),
@@ -19,6 +17,7 @@ urlpatterns = [
     path('logout/',views.logout, name='logout'),
     path('statistics/',views.statistics_test, name='statistics'),
 
-    path('user/<int:pk>/stats', views.StatsRetrieveAPIView.as_view(), name="stats"),
+    path('user/<int:pk>/follow/', views.user_follow, name="follow"),
+    path('user/<int:pk>/stats/', views.StatsRetrieveAPIView.as_view(), name="stats"),
 
 ]

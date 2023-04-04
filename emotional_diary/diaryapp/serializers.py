@@ -41,6 +41,7 @@ class DiaryLikeSerializers(serializers.ModelSerializer):
         model = Diary
         fields = ["like"]
 
+
 class CommentSerializers(serializers.ModelSerializer):
     user = UserSerializer(required=False)
     diary = DiaryListSerializers(required=False)

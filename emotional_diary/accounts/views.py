@@ -111,6 +111,15 @@ def email_validate(request):
     return HttpResponse(result, content_type="application/json")
 
 
+@api_view(['POST'])
+def user_follow(request,pk):
+    user = get_object_or_404(User,pk=pk)
+    if user != request.user:
+        if not user.follower.filter(pk=request.user.pk).exists():
+            user.follower.add(request.user)
+        else:
+            user.follower.remove(request.user)
+    return HttpResponse(status=200)
 
 
 class StatsRetrieveAPIView(RetrieveAPIView):

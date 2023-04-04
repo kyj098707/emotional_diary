@@ -11,6 +11,12 @@ from diaryapp.models import Diary
 User = get_user_model()
 
 
+class DiaryEmotionSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Diary
+        fields = ["happiness","angry","disgust","fear","neutral","sadness","surprise"]
+
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -22,24 +28,29 @@ class UserSerializer(serializers.ModelSerializer):
 class StatsSerializer(serializers.ModelSerializer):
     num_like = serializers.SerializerMethodField()
     num_posting = serializers.SerializerMethodField()
-#    emotional_trend = serializers.SerializerMethodField()
+    num_follower = serializers.SerializerMethodField()
+    emotional_trend = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = "__all__"
+        fields = ["id","username","nickname","follower","num_like","num_posting","num_follower","emotional_trend"]
 
     def get_num_like(self,obj):
         diary_list = Diary.objects.filter(user=obj)
-        total_like = 0
-        if diary_list:
-            total_like = sum([diary.like.count() for diary in diary_list])
+        total_like = 0 if diary_list else sum([diary.like.count() for diary in diary_list])
         return total_like
 
     def get_num_posting(self,obj):
         diary_list = Diary.objects.filter(user=obj)
         return len(diary_list)
 
+    def get_num_follower(self,obj):
+        return obj.follower.count()
 
+    def get_emotional_trend(self,obj):
+        diary_list = Diary.objects.filter(user=obj)
+        emotion_serializer = DiaryEmotionSerializers(instance=diary_list,many=True)
+        return emotion_serializer.data
 
 
 class SignupSerializer(serializers.ModelSerializer):
