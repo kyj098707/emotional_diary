@@ -139,6 +139,10 @@
         animation: moveDiamond 60s cubic-bezier(.5,.28,.86,.69) infinite;
         }
 
+        .to_signup {
+            cursor : pointer;
+        }
+
         @keyframes moveDiamond {
             0% {
                 transform: translateY(0) translateX(0);
@@ -155,6 +159,12 @@
             100% {
                 transform: translateY(0) translateX(0);
             }
+        }
+
+        .signup_logo{
+            margin: 0 auto;
+            display: inline-block;
+            height: 100%;
         }
     </style>
 </head>
@@ -183,7 +193,7 @@
             <div class="sub_link">
                 <a href="../forget_password">비밀번호 찾기</a>
                 |
-                <a id="to_signup">회원가입</button>
+                <a id="to_signup" class='to_signup'>회원가입</button>
             </div>
         </form>
 
