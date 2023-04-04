@@ -13,6 +13,9 @@ class TagSerializers(serializers.ModelSerializer):
         model = Tag
         fields = ["name"]
 
+
+
+
 class DiaryRetrieveSerializers(serializers.ModelSerializer):
     comment = serializers.SerializerMethodField()
     tag = TagSerializers(many=True)
@@ -37,6 +40,7 @@ class DiaryLikeSerializers(serializers.ModelSerializer):
     class Meta:
         model = Diary
         fields = ["like"]
+
 
 class CommentSerializers(serializers.ModelSerializer):
     user = UserSerializer(required=False)

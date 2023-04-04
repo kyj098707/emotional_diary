@@ -5,9 +5,6 @@ from django.urls import path, include
 from . import views
 from .views import DiaryListCreateAPIView, comment_create, attach_tag, TagListCreateAPIView, DiaryRetrieveUpdateDestroyAPIView
 
-# router = DefaultRouter()
-# router.register(r'diary',DiaryViewSet)
-# router.register(r'comment',CommentViewSet)
 
 
 app_name = "diary"
