@@ -14,16 +14,17 @@ from django.contrib.auth.views import logout_then_login
 from django.contrib.auth.decorators import login_required
 
 from rest_framework.decorators import api_view
-from rest_framework.generics import CreateAPIView, get_object_or_404
+from rest_framework.generics import CreateAPIView, get_object_or_404, RetrieveAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status 
 from rest_framework.viewsets import ModelViewSet
-from .serializers import UserSerializer, SignupSerializer
+from .serializers import UserSerializer, SignupSerializer, StatsSerializer, UserRetrieveSerializers
 
 import json
 
 User = get_user_model()
+
 
 def activate(request,pk,token):
     pk = force_str(urlsafe_base64_decode(pk))
@@ -36,9 +37,11 @@ def activate(request,pk,token):
     else:
         return HttpResponse('비정상적인 접근입니다.')
 
+
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
 
 def login(request):
     if request.POST:
@@ -59,6 +62,7 @@ def login(request):
             return redirect('diary:intro')
         return HttpResponse('아이디와 비밀번호가 틀렸습니다.')     
     return render(request, '__01_account/login.html')
+
 
 def logout(request):
     return logout_then_login(request)
@@ -102,11 +106,13 @@ def statistics_test(request):
 
 ## restapi_framework test
 
+
 class SignupView(CreateAPIView):
     model = get_user_model()
     serializer_class = SignupSerializer
     permission_classes = [AllowAny,]
 
+
 @api_view(['GET'])
 def email_validate(request):
     ## 유저 이메일 중복 체크
@@ -128,6 +134,34 @@ def email_validate(request):
     except:
         result = {'response':'email_valid_fail'}
     return HttpResponse(result, content_type="application/json")
+
+
+@api_view(['POST'])
+def user_follow(request,pk):
+    user = get_object_or_404(User,pk=pk)
+    if user != request.user:
+        if not user.follower.filter(pk=request.user.pk).exists():
+            user.follower.add(request.user)
+        else:
+            user.follower.remove(request.user)
+    return HttpResponse(status=200)
+
+
+class UserRetrieveAPIView(RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserRetrieveSerializers
+
+
+@api_view(['GET'])
+def my_page(request):
+    user = request.user
+    user_serializer = UserRetrieveSerializers(instance=user)
+    return Response(user_serializer.data)
+
+
+class StatsRetrieveAPIView(RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = StatsSerializer
 
 """
 @api_view(['GET'])

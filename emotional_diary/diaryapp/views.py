@@ -9,7 +9,8 @@ from accounts.models import User
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view
-from rest_framework.generics import get_object_or_404,ListAPIView,RetrieveAPIView,CreateAPIView,UpdateAPIView,ListCreateAPIView
+from rest_framework.generics import get_object_or_404, ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, \
+    ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import status
 from rest_framework.views import APIView
 # Create your views here.
@@ -43,17 +44,21 @@ def profile_test(request,pk):
 def diary_new(request):
     pass
 
-class DiaryListAPIView(ListAPIView):
+
+class DiaryListCreateAPIView(ListCreateAPIView):
     queryset = Diary.objects.all()
     serializer_class = DiaryListSerializers
 
-class DiaryRetrieveAPIView(RetrieveAPIView):
+
+class DiaryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Diary.objects.all()
     serializer_class = DiaryRetrieveSerializers
+
 
 class TagListCreateAPIView(ListCreateAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializers
+
 
 @api_view(['POST'])
 def comment_create(request,pk):
