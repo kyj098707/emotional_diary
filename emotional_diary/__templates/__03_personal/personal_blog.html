@@ -8,6 +8,9 @@
 
   <link rel="stylesheet"  href="{% static 'static/css/bootstrap.min.css' %}">
   <link rel="stylesheet"  href="{% static 'static/css/personal_style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'static/css/bootstrap.min.css' %}">
+  <script src="{% static 'static/jquery-3.6.3.min.js' %}"></script>
+  <script src="{% static 'static/js/bootstrap.bundle.min.js' %}"></script>
 
 </head>
  <body>
@@ -23,15 +26,14 @@
     </header>
 
  <div class="container">
+  {% include '__03_personal/diary_create.html' %}
     <div class="row mt-5 pt-3">
         <div class="col-md-3">
           <div class = "card shadow my-3">
               <div class = "card-body">
-                    <form action = "" method = "POST" class = "ui form">
-                      {% csrf_token %}
-                      {{  form  }} <!--포스트 모델-->
-                      <input class = "btn btn-primary" type = "submit" value = "게시">
-                    </form>
+                <div class="col-md-6 text-md-end">
+                  {% include '__03_personal/diary_edit.html' %} 
+                  </div>          
               </div>
           </div>
           
@@ -66,3 +68,6 @@
 </body>
 
 </html>
+
+
+
