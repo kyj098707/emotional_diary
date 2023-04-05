@@ -115,3 +115,12 @@ def personal(request):
     }'''
     return render(request, "__03_personal/personal_blog.html")
 
+
+def diary_create(request):
+
+    return render(request, "__03_personal/diary_create.html")
+
+def diary_edit(request):
+
+    return render(request, "__03_personal/diary_edit.html")
+

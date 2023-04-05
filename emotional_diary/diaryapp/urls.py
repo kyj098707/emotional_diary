@@ -14,6 +14,8 @@ urlpatterns = [
     path('intro/',views.intro_test,name='intro'),
     path('profile/<int:pk>/', views.profile_test,name="profile"),
     path('personal/personal_blog/',views.personal, name ='personal_blog'),
+    path('personal/diary_create/',views.diary_create, name ='diary_create'),
+    path('personal/diary_edit/',views.diary_edit, name ='diary_edit'),
     path('intro_test/',views.intro_test2,name='intro_2'),
 
     
