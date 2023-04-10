@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 from os.path import abspath, dirname
 from pathlib import Path
 import configparser
@@ -151,4 +152,10 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ],
     "DEFAULT_PERMISSION_CLASSES":['rest_framework.permissions.IsAuthenticated',],
+}
+
+# SIMPLE_JWT 셋팅
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7)
 }
