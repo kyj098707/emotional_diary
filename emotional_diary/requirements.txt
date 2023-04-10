@@ -5,8 +5,11 @@ Django==4.1.7
 django-bootstrap4==22.3
 django-bootstrap5==22.2
 django_debug_toolbar==3.8.1
+djangorestframework-simplejwt==5.2.2
+djangorestframework==3.14.0
 soupsieve==2.4
 sqlparse==0.4.3
 tzdata==2022.7
 wget==3.2
 wincertstore==0.2
+requests==2.28.2
