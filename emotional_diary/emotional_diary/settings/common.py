@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     # third apps
     "django_bootstrap5",
     "rest_framework",
-    "rest_framework.authtoken",
+    "rest_framework_simplejwt",
 
     #local apps
     "diaryapp",
@@ -145,17 +145,18 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
-    ],
-    "DEFAULT_PERMISSION_CLASSES":['rest_framework.permissions.IsAuthenticated',],
+        'rest_framework_simplejwt.authentication.JWTAuthentication',    ],
+    "DEFAULT_PERMISSION_CLASSES":[
+        'rest_framework.permissions.IsAuthenticated',
+],
 }
+
 
 # SIMPLE_JWT 셋팅
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7)
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'AUTH_HEADER_TYPES': ('Bearer',),
 }
