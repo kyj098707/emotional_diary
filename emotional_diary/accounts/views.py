@@ -1,6 +1,8 @@
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
+from rest_framework_simplejwt.views import TokenObtainPairView
+
 from .models import User
 from django.db import transaction
 from django.contrib.auth.tokens import default_token_generator
@@ -17,13 +19,40 @@ from rest_framework.decorators import api_view
 from rest_framework.generics import CreateAPIView, get_object_or_404, RetrieveAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework import status 
+from rest_framework import status, permissions
 from rest_framework.viewsets import ModelViewSet
-from .serializers import UserSerializer, SignupSerializer, StatsSerializer, UserRetrieveSerializers
+from .serializers import UserSerializer, SignupSerializer, StatsSerializer, UserRetrieveSerializers, \
+    MyTokenObtainPairSerializer
 
 import json
 
 User = get_user_model()
+
+
+##########################
+##### PAGE
+##########################
+
+def login_page(request):
+    """if request.POST:
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        if not User.objects.filter(email=email).exists():
+            return HttpResponse('등록되지 않은 이메일입니다.')
+
+        user = User.objects.get(email=email)
+        ## 아이디가 비활성화 일 때
+        if not user.is_active:
+            return render(request,'__00_exception/non_activate_accounts.html')
+
+        ## 활성된 아이디일 경우
+        user = authenticate(email=email, password=password)
+        if user:
+            auth_login(request, user)
+            return redirect('diary:intro')
+        return HttpResponse('아이디와 비밀번호가 틀렸습니다.')
+    """
+    return render(request, '__01_account/login.html')
 
 
 def activate(request,pk,token):
@@ -43,25 +72,6 @@ class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
 
 
-def login(request):
-    if request.POST:
-        email = request.POST.get("email")
-        password = request.POST.get("password")
-        if not User.objects.filter(email=email).exists():
-            return HttpResponse('등록되지 않은 이메일입니다.')
-        
-        user = User.objects.get(email=email)
-        ## 아이디가 비활성화 일 때
-        if not user.is_active:
-            return render(request,'__00_exception/non_activate_accounts.html')
-        
-        ## 활성된 아이디일 경우
-        user = authenticate(email=email, password=password)
-        if user:
-            auth_login(request, user)
-            return redirect('diary:intro')
-        return HttpResponse('아이디와 비밀번호가 틀렸습니다.')     
-    return render(request, '__01_account/login.html')
 
 
 def logout(request):
@@ -104,8 +114,10 @@ def statistics_test(request):
         "data":test_data
     })
 
-## restapi_framework test
 
+##########################
+##### API
+##########################
 
 class SignupView(CreateAPIView):
     model = get_user_model()
@@ -162,6 +174,11 @@ def my_page(request):
 class StatsRetrieveAPIView(RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = StatsSerializer
+
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = MyTokenObtainPairSerializer
 
 """
 @api_view(['GET'])
