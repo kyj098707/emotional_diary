@@ -3,6 +3,7 @@ from accounts.serializers import UserSerializer
 from diaryapp.models import Diary,Comment,Tag
 
 class DiaryListSerializers(serializers.ModelSerializer):
+    user = UserSerializer(required=False)
     class Meta:
         model = Diary
         fields = ["id","title","content","user"]

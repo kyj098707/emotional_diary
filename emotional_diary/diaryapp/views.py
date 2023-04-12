@@ -13,7 +13,30 @@ from rest_framework.generics import get_object_or_404, ListAPIView, RetrieveAPIV
     ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import status
 from rest_framework.views import APIView
-# Create your views here.
+
+
+################
+## PAGE
+################
+
+def personal_page(request):
+    '''posts : PostModel.objects.all()
+    if request.method == 'POST' :
+        form = PostModelForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.author = reqeust.user
+            instance.save()
+            return redirect('personal_blog')
+
+    else :
+        form = PostModelForm()
+    form = PostModelForm()
+    context = {
+        'post' : posts,
+        'form' : form
+    }'''
+    return render(request, "__03_personal/personal_blog.html")
 
 
 def intro_test(request):
@@ -32,6 +55,7 @@ def intro_test2(request):
 
 def profile_test(request,pk):
     if User.objects.filter(pk=pk).exists():
+
         user = User.objects.get(pk=pk)
         diary_list = Diary.objects.filter(user=user)
         return render(request,"__01_account/profile.html",{
@@ -44,11 +68,21 @@ def profile_test(request,pk):
 def diary_new(request):
     pass
 
+######
+## API
+######
+
 
 class DiaryListCreateAPIView(ListCreateAPIView):
     queryset = Diary.objects.all()
     serializer_class = DiaryListSerializers
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=request.user)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 class DiaryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Diary.objects.all()
@@ -96,24 +130,7 @@ def diary_like(request,pk):
 
 
 ## 개인 블로그 페이지
-def personal(request):
-    '''posts : PostModel.objects.all()
-    if request.method == 'POST' :
-        form = PostModelForm(request.POST)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.author = reqeust.user
-            instance.save()
-            return redirect('personal_blog')
 
-    else : 
-        form = PostModelForm()
-    form = PostModelForm()
-    context = {
-        'post' : posts,
-        'form' : form
-    }'''
-    return render(request, "__03_personal/personal_blog.html")
 
 
 def diary_create(request):
