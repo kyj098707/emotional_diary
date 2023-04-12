@@ -5,6 +5,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.utils.encoding import force_bytes, force_str
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from diaryapp.models import Diary
 
@@ -78,3 +79,21 @@ class SignupSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['pk','email','username','password']
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = {}
+        try:
+            data = super().validate(attrs)
+            refresh = self.get_token(self.user)
+            data['email'] = self.user.email
+            data['refresh'] = str(refresh)
+            data['access'] = str(refresh.access_token)
+            if self.user.is_active == False:
+                data['response'] = 'activate_error'
+            else:
+                data['response'] = 'complete'
+        except Exception as e:
+            data['response'] = 'error'
+        return data

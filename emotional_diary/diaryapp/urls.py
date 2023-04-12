@@ -13,12 +13,13 @@ urlpatterns = [
     #path('<int:pk>', views.my_diary),
     path('intro/',views.intro_test,name='intro'),
     path('profile/<int:pk>/', views.profile_test,name="profile"),
-    path('personal/personal_blog/',views.personal, name ='personal_blog'),
+    path('personal/personal_blog/',views.personal_page, name ='personal_blog'),
     path('personal/diary_create/',views.diary_create, name ='diary_create'),
     path('personal/diary_edit/',views.diary_edit, name ='diary_edit'),
     path('intro_test/',views.intro_test2,name='intro_2'),
 
-    
+
+    #api
     path('diary/',views.DiaryListCreateAPIView.as_view(),name="diary-list"),
     path('diary/<int:pk>/like/',views.diary_like,name='diary-like'),
     path('diary/<int:pk>/',views.DiaryRetrieveUpdateDestroyAPIView.as_view(),name="diary-detail"),
