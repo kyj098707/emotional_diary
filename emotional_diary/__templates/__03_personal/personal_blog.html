@@ -9,52 +9,164 @@
   <link rel="stylesheet"  href="{% static 'static/css/bootstrap.min.css' %}">
   <link rel="stylesheet"  href="{% static 'static/css/personal_style.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'static/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <script src="{% static 'static/jquery-3.6.3.min.js' %}"></script>
   <script src="{% static 'static/js/bootstrap.bundle.min.js' %}"></script>
 
+
   <style>
-      body {
-        background-image: url("{% static 'static/img/account/background.webp' %}");
+        body {
+          background-image: url("{% static 'static/img/account/background.webp' %}");
+        }
+      .main_container {
+          margin: 15px; 
+        }
+        #left-container {
+          border: 3px solid black;
+          background-color: white;
+          width: 20%; 
+          float: left; 
+          margin-left : 5px;
+          margin-right: 10px; 
+          border-radius: 10px; 
+        }
+        #middle-container {
+          border: 3px solid black;
+          background-color: white;
+          width: 55%; 
+          float: left;
+          margin-right: 10px; 
+          margin-left: 25px; 
+          border-radius: 10px; 
+        }
+        #right-container {
+          border: 3px solid black;
+          background-color: white;
+          width: 20%; 
+          float: left; 
+          margin-left: 25px; 
+          border-radius: 10px; 
+        }
+        #diary_create {
+          margin-top: 10px;
+          font-weight: bold;
+        }
+        #diary_create span {
+          margin-left: 40px; 
+        }
+
+        .btn-primary {
+          background-color: white;
+          color: black; 
+          border: 2px solid black;
+  }
+        .btn-secondary {
+          background-color: white;
+          color: black; 
+          border: 2px solid black;
+  }
+        .diary {
+          margin-top:30px;
+          background-color: white;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0,0,0,0.2);
+          margin-bottom: 20px;
       }
-     .main_container {
-        margin: 15px; /* 각 컨테이너 요소의 여백을 설정 */
+
+      .diary .title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
       }
-      #left-container {
-        border: 3px solid black;
-        background-color: white;
-        width: 20%; /* 컨테이너 요소의 너비를 설정 */
-        float: left; /* 컨테이너 요소를 왼쪽으로 배치 */
-        margin-left : 5px;
-        margin-right: 10px; /* 오른쪽 여백을 추가 */
-        border-radius: 10px; /* 요소 모서리를 둥글게 설정 */
+
+      .diary .content {
+        margin-top: 20px;
+        font-size: 18px;
+        line-height: 1.5;
       }
-      #middle-container {
-        border: 3px solid black;
-        background-color: white;
-        width: 55%; /* 컨테이너 요소의 너비를 설정 */
-        float: left; /* 컨테이너 요소를 왼쪽으로 배치 */
-        margin-right: 10px; /* 오른쪽 여백을 추가 */
-        margin-left: 25px; /* 왼쪽 여백을 추가 */
-        border-radius: 10px; /* 요소 모서리를 둥글게 설정 */
+
+      .diary .date {
+        font-size: 14px;
+        color: gray;
+        margin-top: 10px;
+        text-align: right;
+        margin-right : 10px;
       }
-      #right-container {
-        border: 3px solid black;
-        background-color: white;
-        width: 20%; /* 컨테이너 요소의 너비를 설정 */
-        float: left; /* 컨테이너 요소를 왼쪽으로 배치 */
-        margin-left: 25px; /* 왼쪽 여백을 추가 */
-        border-radius: 10px; /* 요소 모서리를 둥글게 설정 */
+
+      .add {
+    margin-top : 20px;
+    display: inline-block;
+    color: red;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+      .heart__count {
+        display: inline-block;
+        font-weight:500;
+        color: black;
+        font-size: 18px;
+        margin-left: 5px;
+        vertical-align: middle;
       }
-      .btn-primary {
-         background-color: white;
-         color: black; /* 버튼 텍스트 색상도 검은색으로 변경 */
-         border: 2px solid black;
-}
-      .btn-secondary {
-         background-color: white;
-         color: black; 
-         border: 2px solid black;
-}
+
+      .fa-envelope {
+        display: inline-block;
+        font-weight:600;
+        color: black;
+        font-size: 18px;
+        margin-left: 20px;
+        vertical-align: middle;
+      }
+      .fa-envelope span {
+        margin-left : 10px;
+        font-weight: 500;
+      }
+      .comment {
+        font-size: 14px;
+        color: #666;
+        margin-left: 10px;
+      }
+
+
+
+
+      .User{
+        display: flex; 
+        justify-content: center;
+        font-size : 40px;
+        
+      }
+
+      .icon {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+  }
+      .icon i {
+        margin: 0 30px;
+        border: none;
+        background-color: black;
+        color: white;
+        padding: 10px;
+        font-size: 32px;
+        border-radius: 50%;
+        cursor: none;
+        transition: all 0.2s ease-in-out;
+      }
+      .icon i:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+      }
+      .icon i:active {
+        cursor: none;
+      }
+
+
+
+
 
 
 
@@ -62,11 +174,6 @@
   </style>
 </head>
  <body>
-  <!--<div class="bg-img-container">
-    <div class="bg-img"></div>
-
-  </div> -->
-
   <div class="bg-img-container">
     <div class="bg-img"></div>
   </div>
@@ -74,14 +181,63 @@
     <div class="row">
       <div class="col-sm-2" id = left-container style="background-color: white; height: 920px;"></div>
       <div class="col-sm-8" id = middle-container style="background-color: white; height: 920px">
-        <button type="button" class="btn btn-primary" id="diary_create" data-bs-toggle="modal" data-bs-target="#modal_diary_create">+&nbsp;&nbsp;&nbsp;diary</button>
+        <button type="button" class="btn btn-primary" id="diary_create" data-bs-toggle="modal" data-bs-target="#modal_diary_create">+ <span>diary</span></button>
+        <div class="diary">
+					<div class="title">으으
 
+          </div>
+					<div class="content">
+						Today, I met up with some friends and we went to a new restaurant in town. The food was amazing and we had a great time catching up with each other. Later, I went to the gym and did a workout.
+					</div>
+          
+          <div class="add">
+            &hearts;<span class="heart__count">좋아요 n개</span>
+            <i class="fas fa-envelope"><span>댓글 n개</span></i>
+          </div>
+
+					<div class="date">April 12, 2023</div>
+				</div>
+        <div class="diary">
+					<div class="title">My Two Diary</div>
+					<div class="content">
+            KT 가자
+					</div>
+          <div class="add">
+            &hearts;<span class="heart__count">좋아요 n개</span>
+            <i class="fas fa-envelope"><span>댓글 n개</span></i>
+          </div>
+					<div class="date">April 12, 2023</div>
+				</div>
+        
+        <div class="diary">
+					<div class="title">캐글</div>
+					<div class="content">
+            내일 캐글 기대된다
+					</div>
+          <div class="add">
+            &hearts;<span class="heart__count">좋아요 n개</span>
+            <i class="fas fa-envelope"><span>댓글 n개</span></i>
+          </div>
+					<div class="date">April 12, 2023</div>
+				</div>
 
       
       </div>
-      <div class="col-sm-2" id = right-container style="background-color: white; height: 920px;">TRERTE</div>
-    </div>
-  
+      <div class="col-sm-2" id="right-container" style="background-color: white; height: 920px;">
+        <div style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden; margin: 20px auto;">
+          <img src="{% static 'static/img/__logo/logo_test_bk.webp' %}" alt="Profile Image" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+      <div class = "User">
+        User
+        </div>
+        <div class="icon">
+          <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+        
+        
+      </div>
+      
 
 
     <div class="modal fade" id="modal_diary_create" tabindex="-1" aria-labelledby="modal_diary_create_label" aria-hidden="true">
