@@ -12,57 +12,132 @@
   <script src="{% static 'static/jquery-3.6.3.min.js' %}"></script>
   <script src="{% static 'static/js/bootstrap.bundle.min.js' %}"></script>
 
+  <style>
+      body {
+        background-image: url("{% static 'static/img/account/background.webp' %}");
+      }
+     .main_container {
+        margin: 15px; /* 각 컨테이너 요소의 여백을 설정 */
+      }
+      #left-container {
+        border: 3px solid black;
+        background-color: white;
+        width: 20%; /* 컨테이너 요소의 너비를 설정 */
+        float: left; /* 컨테이너 요소를 왼쪽으로 배치 */
+        margin-left : 5px;
+        margin-right: 10px; /* 오른쪽 여백을 추가 */
+        border-radius: 10px; /* 요소 모서리를 둥글게 설정 */
+      }
+      #middle-container {
+        border: 3px solid black;
+        background-color: white;
+        width: 55%; /* 컨테이너 요소의 너비를 설정 */
+        float: left; /* 컨테이너 요소를 왼쪽으로 배치 */
+        margin-right: 10px; /* 오른쪽 여백을 추가 */
+        margin-left: 25px; /* 왼쪽 여백을 추가 */
+        border-radius: 10px; /* 요소 모서리를 둥글게 설정 */
+      }
+      #right-container {
+        border: 3px solid black;
+        background-color: white;
+        width: 20%; /* 컨테이너 요소의 너비를 설정 */
+        float: left; /* 컨테이너 요소를 왼쪽으로 배치 */
+        margin-left: 25px; /* 왼쪽 여백을 추가 */
+        border-radius: 10px; /* 요소 모서리를 둥글게 설정 */
+      }
+      .btn-primary {
+         background-color: white;
+         color: black; /* 버튼 텍스트 색상도 검은색으로 변경 */
+         border: 2px solid black;
+}
+      .btn-secondary {
+         background-color: white;
+         color: black; 
+         border: 2px solid black;
+}
+
+
+
+
+  </style>
 </head>
  <body>
-    <header id="right-side">
-    <div id="d-flex flex-column">
-      <div class="profile">
-        <img src="{% static 'static/img/__logo/logo_test_bk.webp' %}"  alt="" class="img-fluid rounded-circle">
-        <h1 class="text-light"><a href="personal_blog.html">이름</a></h1>
-        <br><br>
+  <!--<div class="bg-img-container">
+    <div class="bg-img"></div>
 
-        </div>
-      </div>
-    </header>
+  </div> -->
 
- <div class="container">
-  {% include '__03_personal/diary_create.html' %}
-    <div class="row mt-5 pt-3">
-        <div class="col-md-3">
-          <div class = "card shadow my-3">
-              <div class = "card-body">
-                <div class="col-md-6 text-md-end">
-                  {% include '__03_personal/diary_edit.html' %} 
-                  </div>          
-              </div>
-          </div>
-          
-        </div>
-        <div class="col-md-8">
-            {% for post in posts %}  <!--게시 버튼을 누르면 생성-->
-            <div class="card shadow my-3">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <img src="" alt="img">
-                        </div>
-                        <div class="col-md-8">
-                            <small>{{post.date_created}}</small>  <!--포스트 날짜-->
-                            <hr>
-                            <a class="h3" href="">{{post.title}}</a>
-                            <p class="text-justify my-3">
-                              {{post.content}}  <!--포스트 내용-->
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
+  <div class="bg-img-container">
+    <div class="bg-img"></div>
+  </div>
+  <div class="main_container">
+    <div class="row">
+      <div class="col-sm-2" id = left-container style="background-color: white; height: 920px;"></div>
+      <div class="col-sm-8" id = middle-container style="background-color: white; height: 920px">
+        <button type="button" class="btn btn-primary" id="diary_create" data-bs-toggle="modal" data-bs-target="#modal_diary_create">+&nbsp;&nbsp;&nbsp;diary</button>
+
+
+      
       </div>
-  
-        </div>
+      <div class="col-sm-2" id = right-container style="background-color: white; height: 920px;">TRERTE</div>
     </div>
-</div>
+  
+
+
+    <div class="modal fade" id="modal_diary_create" tabindex="-1" aria-labelledby="modal_diary_create_label" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal_diary_create_label">Create New Diary</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form class="d-grid gap-2">
+              <div class="mb-3">
+                <label for="diary_title" class="form-label">Title:</label>
+                <input type="text" class="form-control" id="diary_title">
+              </div>
+              <div class="mb-3">
+                <label for="diary_contents" class="form-label">Contents:</label>
+                <textarea class="form-control" id="diary_contents" rows="6"></textarea>
+              </div>
+              <div class="text-end">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+                        
+              
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        const modal = new bootstrap.Modal(document.getElementById('modal_diary_create'));
+        $("#diary_create").click(function() {
+          modal.show();
+        });
+        
+        $("#modal_diary_create form").submit(function(event) {
+          event.preventDefault();
+          
+          const title = $("#diary_title").val();
+          const contents = $("#diary_contents").val();
+          
+          console.log("Title:", title);
+          console.log("Contents:", contents);
+          
+          modal.hide();
+        });
+        
+        $("#modal_diary_create button[data-bs-dismiss='modal']").click(function() {
+          modal.hide();
+        });
+      });
+      
+      </script>
 
 
 </body>
