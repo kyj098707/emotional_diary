@@ -3,18 +3,18 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <link rel="stylesheet"  href="{% static 'static/css/bootstrap.min.css' %}">
-  <link rel="stylesheet"  href="{% static 'static/css/personal_style.css' %}">
-  <link rel="stylesheet" type="text/css" href="{% static 'static/css/bootstrap.min.css' %}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <script src="{% static 'static/jquery-3.6.3.min.js' %}"></script>
-  <script src="{% static 'static/js/bootstrap.bundle.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'static/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'static/css/personal_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'static/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="{% static 'static/jquery-3.6.3.min.js' %}"></script>
+    <script src="{% static 'static/js/bootstrap.bundle.min.js' %}"></script>
 
 
-  <style>
+    <style>
         body {
           background-image: url("{% static 'static/img/account/background.webp' %}");
         }
@@ -188,144 +188,154 @@
 
 
 
-  </style>
+
+    </style>
 </head>
- <body>
-  <div class="bg-img-container">
+<body>
+<div class="bg-img-container">
     <div class="bg-img"></div>
-  </div>
-  <div class="main_container">
+</div>
+<div class="main_container">
     <div class="row">
-      <div class="col-sm-2" id = left-container style="background-color: white; height: 920px;"></div>
-      <div class="col-sm-8" id = middle-container style="background-color: white; height: 920px">
-        <button type="button" class="btn btn-primary" id="diary_create" data-bs-toggle="modal" data-bs-target="#modal_diary_create">+ <span>diary</span></button>
-        <div class="diary">
-					<div class="title">
-            글자 수 길어도 고정이 되네?글자 수 길어도 고정이 되네?
-            <button class="delete-button">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                <path d="M10.07 8l3.965-3.965a.25.25 0 0 0 0-.354L13.32 3.07a.25.25 0 0 0-.354 0L8 6.93 4.035 3.965a.25.25 0 0 0-.354 0L2.68 4.32a.25.25 0 0 0 0 .354L6.93 8l-3.965 3.965a.25.25 0 0 0 0 .354l1.354 1.354a.25.25 0 0 0 .354 0L8 9.07l3.965 3.965a.25.25 0 0 0 .354 0l1.354-1.354a.25.25 0 0 0 0-.354L10.07 8z"/>
-              </svg>
-            </button>
-            <button class="edit-button">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                <path d="M12.5 2a2.5 2.5 0 0 1 2.5 2.5c0 .646-.255 1.244-.67 1.68l-8.06 8.06a1.03 1.03 0 0 1-.697.315H2.5a1 1 0 0 1-1-1V9.527c0-.256.1-.512.293-.705l8.06-8.06A2.348 2.348 0 0 1 12.5 2zm-1.414 1.414a1.5 1.5 0 0 0-2.122 0l-.793.793L11.793 7l.793-.793a1.5 1.5 0 0 0 0-2.122l-.793-.793zm-1.414 1.414l-.793.793-4.586 4.586-1.586.402.402-1.586 4.586-4.586.793-.793a.5.5 0 0 1 .707 0l.586.586a.5.5 0 0 1 0 .707z"/>
-              </svg>
-            </button>
-            
-            
-
-          </div>
-					<div class="content">
-						Today, I met up with some friends and we went to a new restaurant in town. The food was amazing and we had a great time catching up with each other. Later, I went to the gym and did a workout.
-					</div>
-          
-          <div class="add">
-            &hearts;<span class="heart__count">좋아요 n개</span>
-            <i class="fas fa-envelope"><span>댓글 n개</span></i>
-          </div>
-
-					<div class="date">April 12, 2023</div>
-				</div>
-        <div class="diary">
-					<div class="title">My Two Diary
-            <button class="delete-button">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                <path d="M10.07 8l3.965-3.965a.25.25 0 0 0 0-.354L13.32 3.07a.25.25 0 0 0-.354 0L8 6.93 4.035 3.965a.25.25 0 0 0-.354 0L2.68 4.32a.25.25 0 0 0 0 .354L6.93 8l-3.965 3.965a.25.25 0 0 0 0 .354l1.354 1.354a.25.25 0 0 0 .354 0L8 9.07l3.965 3.965a.25.25 0 0 0 .354 0l1.354-1.354a.25.25 0 0 0 0-.354L10.07 8z"/>
-              </svg>
-            </button>
-            <button class="edit-button">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                <path d="M12.5 2a2.5 2.5 0 0 1 2.5 2.5c0 .646-.255 1.244-.67 1.68l-8.06 8.06a1.03 1.03 0 0 1-.697.315H2.5a1 1 0 0 1-1-1V9.527c0-.256.1-.512.293-.705l8.06-8.06A2.348 2.348 0 0 1 12.5 2zm-1.414 1.414a1.5 1.5 0 0 0-2.122 0l-.793.793L11.793 7l.793-.793a1.5 1.5 0 0 0 0-2.122l-.793-.793zm-1.414 1.414l-.793.793-4.586 4.586-1.586.402.402-1.586 4.586-4.586.793-.793a.5.5 0 0 1 .707 0l.586.586a.5.5 0 0 1 0 .707z"/>
-              </svg>
-            </button>
+        <div class="col-sm-2" id=left-container style="background-color: white; height: 920px;"></div>
+        <div class="col-sm-8" id=middle-container style="background-color: white; height: 920px">
+            <button type="button" class="btn btn-primary" id="diary_create" data-bs-toggle="modal"
+                    data-bs-target="#modal_diary_create">+ <span>diary</span></button>
+            <div class="diary">
+                <div class="title">
+                    글자 수 길어도 고정이 되네?글자 수 길어도 고정이 되네?
+                    <button class="delete-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-x" viewBox="0 0 16 16">
+                            <path d="M10.07 8l3.965-3.965a.25.25 0 0 0 0-.354L13.32 3.07a.25.25 0 0 0-.354 0L8 6.93 4.035 3.965a.25.25 0 0 0-.354 0L2.68 4.32a.25.25 0 0 0 0 .354L6.93 8l-3.965 3.965a.25.25 0 0 0 0 .354l1.354 1.354a.25.25 0 0 0 .354 0L8 9.07l3.965 3.965a.25.25 0 0 0 .354 0l1.354-1.354a.25.25 0 0 0 0-.354L10.07 8z"/>
+                        </svg>
+                    </button>
+                    <button class="edit-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                            <path d="M12.5 2a2.5 2.5 0 0 1 2.5 2.5c0 .646-.255 1.244-.67 1.68l-8.06 8.06a1.03 1.03 0 0 1-.697.315H2.5a1 1 0 0 1-1-1V9.527c0-.256.1-.512.293-.705l8.06-8.06A2.348 2.348 0 0 1 12.5 2zm-1.414 1.414a1.5 1.5 0 0 0-2.122 0l-.793.793L11.793 7l.793-.793a1.5 1.5 0 0 0 0-2.122l-.793-.793zm-1.414 1.414l-.793.793-4.586 4.586-1.586.402.402-1.586 4.586-4.586.793-.793a.5.5 0 0 1 .707 0l.586.586a.5.5 0 0 1 0 .707z"/>
+                        </svg>
+                    </button>
 
 
-          </div>
-          
+                </div>
+                <div class="content">
+                    Today, I met up with some friends and we went to a new restaurant in town. The food was amazing and
+                    we had a great time catching up with each other. Later, I went to the gym and did a workout.
+                </div>
 
-					<div class="content">
-            KT 가자
-					</div>
-          <div class="add">
-            &hearts;<span class="heart__count">좋아요 n개</span>
-            <i class="fas fa-envelope"><span>댓글 n개</span></i>
-          </div>
-					<div class="date">April 12, 2023</div>
-				</div>
-        
-        <div class="diary">
-					<div class="title">캐글
-            <button class="delete-button">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                <path d="M10.07 8l3.965-3.965a.25.25 0 0 0 0-.354L13.32 3.07a.25.25 0 0 0-.354 0L8 6.93 4.035 3.965a.25.25 0 0 0-.354 0L2.68 4.32a.25.25 0 0 0 0 .354L6.93 8l-3.965 3.965a.25.25 0 0 0 0 .354l1.354 1.354a.25.25 0 0 0 .354 0L8 9.07l3.965 3.965a.25.25 0 0 0 .354 0l1.354-1.354a.25.25 0 0 0 0-.354L10.07 8z"/>
-              </svg>
-            </button>
-            <button class="edit-button">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                <path d="M12.5 2a2.5 2.5 0 0 1 2.5 2.5c0 .646-.255 1.244-.67 1.68l-8.06 8.06a1.03 1.03 0 0 1-.697.315H2.5a1 1 0 0 1-1-1V9.527c0-.256.1-.512.293-.705l8.06-8.06A2.348 2.348 0 0 1 12.5 2zm-1.414 1.414a1.5 1.5 0 0 0-2.122 0l-.793.793L11.793 7l.793-.793a1.5 1.5 0 0 0 0-2.122l-.793-.793zm-1.414 1.414l-.793.793-4.586 4.586-1.586.402.402-1.586 4.586-4.586.793-.793a.5.5 0 0 1 .707 0l.586.586a.5.5 0 0 1 0 .707z"/>
-              </svg>
-            </button>
+                <div class="add">
+                    &hearts;<span class="heart__count">좋아요 n개</span>
+                    <i class="fas fa-envelope"><span>댓글 n개</span></i>
+                </div>
 
-          </div>
-					<div class="content">
-            내일 캐글 기대된다
-					</div>
-          <div class="add">
-            &hearts;<span class="heart__count">좋아요 n개</span>
-            <i class="fas fa-envelope"><span>댓글 n개</span></i>
-          </div>
-					<div class="date">April 12, 2023</div>
-				</div>
+                <div class="date">April 12, 2023</div>
+            </div>
+            <div class="diary">
+                <div class="title">My Two Diary
+                    <button class="delete-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-x" viewBox="0 0 16 16">
+                            <path d="M10.07 8l3.965-3.965a.25.25 0 0 0 0-.354L13.32 3.07a.25.25 0 0 0-.354 0L8 6.93 4.035 3.965a.25.25 0 0 0-.354 0L2.68 4.32a.25.25 0 0 0 0 .354L6.93 8l-3.965 3.965a.25.25 0 0 0 0 .354l1.354 1.354a.25.25 0 0 0 .354 0L8 9.07l3.965 3.965a.25.25 0 0 0 .354 0l1.354-1.354a.25.25 0 0 0 0-.354L10.07 8z"/>
+                        </svg>
+                    </button>
+                    <button class="edit-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                            <path d="M12.5 2a2.5 2.5 0 0 1 2.5 2.5c0 .646-.255 1.244-.67 1.68l-8.06 8.06a1.03 1.03 0 0 1-.697.315H2.5a1 1 0 0 1-1-1V9.527c0-.256.1-.512.293-.705l8.06-8.06A2.348 2.348 0 0 1 12.5 2zm-1.414 1.414a1.5 1.5 0 0 0-2.122 0l-.793.793L11.793 7l.793-.793a1.5 1.5 0 0 0 0-2.122l-.793-.793zm-1.414 1.414l-.793.793-4.586 4.586-1.586.402.402-1.586 4.586-4.586.793-.793a.5.5 0 0 1 .707 0l.586.586a.5.5 0 0 1 0 .707z"/>
+                        </svg>
+                    </button>
 
-      
-      </div>
-      <div class="col-sm-2" id="right-container" style="background-color: white; height: 920px;">
-        <div style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden; margin: 20px auto;">
-          <img src="{% static 'static/img/__logo/logo_test_bk.webp' %}" alt="Profile Image" style="width: 100%; height: 100%; object-fit: cover;">
+
+                </div>
+
+
+                <div class="content">
+                    KT 가자
+                </div>
+                <div class="add">
+                    &hearts;<span class="heart__count">좋아요 n개</span>
+                    <i class="fas fa-envelope"><span>댓글 n개</span></i>
+                </div>
+                <div class="date">April 12, 2023</div>
+            </div>
+
+            <div class="diary">
+                <div class="title">캐글
+                    <button class="delete-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-x" viewBox="0 0 16 16">
+                            <path d="M10.07 8l3.965-3.965a.25.25 0 0 0 0-.354L13.32 3.07a.25.25 0 0 0-.354 0L8 6.93 4.035 3.965a.25.25 0 0 0-.354 0L2.68 4.32a.25.25 0 0 0 0 .354L6.93 8l-3.965 3.965a.25.25 0 0 0 0 .354l1.354 1.354a.25.25 0 0 0 .354 0L8 9.07l3.965 3.965a.25.25 0 0 0 .354 0l1.354-1.354a.25.25 0 0 0 0-.354L10.07 8z"/>
+                        </svg>
+                    </button>
+                    <button class="edit-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                            <path d="M12.5 2a2.5 2.5 0 0 1 2.5 2.5c0 .646-.255 1.244-.67 1.68l-8.06 8.06a1.03 1.03 0 0 1-.697.315H2.5a1 1 0 0 1-1-1V9.527c0-.256.1-.512.293-.705l8.06-8.06A2.348 2.348 0 0 1 12.5 2zm-1.414 1.414a1.5 1.5 0 0 0-2.122 0l-.793.793L11.793 7l.793-.793a1.5 1.5 0 0 0 0-2.122l-.793-.793zm-1.414 1.414l-.793.793-4.586 4.586-1.586.402.402-1.586 4.586-4.586.793-.793a.5.5 0 0 1 .707 0l.586.586a.5.5 0 0 1 0 .707z"/>
+                        </svg>
+                    </button>
+
+                </div>
+                <div class="content">
+                    내일 캐글 기대된다
+                </div>
+                <div class="add">
+                    &hearts;<span class="heart__count">좋아요 n개</span>
+                    <i class="fas fa-envelope"><span>댓글 n개</span></i>
+                </div>
+                <div class="date">April 12, 2023</div>
+            </div>
+
+
         </div>
-      <div class = "User">
-        User
-        </div>
-        <div class="icon">
-          <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
-        </div>
-        
-        
-      </div>
-      
+        <div class="col-sm-2" id="right-container" style="background-color: white; height: 920px;">
+            <div style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden; margin: 20px auto;">
+                <img src="{% static 'static/img/__logo/logo_test_bk.webp' %}" alt="Profile Image"
+                     style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="User">
+                User
+            </div>
+            <div class="icon">
+                <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
 
-    <div class="modal fade" id="modal_diary_create" tabindex="-1" aria-labelledby="modal_diary_create_label" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modal_diary_create_label">Create New Diary</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form class="d-grid gap-2">
-              <div class="mb-3">
-                <label for="diary_title" class="form-label">Title:</label>
-                <input type="text" class="form-control" id="diary_title">
-              </div>
-              <div class="mb-3">
-                <label for="diary_contents" class="form-label">Contents:</label>
-                <textarea class="form-control" id="diary_contents" rows="6"></textarea>
-              </div>
-              <div class="text-end">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-              </div>
-                        
-              
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <script type="text/javascript">
+        </div>
+
+
+        <div class="modal fade" id="modal_diary_create" tabindex="-1" aria-labelledby="modal_diary_create_label"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_diary_create_label">Create New Diary</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="d-grid gap-2">
+                            <div class="mb-3">
+                                <label for="diary_title" class="form-label">Title:</label>
+                                <input type="text" class="form-control" id="diary_title">
+                            </div>
+                            <div class="mb-3">
+                                <label for="diary_contents" class="form-label">Contents:</label>
+                                <textarea class="form-control" id="diary_contents" rows="6"></textarea>
+                            </div>
+                            <div class="text-end">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
       $(document).ready(function() {
         const modal = new bootstrap.Modal(document.getElementById('modal_diary_create'));
         $("#diary_create").click(function() {
@@ -349,7 +359,8 @@
         });
       });
       
-      </script>
+
+        </script>
 
 
 </body>

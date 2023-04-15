@@ -13,8 +13,9 @@
     <!-- for fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Source+Sans+Pro:wght@300;400&display=swap"
+          rel="stylesheet">
+
     <style>
         body{
             margin : 0;
@@ -166,38 +167,39 @@
             display: inline-block;
             height: 100%;
         }
+
     </style>
 </head>
 <body>
-    <div class="bg-img-container">
-        <div class="bg-img"></div>
+<div class="bg-img-container">
+    <div class="bg-img"></div>
+</div>
+{% include '__01_account/signup.html' %}
+<div class="center" id="container_login">
+    <div class="d-flex mt-2 justify-content-center">
+        <img src="{% static 'static/img/__logo/logo_test_bk.webp' %}" alt="" width="150" class="align-item-center my-4">
     </div>
-    {% include '__01_account/signup.html' %}
-    <div class="center" id="container_login">
-        <div class="d-flex mt-2 justify-content-center">
-            <img src="{% static 'static/img/__logo/logo_test_bk.webp' %}" alt="" width="150" class="align-item-center my-4">
+    <form method="post">
+        {% csrf_token %}
+        <div class="txt_field">
+            <input type="email" name="email" id="email">
+            <span></span>
+            <label>이메일</label>
         </div>
-        <form method="post">
-            {% csrf_token %}
-            <div class="txt_field">
-                <input type="email" name="email" id="email">
-                <span></span>
-                <label>이메일</label>
-            </div>
-            <div class="txt_field">
-                <input type="password" name="password" id="password">
-                <span></span>
-                <label>비밀번호</label>
-            </div>
-            <input type="button" value = "Login" onclick="handleLoginClick()">
-            <div class="sub_link">
-                <a href="../forget_password">비밀번호 찾기</a>
+        <div class="txt_field">
+            <input type="password" name="password" id="password">
+            <span></span>
+            <label>비밀번호</label>
+        </div>
+        <input type="button" value="Login" onclick="handleLoginClick()">
+        <div class="sub_link">
+            <a href="../forget_password">비밀번호 찾기</a>
 
-                <a id="to_signup" class='to_signup'>회원가입</button>
-            </div>
-        </form>
+            <a id="to_signup" class='to_signup'>회원가입</button>
+        </div>
+    </form>
 
-    </div>
+</div>
 
 <script type="text/javascript">
     function request_ajax(url, method, data_dic) {
@@ -216,6 +218,8 @@
                         });
                     return result;
             }
+
+let ajax_url = "{% url 'account:token_obtain_pair' %}";
     function handleLoginClick(){
                 var email = $("#email").val()
                 var password = $("#password").val()
@@ -226,7 +230,9 @@
                     localStorage.setItem("access",result.access);
                     localStorage.setItem("refresh",result.refresh);
                     localStorage.setItem("email",result.email);
-                    location.href = '{% url 'diary:intro' %}'
+                    console.log("storage complete")
+                    let intro_url = "{% url 'diary:intro' %}"
+                    location.href = intro_url
                     }
                 else{
                     console.log("email activate");
@@ -238,6 +244,7 @@
         let modal = bootstrap.Modal.getOrCreateInstance(modals)  
         modal.show()
     })
+
 </script>
 </body>
 </html>

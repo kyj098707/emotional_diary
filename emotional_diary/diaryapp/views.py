@@ -1,14 +1,15 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db import transaction
+from django.urls import reverse
 from django.http import HttpResponse
 from rest_framework.response import Response
 from .models import Diary,Comment,Tag
-from .serializers import DiaryListSerializers,DiaryRetrieveSerializers,CommentSerializers,DiaryLikeSerializers,TagSerializers
+from .serializers import DiaryListSerializers,DiaryRetrieveSerializers,CommentSerializers,DiaryLikeNumSerializers,TagSerializers
 from accounts.models import User
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import AllowAny
-from rest_framework.decorators import api_view
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.generics import get_object_or_404, ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, \
     ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import status
@@ -18,6 +19,7 @@ from rest_framework.views import APIView
 ################
 ## PAGE
 ################
+
 
 def personal_page(request):
     '''posts : PostModel.objects.all()
@@ -40,17 +42,13 @@ def personal_page(request):
 
 
 def intro_test(request):
-    qs = Diary.objects.all()
-    return render(request,"__02_intro/main.html",{
-        "diary_list":qs
-    })
+    return render(request, "__02_intro/intro_test.html")
+
 
 def intro_test2(request):
     diary_qs = Diary.objects.all()
-    user_qs = User.objects.all()
-    return render(request,"__test/main.html",{
+    return render(request,"__02_intro/main.html",{
         "diary_list":diary_qs,
-        "user_list":user_qs
     })
 
 def profile_test(request,pk):
@@ -83,6 +81,18 @@ class DiaryListCreateAPIView(ListCreateAPIView):
         serializer.save(user=request.user)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def list(self, request, *args, **kwargs):
+
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 class DiaryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Diary.objects.all()
@@ -124,7 +134,7 @@ def diary_like(request,pk):
         diary.like.remove(request.user) 
     else:
         diary.like.add(request.user)
-    serializer = DiaryLikeSerializers(diary)
+    serializer = DiaryLikeNumSerializers(diary)
     return Response(serializer.data)
 
 
