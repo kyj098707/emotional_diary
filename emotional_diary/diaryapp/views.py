@@ -92,7 +92,7 @@ class DiaryListCreateAPIView(ListCreateAPIView):
             return self.get_paginated_response(serializer.data)
 
         serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+        return render(request,"__02_intro/__addon/intro_post.html", {"data" : list(serializer.data)})
 
 class DiaryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Diary.objects.all()
