@@ -1,7 +1,10 @@
 import os
+from datetime import timedelta
 from os.path import abspath, dirname
 from pathlib import Path
-
+import configparser
+configs = configparser.ConfigParser()
+configs.read('./keys.conf', encoding = "utf-8")
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = dirname(dirname(dirname(abspath(__file__))))
 # 현재 파일의 절대 경로의 부모,부모,부모 폴더  
@@ -19,30 +22,35 @@ ALLOWED_HOSTS = []
 
 
 ## Email 관련
-SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+
 EMAIL_HOST = "smtp.sendgrid.net"
 EMAIL_HOST_USER = "apikey"
-EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+EMAIL_HOST_PASSWORD = "apo_"
 EMAIL_PORT = 587
 EMAIL_USE_TLS= True
-
+WELCOME_EMAIL_SENDER = "a036129@aivle.kt.co.kr"
 # Application definition
 
 INSTALLED_APPS = [
+    # django apps
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    
+    # third apps
+    "django_bootstrap5",
+    "rest_framework",
+    "rest_framework_simplejwt",
+
+    #local apps
     "diaryapp",
     "accounts",
-    "django_bootstrap5",
-    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -59,7 +67,7 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         #CHAGNGED
         "DIRS": [
-            os.path.join(BASE_DIR,'emotional_diary',"templates")
+            os.path.join(BASE_DIR,"__templates")
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -122,10 +130,12 @@ USE_TZ = True
 
 #CHANGED--->
 STATIC_URL = '/static/'
+
+STATIC_DIR = os.path.join(BASE_DIR,'__static')
+STATIC_ROOT = os.path.join(BASE_DIR,'__collect_static')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'emotional_diary','static')
+    ("static",STATIC_DIR)
 ]
-STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
@@ -135,3 +145,18 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',    ],
+    "DEFAULT_PERMISSION_CLASSES":[
+        'rest_framework.permissions.IsAuthenticated',
+],
+}
+
+
+# SIMPLE_JWT 셋팅
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'AUTH_HEADER_TYPES': ('Bearer',),
+}

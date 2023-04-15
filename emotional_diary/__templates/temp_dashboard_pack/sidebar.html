@@ -1,0 +1,40 @@
+{% load static %}
+<div class="d-flex flex-column flex-shrink-0 p-3" id="sidebar">
+  <a href="/intro" class="d-flex align-items-center my-3 mx-3 mb-md-0 me-md-auto">
+    <img src="{% static 'static/img/__logo/logo_test_bk.webp' %}" alt="logo" width="200" />
+  </a>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+          <a href="/intro" class="btn" aria-current="page">
+            <svg width="30" height="30" fill="none">
+              <use xlink:href="#home"></use>
+            </svg>
+            Home
+          </a>
+      </li>
+      <li>
+        <a href="/accounts/statistics/" class="btn">
+          <svg width="30" height="30" fill="none">
+            <use xlink:href="#dashboard"></use>
+          </svg>
+          Dashboard
+        </a>
+      </li>
+      <li>
+        <a href="/personal/personal_blog/" class="btn">
+          <svg width="30" height="30" fill="none">
+            <use xlink:href="#profile"></use>
+          </svg>
+          Profile
+        </a>
+      </li>
+      <li>
+        <a href="/intro" class="btn">
+          <svg width="30" height="30" fill="none">
+            <use xlink:href="#settings"></use>
+          </svg>
+          Settings
+        </a>
+      </li>
+    </ul>
+</div>

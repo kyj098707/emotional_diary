@@ -3,14 +3,13 @@ from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.conf.urls.static import static
 from django.urls import path, include
-from django.shortcuts import render
-from django.views.generic import TemplateView
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/",include("accounts.urls")),
-    path("",login_required(TemplateView.as_view(template_name='root.html')),name='root')
+    path("api-auth", include("rest_framework.urls")),
+    path("",include("diaryapp.urls")),
 ]
 
 if settings.DEBUG:

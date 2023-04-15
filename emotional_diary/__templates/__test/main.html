@@ -1,0 +1,110 @@
+{% extends "../base.html" %}
+
+{% block content %}
+    <!-- 일기 리스트 -->
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
+        $.ajaxSetup({
+            headers: { "X-CSRFToken": '{{csrf_token}}' }
+        });
+    </script>
+    <div id="content">
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            {% if diary_list %}
+                {% for diary in diary_list %}
+                <div class="col">
+                    <div class="card h-100">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ diary.title }}</h5>
+                        <p class="card-text">{{ diary.cotent }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">2023.03.10</small>
+                        
+                        <button id="like-btn-{{ diary.pk }}" onclick="handleLikeClick(this.id)">
+                            like
+                        </button>
+                        <button id="unlike-btn-{{ diary.pk }}" onclick="handleDislikeClick(this.id)">
+                            Dislike
+                        </button>
+
+                    </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col">
+                    <div class="card h-100">
+                        오늘의 일기 작성하기
+                    </div>
+                </div>
+            {% endif %}
+        </div>  
+    </div>
+    <div>
+        {% if user_list %}
+            {% for user in user_list %}
+            <div>
+                {{ user.username }}
+                <button id="follow-btn-{{ user.pk }}" onclick="handleFollowClick(this.id)">
+                    follow
+                </button>
+                <button id="follow-btn-{{ user.pk }}" onclick="handleUnfollowClick(this.id)">
+                    unfollow
+                </button>
+            </div>
+            {% endfor %}
+        {% endif %}
+
+        <script type="text/javascript">
+            function request_ajax(url, method, data_dic) {
+                $.ajax({
+                    url:url,
+                    type:method,
+                    async:false,
+                    data:data_dic,
+                    success: function (response) {
+                            result = response
+                            },
+                error: function (e) {
+                        alert("connenction error")
+                        result = "error"
+                        }
+                        });
+                    return result;
+            }
+                
+            const handleFollowClick = (buttonId) => {
+                id = buttonId.split("-").pop()
+                let ajax_url = "{% url 'diary:profile' %}"+id+"/follow/"
+                data_dic = {}
+                result = request_ajax(ajax_url,"POST",data_dic)
+                console.log(ajax_url)
+            }
+            const handleUnfollowClick = (buttonId) => {
+                id = buttonId.split("-").pop()
+                let ajax_url = "{% url 'diary:profile' %}"+id+"/unfollow/"
+                data_dic = {}
+                result = request_ajax(ajax_url,"DELETE",data_dic)
+                console.log(ajax_url)
+            }
+            const handleLikeClick = (buttonId) => {
+                
+                id = buttonId.split("-").pop()
+                let ajax_url = "{% url 'diary:diary' %}"+id+"/like/"
+                data_dic = {"diary_id":id}
+                result = request_ajax(ajax_url,"POST",data_dic)
+            }
+
+            const handleDislikeClick = (buttonId) => {
+                id = buttonId.split("-").pop()
+                let ajax_url = "{% url 'diary:diary' %}"+id+"/dislike/"
+                data_dic = {"diary_id":id}
+                result = request_ajax(ajax_url,"DELETE",data_dic)
+            }
+
+        </script>
+    </div>
+
+{% endblock %}
