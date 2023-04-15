@@ -16,29 +16,17 @@ body,html {
     box-sizing: border-box;
 }
 
-#sidebar {
-    width: 20vw;
-    height: 100%;
-    position: fixed;
-    left: 0;
-    top:0;
-    background-color: rgba(181, 199, 237, 0.5)
+body {
+    overflow-x: hidden; 
+    overflow-y: hidden;
+    background-image: url('../img/account/background.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 20px;
+    height: 100vh;
 }
 
-#main-content {
-    margin-left: 20vw;
-}
-
-header {
-    width: calc(100% - 20vw);
-    height: 80px;
-    top: 0;
-    position: fixed;
-    left: 20vw;
-}
-
-#content {
-    margin-top: 75px;
-    padding: 2rem 1.5rem;
-    min-height: calc(100vh - 80px);   
+a, a:hover {
+    text-decoration: none;
 }
