@@ -44,7 +44,7 @@ class StatsSerializer(serializers.ModelSerializer):
 
     def get_num_like(self,obj):
         diary_list = Diary.objects.filter(user=obj)
-        total_like = 0 if diary_list else sum([diary.like.count() for diary in diary_list])
+        total_like = 0 if diary_list is None else sum([diary.like.count() for diary in diary_list])
         return total_like
 
     def get_num_posting(self,obj):
@@ -73,7 +73,7 @@ class SignupSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(email=validated_data["email"],
                                 username=validated_data["username"],
                                 password=validated_data["password"])
-        self.send_mail(validated_data["email"])
+        #self.send_mail(validated_data["email"])
         return user
 
     class Meta:

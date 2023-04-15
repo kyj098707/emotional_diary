@@ -2,13 +2,31 @@ from rest_framework import serializers
 from accounts.serializers import UserSerializer
 from diaryapp.models import Diary,Comment,Tag
 
-class DiaryListSerializers(serializers.ModelSerializer):
-    user = UserSerializer(required=False)
+
+class DiaryLikeNumSerializers(serializers.ModelSerializer):
+    num_like = serializers.SerializerMethodField()
+
     class Meta:
         model = Diary
-        fields = ["id","title","content","user"]
+        fields = ["num_like"]
 
+    def get_num_like(self, diary):
+        return diary.like.count()
 
+class DiaryListSerializers(serializers.ModelSerializer):
+    user = UserSerializer(required=False)
+    num_like = serializers.SerializerMethodField()
+    num_comment = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Diary
+        fields = ["id","title","content","user","num_like", "num_comment"]
+
+    def get_num_comment(self, diary):
+        comment_list = Comment.objects.filter(diary=diary)
+        return len(comment_list)
+    def get_num_like(self, diary):
+        return diary.like.count()
 class TagSerializers(serializers.ModelSerializer):
     class Meta:
         model = Tag
@@ -37,10 +55,7 @@ class DiaryCommentSerializers(serializers.ModelSerializer):
         model = Comment
         fields = ["id","user","content","created_at"]
 
-class DiaryLikeSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = Diary
-        fields = ["like"]
+
 
 
 class CommentSerializers(serializers.ModelSerializer):
