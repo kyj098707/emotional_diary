@@ -40,6 +40,16 @@
             element.innerHTML = `<div id=num_like>` + response.num_like + `개</div>`
 
           }
+          const handleDelClick = (buttonId) => {
+            token = localStorage.getItem("access")
+            id = buttonId.split("-").pop()
+            let ajax_url = "{% url 'diary:diary-list' %}" + id
+            data_dic = { "diary_id": id }
+            response = request_ajax(ajax_url, "DELETE", data_dic, token)
+            const element = document.getElementById("content");
+            element.innerHTML = response
+
+          }
         </script>
         <button type="button" class="btn btn-primary" id="diary_create" data-bs-toggle="modal" data-bs-target="#modal_diary_create">+ <span>diary</span></button>
 
@@ -96,7 +106,7 @@
             xhr.setRequestHeader("Authorization", "Bearer " + token);
           },
           async: false,
-          data: data_dic,
+          data: JSON.stringify(data_dic),
           success: function (response) {
             result = response
           },
@@ -135,9 +145,16 @@
          data_dic = {"title" : title, "content" : contents};
          let token = localStorage.getItem("access")
          response = request_ajax(ajax_url, "POST", data_dic, token)
-         console.log(ajax_url)
-         console.log(data_dic)
-         console.log(token)
+         const element = document.getElementById('content');
+         if (response == "error") {
+           document.getElementById("error_msg").style.display = "block";
+         }
+         else {
+           element.innerHTML = response;
+           console.log(response)
+           console.log("Dd")
+           console.log(element)
+         }
 
          console.log(response)
          modal.hide();

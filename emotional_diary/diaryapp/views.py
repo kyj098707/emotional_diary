@@ -72,7 +72,7 @@ def diary_new(request):
 
 
 class DiaryListCreateAPIView(ListCreateAPIView):
-    queryset = Diary.objects.all()
+    queryset = Diary.objects.order_by("-created_at")
     serializer_class = DiaryListSerializers
 
     def create(self, request, *args, **kwargs):
@@ -80,7 +80,10 @@ class DiaryListCreateAPIView(ListCreateAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save(user=request.user)
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+
+        return render(request, "__02_intro/__addon/intro_post.html", {"data":list(serializer.data)})
 
     def list(self, request, *args, **kwargs):
 
@@ -98,6 +101,12 @@ class DiaryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Diary.objects.all()
     serializer_class = DiaryRetrieveSerializers
 
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        queryset = Diary.objects.order_by("-created_at")
+        serializer = DiaryListSerializers(queryset,many=True)
+        return render(request,"__02_intro/__addon/intro_post.html", {"data" : list(serializer.data)})
 
 class TagListCreateAPIView(ListCreateAPIView):
     queryset = Tag.objects.all()
