@@ -20,13 +20,14 @@ class DiaryListSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Diary
-        fields = ["id","title","content","user","num_like", "num_comment"]
+        fields = ["id","title","content","user","num_like", "num_comment","created_at"]
 
     def get_num_comment(self, diary):
         comment_list = Comment.objects.filter(diary=diary)
         return len(comment_list)
     def get_num_like(self, diary):
         return diary.like.count()
+
 class TagSerializers(serializers.ModelSerializer):
     class Meta:
         model = Tag
