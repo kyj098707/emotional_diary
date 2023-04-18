@@ -218,7 +218,8 @@
         <div class="sub_link">
             <a href="../forget_password">비밀번호 찾기</a>
 
-            <a id="to_signup" class='to_signup'>회원가입</button>
+            <a id="to_signup" class='to_signup'>회원가입</a>
+
         </div>
     </form>
 
@@ -246,12 +247,12 @@
                 return result;
             }
 
-let ajax_url = "{% url 'account:token_obtain_pair' %}";
     function handleLoginClick(){
-                var email = $("#email").val()
-                var password = $("#password").val()
+                const email = $("#email").val();
+                const password = $("#password").val();
                 let ajax_url = "{% url 'account:token_obtain_pair' %}";
-                data_dic = {"email":email,"password":password};
+                const data_dic = {"email":email,"password":password};
+
                 result = request_ajax(ajax_url,"POST",data_dic);
                 if (result.response=="complete"){
                     localStorage.setItem("access",result.access);
@@ -265,7 +266,27 @@ let ajax_url = "{% url 'account:token_obtain_pair' %}";
                     console.log("email activate");
                 }
             }
+    $(document).on("click","#submit_join", function(){
+        email = $("#join_email").val();
+        nickname = $("#join_username").val();
+        password = $("#join_password").val();
+        let ajax_url = "{% url 'account:password_validate' %}"
+        data_dic = {"email":email, "nickname":nickname, "password":password}
+        console.log(data_dic)
+        result = request_ajax(ajax_url,"GET",data_dic);
+        console.log(result)
+        if (result.validation=="True"){
+            let ajax_url = "{% url 'account:signup' %}";
+            data_dic = {"email":email,"password":password,"username":nickname};
+            result = request_ajax(ajax_url,"POST",data_dic);
+            element.innerHTML = '<div id="error">' + result.message + '</div>';
+        }
+        else {
+            const element = document.getElementById('error');
+            element.innerHTML = '<div id="error">' + result.message + '</div>';
+        }
 
+    })
     $(document).on("click","#to_signup", function(){
         const modals = document.querySelector('#modal_signup');
         let modal = bootstrap.Modal.getOrCreateInstance(modals)  
