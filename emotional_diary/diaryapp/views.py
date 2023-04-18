@@ -71,7 +71,7 @@ def intro_test2(request):
 
 def layout_test(request):
     # return render(request, "temp_dashboard_pack/base_temp.html")
-    return render(request, "base_test.html")
+    return render(request, "base_layout.html")
     
 
 def profile_test(request,pk):
