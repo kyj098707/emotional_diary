@@ -30,4 +30,6 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name="token_refresh"),
     path('token/verify/', TokenVerifyView.as_view(), name="token_verify"),
 
+    path('password/validate', views.signup_validate, name="password_validate"),
+
 ]

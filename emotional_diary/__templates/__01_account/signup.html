@@ -12,22 +12,22 @@
         
             <label class="form-label">계정 (E-mail)</label>
             <div class="input-group mb-2 ">
-              <input type="email" class="form-control" name="email">
+              <input type="email" class="form-control" name="email" id="join_email">
             </div>
 
             <label class="form-label">비밀번호</label>
             <div class="input-group mb-4">
-                <input type="password" class="form-control"  name="password1">
+                <input type="password" class="form-control"  name="password1" id="join_password">
                 <input type="password" class="form-control" name="password2">
             </div>
             <hr>
             <label class="form-label">별명 </label>
             <div class="input-group mb-2">
-                <input type="text" class="form-control" name="username">
+                <input type="text" class="form-control" name="username" id="join_username">
             </div>
 
 
-            <label class="form-label">성별</label>
+            <label class="form-label" id="gender">성별</label>
             <div class="input-group mb-2">
               <select class="form-select" name="gender">
                 <option selected value='N'>비공개</option>
@@ -35,7 +35,7 @@
                 <option value="F">여성</option>
               </select>
             </div>
-
+            <div id="error"></div>
             <button type="button" class="btn btn-dark my-4 w-100" id='submit_join'>가  입</button>
 
         </div>
