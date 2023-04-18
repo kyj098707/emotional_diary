@@ -3,7 +3,7 @@
 {% block contents %}
         <div id='mainpage' class="row gx-5">
             <!-- 좌측 사이드바 -->
-            <div class="col-lg-2 narrow-hide">
+            <div class="col-xl-2 narrow-hide">
                 <div class="rounded-box" style="height: 40%;">
                     {% block right-up %}
                     {% endblock %}
@@ -15,7 +15,7 @@
             </div>
 
             <!-- 중앙 컨텐츠 -->
-            <div id='main_contents' class="col-lg-8">
+            <div id='main_contents' class="col-xl-8">
                 <div class="rounded-box" style="height: 100%;">
                     {% block center %}
                     {% endblock %}
@@ -23,7 +23,7 @@
             </div>
 
             <!-- 우측 사이드바 -->
-            <div id='right_sdb' class="col-lg-2">
+            <div id='right_sdb' class="col-xl-2">
                 <div class="rounded-box" style="height: 100%;">
                 <div class="text-center">
                     {% include "./__side_profile.html" %}
@@ -37,7 +37,10 @@
                     <!-- 메뉴 -->
                     <hr class="sidebar-divider my-5">
                     <div class="sidebar_menu menu_container ">
+                    
+                        <!-- user state에 따라 다른 메뉴 출력 필요 for문 -->
                         {% include "./__side_menu.html" %}
+                        {% comment %} {% include "./__side_menu_other.html" %} {% endcomment %}
                     </div>
 
                     <!-- 하단 부가사항 -->

@@ -13,7 +13,7 @@
     <link href="{% static 'static/css/__base.css' %}" rel="stylesheet">
 
     {% include "./_symbol.html" %}
-    {% comment %} {% include "./_extern_library_font.html" %} {% endcomment %}
+    {% include "./_extern_library_font.html" %}
     <style>
     
     body {
@@ -29,7 +29,7 @@
         margin: 0 auto;
     }
 
-    {% block style %}
+    {% block st %}
     {% endblock %}
     </style>
 </head>
@@ -41,7 +41,10 @@
     {% endblock %}
     </div>
 
-    {% block scripts %}
-    {% endblock %}
+
+    <script type="text/javascript">
+        {% block sc %}
+        {% endblock %}
+    </script>
 </body>
 </html>
