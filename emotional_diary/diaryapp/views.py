@@ -69,6 +69,11 @@ def intro_test2(request):
         "diary_list":diary_qs,
     })
 
+def layout_test(request):
+    # return render(request, "temp_dashboard_pack/base_temp.html")
+    return render(request, "base_test.html")
+    
+
 def profile_test(request,pk):
     if User.objects.filter(pk=pk).exists():
 

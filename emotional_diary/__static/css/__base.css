@@ -1,0 +1,143 @@
+
+
+.container-fluid {
+    width: 95%;
+    height: 95%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.row {
+    height: 100%;
+}
+.custom-row {
+margin: 0;
+}
+.sidebar {
+    background-color: #fff;
+    border-radius: 10px;
+    transition: all 0.5s;
+    height: 100%;
+    padding:20px;
+}
+.logo_img {
+    display: block;
+    margin: 10px auto;
+}
+
+.sidebar-divider {
+background-color: gray;
+height: 1px;
+width: 85%;
+opacity : 40%;
+margin: 20px auto;
+}
+
+@media (max-width: 1023px) {
+    .narrow-hide {
+        display: none;
+    }
+
+        #mainpage {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #main_contents {
+            order: 2;  margin-top:15px;
+
+        }
+
+        #right_sdb {
+            order: 1;
+            padding-top: 10px;height:
+            height: 10px;
+        }
+
+    .logo-img {
+        width:5rem !important;
+        }
+    .profile-img {
+            width:5rem !important;
+    }
+}
+
+.logo-img {
+    width:5rem !important;
+    }
+
+.sidebar_menu {
+display: flex;
+flex-direction: column;
+width: 100%;
+}
+
+.menu_item {
+display: flex;
+align-items: center;
+padding: 10px;
+color: #333;
+text-decoration: none;
+}
+
+.menu_item:hover {
+background-color: #333;
+color: #fff;
+}
+
+.active {
+background-color: #333;
+color: #fff;
+}
+
+.additional_menu {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    font-size: 20px;
+    text-align: center;
+    padding: 10px;
+    background-color: #ffeeee;
+    border-radius: 10px;
+    margin-bottom: 50px;
+}
+
+.additional_menu a {
+    color: #333;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.additional_menu a:hover {
+    text-decoration: underline;
+}
+
+.additional_menu span {
+    display: block;
+    margin-top: 10px;
+}
+
+.rounded-box {
+    position: relative;
+    border-radius: 20px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.profile-img {
+    width: 80%;
+    border-radius: 50%;
+}
+
+.profile-name {
+    font-size : 1.5rem;
+}
+
+.social-icon {
+    width: 30px;
+    margin: 0 5px;
+}
