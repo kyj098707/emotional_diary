@@ -1,45 +1,18 @@
+{% extends "../base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aivlary</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'static/css/bootstrap.min.css' %}">
-    <script src="{% static 'static/jquery-3.6.3.min.js' %}"></script>
-    <script src="{% static 'static/js/bootstrap.bundle.min.js' %}"></script>
 
-    <!-- for fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Source+Sans+Pro:wght@300;400&display=swap"
-          rel="stylesheet">
+{% block st %}
 
-    <style>
-        body{
-            margin : 0;
-            padding: 0;
-            height: 100vh;
-            overflow-x: hidden;
-            font-family: 'Noto Sans KR', sans-serif;
-            font-family: 'Source Sans Pro', sans-serif;
-            -ms-overflow-style: none;
-        }
-        ::-webkit-scrollbar {
-            display: none;
-        }
-
-        .center{
+        #container_login{
             position : absolute;
             top : 50%;
             left : 50%;
             transform : translate(-50%, -50%);
-            width : 400px;
+            width : 500px;
             background : white;
             border-radius : 10px;
         }
-        .center form{
+        #container_login form{
             padding : 0 40px;
             box-sizing: border-box;
         }
@@ -123,9 +96,11 @@
         
         .bg-img-container {
         position: relative;
-        width: 100% !important; 
-        height: 100% !important;
+        width: 150vw !important; 
+        height: 150vh !important;
         overflow: hidden;
+        top: -25%;
+        left: -25%;
         }
 
         .bg-img {
@@ -169,7 +144,13 @@
         }
 
         .error_login {
+            position : absolute;
+            top : 50%;
+            left : 50%;
+            transform : translate(-50%, -50%);
+            animation-iteration-count: 50;
             animation: vibration .1s infinite !important;
+            transform-origin: center !important;
         }
 
         @keyframes vibration {
@@ -180,72 +161,87 @@
                 transform: rotate(-1deg);
             }
         }
-
         #error_msg {
-            display: flex;
+            bottom: -30px;
             justify-content: center;
-            margin: 0 70px 10px;
+            width: 100%;
             color: red;
+            display: flex;
+            text-align: center;
         }
+{% endblock %}
 
-    </style>
-</head>
-<body>
-<div class="bg-img-container">
-    <div class="bg-img"></div>
-</div>
-{% include '__01_account/signup.html' %}
-<div class="center" id="container_login">
-    <div class="d-flex mt-2 justify-content-center">
-        <img src="{% static 'static/img/__logo/logo_test_bk.webp' %}" alt="" width="150" class="align-item-center my-4">
+{% block contents %}
+    <div class="bg-img-container">
+        <div class="bg-img"></div>
     </div>
-    <form method="post">
-        {% csrf_token %}
-        <div class="txt_field">
-            <input type="email" name="email" id="email">
-            <span></span>
-            <label>이메일</label>
+    {% include './__addon/signup_modal.html' %}
+<div class='vib'>
+    <div id="container_login">
+        <div class="d-flex mt-2 justify-content-center">
+            <img src="{% static 'static/img/__logo/logo_test_bk.webp' %}" alt="" width="150" class="align-item-center my-4">
         </div>
-        <div class="txt_field">
-            <input type="password" name="password" id="password">
-            <span></span>
-            <label>비밀번호</label>
-        </div>
-        <div id="error_msg" style="display: none;">
-            로그인 정보를 확인해주세요
-        </div>
-        <input type="button" value="Login" onclick="handleLoginClick()">
-        <div class="sub_link">
-            <a href="../forget_password">비밀번호 찾기</a>
+        <form method="post">
+            {% csrf_token %}
+            <div class="txt_field">
+                <input type="email" name="email" id="email">
+                <span></span>
+                <label>이메일</label>
+            </div>
+            <div class="txt_field">
+                <input type="password" name="password" id="password">
+                <span></span>
+                <label>비밀번호</label>
+            </div>
+            <div id="error_msg" style="display: none;">
+                로그인 정보를 확인해주세요
+            </div>
+            <input type="button" value="Login" onclick="handleLoginClick()">
+            <div class="sub_link">
+                <a href="../forget_password">비밀번호 찾기</a>
 
-            <a id="to_signup" class='to_signup'>회원가입</a>
+                <a id="to_signup" class='to_signup'>회원가입</a>
+            </div>
+        </form>
+    </div>
+<div>
+{% endblock %}
 
-        </div>
-    </form>
 
-</div>
+{% block sc %}
+    function error_vib(msg_string){
+        let element = $('.vib')
+        element.addClass('error_login');
+        setTimeout(() => {
+            element.removeClass('error_login');
+        }, 300) 
+        $('#error_msg').text(msg_string)
+        document.getElementById('error_msg').style.display = "block";
+    }
 
-<script type="text/javascript">
     function request_ajax(url, method, data_dic) {
-                $.ajax({
-                    url:url,
-                    type:method,
-                    async:false,
-                    data:data_dic,
-                    success: function (response) {
-                            result = response
-                            },
-                error: function (e) {
-                    $('#container_login').addClass('error_login');
-                    setTimeout(() => {
-                        $('#container_login').removeClass('error_login');
-                    }, 200) 
-                    document.getElementById('error_msg').style.display = "block";
-                    result = "error"
-                    }
-                });
-                return result;
+        $.ajax({
+            url:url,
+            type:method,
+            async:false,
+            data:data_dic,
+            success: function (response) {
+                    result = response
+                        let msg = "임시"
+                        if (msg == "error") {
+                            error_vib("에러메시지 추가")
+                        } else {
+                            let val = 1 
+                            
+                        }
+                    },
+        error: function (e) {
+            result = "error"
+            error_vib("서버와의 연결에 문제가 있습니다.")
             }
+        });
+        return result;
+    }
 
     function handleLoginClick(){
                 const email = $("#email").val();
@@ -293,6 +289,6 @@
         modal.show()
     })
 
-</script>
+    {% endblock %}
 </body>
 </html>

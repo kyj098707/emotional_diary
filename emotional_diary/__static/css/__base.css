@@ -34,7 +34,7 @@ opacity : 40%;
 margin: 20px auto;
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 1200px) {
     .narrow-hide {
         display: none;
     }
@@ -59,7 +59,7 @@ margin: 20px auto;
         width:5rem !important;
         }
     .profile-img {
-            width:5rem !important;
+            width:10rem !important;
     }
 }
 

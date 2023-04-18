@@ -42,7 +42,8 @@ def personal_page(request):
 
 
 def intro_test(request):
-    return render(request, "__02_intro/intro_test.html")
+    # return render(request, "__02_intro/intro_test.html")
+    return render(request, "base_layout.html")
 
 
 
@@ -71,7 +72,9 @@ def intro_test2(request):
 
 def layout_test(request):
     # return render(request, "temp_dashboard_pack/base_temp.html")
-    return render(request, "base_layout.html")
+    # return render(request, "base_layout.html")
+    # return render(request, "_01_account/login.html")
+    return render(request, "_02_main/my post.html")
     
 
 def profile_test(request,pk):
