@@ -15,7 +15,7 @@ from django.contrib.auth import authenticate,get_user_model
 from django.contrib.auth.views import logout_then_login
 from django.contrib.auth.decorators import login_required
 
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.generics import CreateAPIView, get_object_or_404, RetrieveAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -23,6 +23,9 @@ from rest_framework import status, permissions
 from rest_framework.viewsets import ModelViewSet
 from .serializers import UserSerializer, SignupSerializer, StatsSerializer, UserRetrieveSerializers, \
     MyTokenObtainPairSerializer
+
+from accounts.validators import MyCommonPasswordValidator, MyNumericPasswordValidator, MyMinimumLengthValidator, \
+    EmailNicknameValidator
 
 import json
 
@@ -124,17 +127,50 @@ class SignupView(CreateAPIView):
     serializer_class = SignupSerializer
     permission_classes = [AllowAny]
 
-
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 @api_view(['GET'])
-def email_validate(request):
-    ## 유저 이메일 중복 체크
-    email = request.GET.get("email")
-    try:
-        if User.objects.get(email=email):
-            result = {'response':'complete'}
-    except:
-        result = {'response':'email_valid_fail'}
-    return HttpResponse(result, content_type="application/json")
+@permission_classes([AllowAny])
+def signup_validate(request):
+    """
+    password validation
+    - 8글자 이하, 단순, 문자 체크
+    """
+
+    email = request.GET.get('email')
+    nickname = request.GET.get('nickname')
+    password = request.GET.get('password')
+    print(email)
+    response = {"message" : "비밀번호 검증 성공", "validation" : "True"}
+    en_validator = EmailNicknameValidator(email=email, nickname=nickname)
+    if not en_validator.nickname_duplication():
+        response["message"] = '동일한 닉네임이 존재합니다.'
+        response["validation"] = "False"
+    elif not en_validator.email_duplication():
+        response["message"] = '동일한 이메일이 존재합니다.'
+        response["validation"] = "False"
+    elif not en_validator.email_format():
+        response["message"] = '올바른 이메일 형식이 아닙니다.'
+        response["validation"] = "False"
+    elif not en_validator.nickname_format():
+        response["message"] = "닉네임은 두글자 이상 적어주세요"
+        response["validation"] = "False"
+    elif not MyMinimumLengthValidator().validate(password):
+        response["message"] = '8글자 이상의 비밀번호를 사용해주세요.'
+        response["validation"] = "False"
+    elif not MyCommonPasswordValidator().validate(password):
+        response["message"] = '너무 단순한 비밀번호는 사용할 수 없습니다.'
+        response["validation"] = "False"
+    elif not MyNumericPasswordValidator().validate(password):
+        response["message"] = '비밀번호에는 문자가 포함되어야 합니다'
+        response["validation"] = "False"
+    return Response(response)
+
+
 
 @api_view(['GET'])
 def email_validate(request):
