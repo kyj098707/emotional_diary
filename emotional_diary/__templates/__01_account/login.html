@@ -91,7 +91,7 @@
             width : 100%;
         }
 
-        input[type = "submit"]{
+        input[type = "button"]{
             width : 100%;
             height : 50px;
             border: 1px solid;
@@ -103,9 +103,9 @@
             cursor : pointer;
             outline : none; 
         }
-        input[type="submit"]:hover {
+        input[type="button"]:hover {
             border-color : #46321F;
-            transition: .5s;
+            transition: .2s;
         }
 
         .sub_link{
@@ -168,6 +168,26 @@
             height: 100%;
         }
 
+        .error_login {
+            animation: vibration .1s infinite !important;
+        }
+
+        @keyframes vibration {
+            from {
+                transform: rotate(1deg);
+            }
+            to {
+                transform: rotate(-1deg);
+            }
+        }
+
+        #error_msg {
+            display: flex;
+            justify-content: center;
+            margin: 0 70px 10px;
+            color: red;
+        }
+
     </style>
 </head>
 <body>
@@ -191,6 +211,9 @@
             <span></span>
             <label>비밀번호</label>
         </div>
+        <div id="error_msg" style="display: none;">
+            로그인 정보를 확인해주세요
+        </div>
         <input type="button" value="Login" onclick="handleLoginClick()">
         <div class="sub_link">
             <a href="../forget_password">비밀번호 찾기</a>
@@ -212,11 +235,15 @@
                             result = response
                             },
                 error: function (e) {
-                        alert("connenction error")
-                        result = "error"
-                        }
-                        });
-                    return result;
+                    $('#container_login').addClass('error_login');
+                    setTimeout(() => {
+                        $('#container_login').removeClass('error_login');
+                    }, 200) 
+                    document.getElementById('error_msg').style.display = "block";
+                    result = "error"
+                    }
+                });
+                return result;
             }
 
 let ajax_url = "{% url 'account:token_obtain_pair' %}";
