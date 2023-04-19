@@ -17,7 +17,8 @@ urlpatterns = [
     path('personal/diary_create/',views.diary_create, name ='diary_create'),
     path('personal/diary_edit/',views.diary_edit, name ='diary_edit'),
     path('intro_test/',views.intro_test2,name='intro_2'),
-
+    path('newsfeed/list', views.newsfeed_list, name="newsfeed_list"),
+    path('newsfeed/<int:pk>/test', views.newsfeed_test, name="newsfeed_test"),
 
     #api
     path('diary/',views.DiaryListCreateAPIView.as_view(),name="diary-list"),
