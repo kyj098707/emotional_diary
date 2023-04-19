@@ -31,6 +31,13 @@ urlpatterns = [
     path('token/verify/', TokenVerifyView.as_view(), name="token_verify"),
     path('password/validate', views.signup_validate, name="password_validate"),
     
+    # ====================================================
+    # ====================================================
+    # ====================================================
+    
+    
+    path('service_login/', views_rf.login, name='login_page'),
+    
     
     
     
