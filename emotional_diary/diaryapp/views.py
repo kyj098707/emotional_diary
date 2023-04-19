@@ -45,6 +45,24 @@ def intro_test(request):
     return render(request, "__02_intro/intro_test.html")
 
 
+
+def newsfeed_list(request):
+    diary_qs = Diary.objects.all()
+    serializer = DiaryListSerializers(diary_qs,many=True)
+    return render(request,"__02_intro/detail_diary_test.html", {"data" : list(serializer.data)})
+
+
+def newsfeed_test(request,pk):
+    diary = get_object_or_404(Diary, pk=pk)
+    serializer = DiaryRetrieveSerializers(diary)
+    return render(request, "__02_intro/detail_diary_test.html",{
+        "data": serializer.data,
+    })
+
+
+
+
+
 def intro_test2(request):
     diary_qs = Diary.objects.all()
     return render(request,"__02_intro/main.html",{
@@ -97,9 +115,15 @@ class DiaryListCreateAPIView(ListCreateAPIView):
         serializer = self.get_serializer(queryset, many=True)
         return render(request,"__02_intro/__addon/intro_post.html", {"data" : list(serializer.data)})
 
+
 class DiaryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Diary.objects.all()
     serializer_class = DiaryRetrieveSerializers
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return render(request,"__02_intro/__addon/diary_detail_test.html", {"data" : list(serializer.data)})
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
