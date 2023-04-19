@@ -63,6 +63,19 @@
                             ... 더보기
                         </p>
                     </div>
+                    
+                     <!-- 댓글 추가 -->
+                     <form method="post">
+                        {% csrf_token %}
+                        <div class="comment-add d-flex">
+                            <div class="comment-input">
+                                <p><textarea class="w-100 comment-txtarea" rows="2" placeholder="댓글 달기"></textarea></p>
+                            </div>
+                            <div class="comment-submit">
+                                <button class="comment-btn" type="submit">Post</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
