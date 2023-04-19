@@ -95,24 +95,24 @@
         }
         
         .bg-img-container {
-        position: relative;
-        width: 150vw !important; 
-        height: 150vh !important;
-        overflow: hidden;
-        top: -25%;
-        left: -25%;
+            position: relative;
+            width: 150vw !important; 
+            height: 150vh !important;
+            overflow: hidden;
+            top: -25%;
+            left: -25%;
         }
 
         .bg-img {
-        position: absolute;
-        width: 150% !important;
-        height: 150% !important;
-        top: -25%;
-        left: -25%;
-        background-image: url("{% static 'static/img/account/background.webp' %}");
-        background-size: cover;
-        background-position: center;
-        animation: moveDiamond 60s cubic-bezier(.5,.28,.86,.69) infinite;
+            position: absolute;
+            width: 150% !important;
+            height: 150% !important;
+            top: -25%;
+            left: -25%;
+            background-image: url("{% static 'static/img/account/background.webp' %}");
+            background-size: cover;
+            background-position: center;
+            animation: moveDiamond 60s cubic-bezier(.5,.28,.86,.69) infinite;
         }
 
         .to_signup {
@@ -171,11 +171,14 @@
         }
 {% endblock %}
 
+{% block modal %}
+    {% include './__addon/signup_modal.html' %} 
+{% endblock %}
+
 {% block contents %}
-    <div class="bg-img-container">
-        <div class="bg-img"></div>
-    </div>
-    {% include './__addon/signup_modal.html' %}
+<div class="bg-img-container">
+    <div class="bg-img"></div>
+</div>
 <div class='vib'>
     <div id="container_login">
         <div class="d-flex mt-2 justify-content-center">
