@@ -111,24 +111,6 @@
         }
     }
 
-
-    /* diary_detail.html modal css */
-
-    .comment-txtarea {
-        resize: none;
-        border-radius: 10px;
-    }
-
-    .comment-txtarea:focus {
-        outline: none;
-    }
-
-    .comment-btn {
-        border:0;
-        background-color: transparent;
-    }
-
-
 </style>
 
 {% endblock %}
@@ -145,12 +127,11 @@
 
 <!-- news feed -->
 <div class="slider"  data-slick='{"slidesToShow": 3, "slidesToScroll": 1}'>
-    {% if diary_list %}
-        {% for diary in diary_list %}
+    {% for diary in data %}
         <div class="diary-slider__item diary-hover swiper-slide" id="to_detail">
             <div class="diary-user d-flex">
                 <img src="{% static 'static/img/account/profile_on.webp' %}" class="diary-user__img" width="30"></img>
-                <span class="diary-user__name mx-2"><strong>{{ diary.user }}</strong></span>
+                <span class="diary-user__name mx-2"><strong>{{ diary.user.username }}</strong></span>
                 <button class="btn dropdown-button d-flex" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <svg width="20" height="20" fill="gray">
                         <use xlink:href="#three-dots"></use>
@@ -172,44 +153,33 @@
                 <svg width="16" height="16" class="heart">
                     <use xlink:href="#heart"></use>
                 </svg>
-                <span class="heart__count">좋아요 {{ diary.like }}개</span>
-                <i class="fas fa-envelope"></i><span>댓글 n개</span>
+                <span class="heart__count">좋아요 {{ diary.num_like }}개</span>
+                <i class="fas fa-envelope"></i><span>댓글 {{ diary.num_comment }}개</span>
             </div>
 
             <div class="diary-comments my-3">
+                {% for comment in diary.comment %}
                 <div class="diary-comment">
                     <div class="diary-comment-user d-flex">
                         <img src="{% static 'static/img/account/profile1.jpg' %}" class="diary-user__img" width="18" height="18"></img>
-                        <span class="diary-user__name mx-2"><strong>ahyun</strong></span>
+                        <span class="diary-user__name mx-2"><strong>{{comment.user.username}}</strong></span>
                     </div>
                     <p class="diary-comment__txt my-0">
-                        Lorem Ipsum is simply dummy text of the printing
+                        {{comment.content}}
                     </p>
                     <p class="diary-comment__more">
                         ... 더보기
                     </p>
                 </div>
-                <div class="diary-comment">
-                    <div class="diary-comment-user d-flex">
-                        <img src="{% static 'static/img/account/profile2.jpg' %}" class="diary-user__img" width="18" height="18"></img>
-                        <span class="diary-user__name mx-2"><strong>hyunju</strong></span>
-                    </div>
-                    <p class="diary-comment__txt my-0">
-                        Lorem Ipsum is simply dummy text of the printing
-                    </p>
-                    <p class="diary-comment__more">
-                        ... 더보기
-                    </p>
-                </div>
+                {% endfor %}
             </div>
 
             <div class="diary-date">
-                <span class="diary-date__time">1시간 전</span>
-                <span class="diary-date" style="display: none;">2023.04.15</span>
-            </div>  
+                <span class="diary-date__time">{{diary.create_at}}</span>
+                <span class="diary-date" style="display: none;">{{diary.create_at}}</span>
+            </div>
         </div>
-        {% endfor %}
-    {% endif %}
+    {% endfor %}
 </div>
 
 
@@ -239,7 +209,7 @@
 
     $(document).on("click","#to_detail", function(){
         const modals = document.querySelector('#modal_detail');
-        let modal = bootstrap.Modal.getOrCreateInstance(modals)  
+        let modal = bootstrap.Modal.getOrCreateInstance(modals)
         modal.show()
     })
 </script>
