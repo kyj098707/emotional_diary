@@ -160,3 +160,14 @@ def diary_edit(request):
 
     return render(request, "__03_personal/diary_edit.html")
 
+
+def diary_delete(request):
+
+    return render(request, "__03_personal/diary_delete.html")
+
+
+def diary_comment(request):
+
+    return render(request, "__03_personal/diary_comment.html")
+
+

@@ -1,3 +1,4 @@
+/* personal_blog.html */
 body {
   background-image: url('../img/account/background.webp');
   overflow: hidden;
@@ -187,3 +188,23 @@ cursor: pointer;
 .icon i:active {
 cursor: none;
 }
+
+.edit-content-input {
+  width: 100%;
+  height : 200px;
+}
+
+
+/* diary_comment.html */
+
+
+
+/* diary_edit.html */
+.save-button {
+  float: right;
+
+
+}
+
+
+
