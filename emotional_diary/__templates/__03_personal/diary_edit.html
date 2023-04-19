@@ -1,0 +1,42 @@
+<script>
+$(document).ready(function() {
+    $('.edit-button').click(function() {
+        // 기존 내용 가져오기
+        var title = $('.title a').html();
+        var content = $('.content').html();
+    
+        // input 태그로 변경하기
+        var titleInput = $('<input type="text" class="edit-title-input">');
+        var contentInput = $('<textarea class="edit-content-input"></textarea>');
+        titleInput.val(title);
+        contentInput.val(content.trim());
+        $('.title a').html(titleInput);
+        $('.content').html(contentInput);
+    
+    
+    
+        // 수정 버튼
+        var saveButton = $('<button class="save-button">수정</button>');
+        $('.title').append(saveButton);
+    
+        // edit-button 숨기기
+        $(this).hide();
+    
+        // 저장 버튼 클릭 시 이벤트 핸들러 등록
+        saveButton.click(function() {
+          var editedTitle = $('.edit-title-input').val();
+          var editedContent = $('.edit-content-input').val();
+          $('.title a').html(editedTitle);
+          $('.content').html(editedContent);
+    
+          // 수정이 완료되면 edit-button 다시 보이기
+          $('.edit-button').show();
+          titleInput.hide();
+          contentInput.hide();
+          saveButton.hide();
+        });
+      });
+
+    });
+
+</script>

@@ -1,0 +1,72 @@
+<div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="commentModalLabel">댓글</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- 댓글 작성 폼 -->
+          <form id="comment-form">
+            <textarea id="comment-content" class="form-control" placeholder="댓글을 입력해주세요."></textarea>
+            <button type="submit" class="btn btn-primary mt-3 ml-auto">작성</button>
+          </form>
+  
+          <!-- 댓글 목록 -->
+          <div class="comment-list mt-3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+        
+  <script>
+  document.querySelector('.add i').addEventListener('click', function() {
+    var commentModal = new bootstrap.Modal(document.getElementById('commentModal'));
+    commentModal.show();
+          });
+          
+  document.querySelector('#comment-form').addEventListener('submit', function(e) {
+    e.preventDefault(); // 폼의 기본 동작 방지
+  
+    var commentContent = document.querySelector('#comment-content').value; // 입력한 댓글 내용 get
+    if (commentContent.trim() === '') { // 댓글 내용이 공백일 경우 경고창 표시
+      alert('댓글을 입력해주세요.');
+      return;
+    }
+  
+  var commentList = document.querySelector('.comment-list');
+  var commentItem = document.createElement('div'); // 댓글 목록에 추가할 새로운 댓글 아이템 생성
+  commentItem.classList.add('comment-item');
+  var commentContent = document.querySelector('#comment-content').value;
+  var userId = 'user123'; // 사용자 ID 예시
+  var currentTime = new Date().toLocaleString(); // 현재 시간
+  commentItem.innerHTML = `
+    <div class="comment-info">
+      <div class="comment-content"><span class="user-id">${userId}</span> ${commentContent}</div>
+      <span class="comment-time">${currentTime}</span>
+    </div>
+    <div class="comment-actions">
+      <button class="btn btn-sm btn-danger delete-comment" data-bs-toggle="modal">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+          <path d="M10.07 8l3.965-3.965a.25.25 0 0 0 0-.354L13.32 3.07a.25.25 0 0 0-.354 0L8 6.93 4.035 3.965a.25.25 0 0 0-.354 0L2.68 4.32a.25.25 0 0 0 0 .354L6.93 8l-3.965 3.965a.25.25 0 0 0 0 .354l1.354 1.354a.25.25 0 0 0 .354 0L8 9.07l3.965 3.965a.25.25 0 0 0 .354 0l1.354-1.354a.25.25 0 0 0 0-.354L10.07 8z"/>
+        </svg>
+      </button>
+    </div>
+  `;
+  
+  commentList.appendChild(commentItem); // 새로운 댓글 아이템을 목록에 추가
+  document.querySelector('#comment-content').value = ''; // 댓글 입력 폼 초기화
+  });
+  
+  document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('delete-comment')) { // 삭제 버튼을 클릭한 경우
+      e.preventDefault();
+      var commentItem = e.target.closest('.comment-item'); // 삭제할 댓글 항목 찾기
+      commentItem.parentNode.removeChild(commentItem); // 댓글 항목 삭제
+    }
+  });
+  
+  
+  </script>
