@@ -27,8 +27,6 @@ from .serializers import UserSerializer, SignupSerializer, StatsSerializer, User
 from accounts.validators import MyCommonPasswordValidator, MyNumericPasswordValidator, MyMinimumLengthValidator, \
     EmailNicknameValidator
 
-
-
 import json
 
 def login(request):
