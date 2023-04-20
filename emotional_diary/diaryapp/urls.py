@@ -19,6 +19,7 @@ urlpatterns = [
     path('personal/diary_edit/',views.diary_edit, name ='diary_edit'),
     path('personal/diary_comment/',views.diary_comment, name ='diary_comment'),
     path('intro_test/',views.intro_test2,name='intro_2'),
+    path('layout_test/',views.layout_test,name='intro_2'),
     path('newsfeed/list', views.newsfeed_list, name="newsfeed_list"),
     path('newsfeed/<int:pk>/test', views.newsfeed_test, name="newsfeed_test"),
 

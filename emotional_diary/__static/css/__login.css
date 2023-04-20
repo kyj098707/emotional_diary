@@ -1,0 +1,156 @@
+
+#container_login{
+    position : absolute;
+    top : 50%;
+    left : 50%;
+    transform : translate(-50%, -50%);
+    width : 500px;
+    background : white;
+    border-radius : 10px;
+}
+#container_login form{
+    padding : 0 40px;
+    box-sizing: border-box;
+}
+
+form .txt_field{
+    position: relative;
+    border-bottom: 1px solid #46321F;
+    opacity: 0.7;
+    margin: 30px 0;
+}
+
+.txt_field input{
+    width : 100%;
+    padding : 0 5px;
+    height : 40px;
+    font-size : 16px;
+    border: none;
+    background : none;
+    outline : none;
+}
+.txt_field label{
+    position: absolute;
+    top : 50%;
+    left : 5px;
+    color : #46321F;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events : none;
+    transition : .5s;
+}
+.txt_field span::before{
+    content : '';
+    position: absolute;
+    top : 40px;
+    left : 0;
+    width : 0%;
+    height : 2px;
+    background: #46321F;
+    transition : .5s;
+}
+.txt_field input:focus ~ label,
+.txt_field input:valid ~ label,
+.txt_field input:invalid ~ label{
+    top : -5px;
+    color : #46321F;
+}
+.txt_field input:focus ~ span::before,
+.txt_field input:valid ~ span::before{
+    width : 100%;
+}
+
+input[type = "button"]{
+    width : 100%;
+    height : 50px;
+    border: 1px solid;
+    background: #46321F;
+    border-radius : 25px;
+    font-size : 18px;
+    color : #e9f4fb;
+    font-weight : 700;
+    cursor : pointer;
+    outline : none; 
+}
+input[type="button"]:hover {
+    border-color : #46321F;
+    transition: .2s;
+}
+
+.sub_link{
+    margin : 30px 0;
+    text-align : center;
+    font-size : 16px;
+    color : #46321F;
+    opacity: 0.7;
+}
+.sub_link a{
+    text-decoration: none;
+    color : #46321F;
+    opacity: 0.7;
+}
+
+.bg-img-container {
+    position: relative;
+    width: 150vw !important; 
+    height: 150vh !important;
+    overflow: hidden;
+    top: -25%;
+    left: -25%;
+}
+
+
+.to_signup {
+    cursor : pointer;
+}
+
+@keyframes moveDiamond {
+    0% {
+        transform: translateY(0) translateX(0);
+    }
+    25% {
+        transform: translateY(8%) translateX(8%);
+    }
+    50% {
+        transform: translateY(16%) translateX(0);
+    }
+    75% {
+        transform: translateY(8%) translateX(-8%);
+    }
+    100% {
+        transform: translateY(0) translateX(0);
+    }
+}
+
+.signup_logo{
+    margin: 0 auto;
+    display: inline-block;
+    height: 100%;
+}
+
+.error_login {
+    position : absolute;
+    top : 50%;
+    left : 50%;
+    transform : translate(-50%, -50%);
+    animation-iteration-count: 50;
+    animation: vibration .1s infinite !important;
+    transform-origin: center !important;
+}
+
+@keyframes vibration {
+    from {
+        transform: rotate(1deg);
+    }
+    to {
+        transform: rotate(-1deg);
+    }
+}
+#error_msg {
+    bottom: -30px;
+    justify-content: center;
+    width: 100%;
+    color: red;
+    display: flex;
+    text-align: center;
+}

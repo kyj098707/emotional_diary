@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 from accounts.views import UserViewSet, MyTokenObtainPairView
-from . import views
+from . import views, views_rf
 from .views import StatsRetrieveAPIView,UserRetrieveAPIView
 
 
@@ -30,5 +30,16 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name="token_refresh"),
     path('token/verify/', TokenVerifyView.as_view(), name="token_verify"),
     path('password/validate', views.signup_validate, name="password_validate"),
+    
+    # ====================================================
+    # ====================================================
+    # ====================================================
+    
+    
+    path('service_login/', views_rf.login, name='login_page'),
+    
+    
+    
+    
 
 ]

@@ -1,0 +1,68 @@
+{% extends "../base.html" %}
+{% load static %}
+
+
+{% block load %}
+    <link href="{% static 'static/css/__login.css' %}" rel="stylesheet">
+<script type="text/javascript" src="{% static 'static/js/__login.js' %}"></script>
+
+{% endblock %}
+
+{% block st %}
+    .bg-img {
+        position: absolute;
+        width: 150% !important;
+        height: 150% !important;
+        top: -25%;
+        left: -25%;
+        background-image: url("{% static 'static/img/account/background.webp' %}");
+        background-size: cover;
+        background-position: center;
+        animation: moveDiamond 60s cubic-bezier(.5,.28,.86,.69) infinite;
+    }
+
+{% endblock %}
+
+{% block modal %}
+    {% include './__addon/signup_modal.html' %} 
+{% endblock %}
+
+{% block contents %}
+<div class="bg-img-container">
+    <div class="bg-img"></div>
+</div>
+<div class='vib'>
+    <div id="container_login">
+        <div class="d-flex mt-2 justify-content-center">
+            <img src="{% static 'static/img/__logo/logo_test_bk.webp' %}" alt="" width="150" class="align-item-center my-4">
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="txt_field">
+                <input type="email" name="email" id="email">
+                <span></span>
+                <label>이메일</label>
+            </div>
+            <div class="txt_field">
+                <input type="password" name="password" id="password">
+                <span></span>
+                <label>비밀번호</label>
+            </div>
+            <div id="error_msg" style="display: none;">
+                로그인 정보를 확인해주세요
+            </div>
+            <input type="button" value="Login" onclick="handleLoginClick()">
+            <div class="sub_link">
+                <a href="../forget_password">비밀번호 찾기</a>
+
+                <a id="to_signup" class='to_signup'>회원가입</a>
+            </div>
+        </form>
+    </div>
+<div>
+{% endblock %}
+
+
+{% block sc %}
+
+{% endblock %}

@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aivlary</title>
+
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <link href="{% static 'static/css/__base.css' %}" rel="stylesheet">
+
+    {% include "./_symbol.html" %}
+    
+    <style>
+    
+    body {
+        background-image: url("{% static 'static/img/account/background.webp' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        overflow-x: hidden; 
+        overflow-y: hidden;
+        padding: 20px;
+        height: 100vh;
+        width: 100vw;
+        margin: 0 auto;
+    }
+
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div id='mainpage' class="row gx-5">
+            <!-- Left sidebar -->
+            <div class="col-sm-8 narrow-hide">
+                <div class="rounded-box" style="height: 40%;">
+                </div>
+                <div class="rounded-box" style="height: calc(97.5% - 40%);">
+                    <!-- Content for the lower section of the left sidebar -->
+                </div>
+            </div>
+
+            <!-- Main content -->
+            <div id='main_contents' class="col-sm-8">
+                <div class="rounded-box" style="height: 100%;">
+                </div>
+            </div>
+
+            <!-- Right sidebar -->
+            <div id='right_sdb' class="col-sm-8">
+                <div class="rounded-box" style="height: 100%;">
+                <div class="text-center">
+                    <img src="{% static 'static/img/__logo/logo_test_bk.webp' %}" alt="Logo" class="w-25 img-fluid logo-img mb-4"><br>
+                    <img src="{% static 'static/img/__profile(dummy)/profile_01.webp' %}" alt="Profile picture" class="profile-img mb-3">
+                    <div class="profile-name fs-3 my-4">닉네임</div>
+
+
+                    <div class='narrow-hide'>
+                    <!-- Social icons -->
+                    <div class="d-flex justify-content-center my-3 mx-3 px-3">
+                        <svg class='py-0 my-0 mx-1 w-25' style='height:2rem'><use xlink:href="#github-gray"></use></svg>
+                        <svg class='py-0 my-0 mx-1 w-25' style='height:2rem'><use xlink:href="#github-gray"></use></svg>
+                        <svg class='py-0 my-0 mx-1 w-25' style='height:2rem'><use xlink:href="#github-gray"></use></svg>
+                    </div>
+
+                    <hr class="sidebar-divider my-5">
+                    <div class="sidebar_menu menu_container ">
+                        <a href="#" class="fs-4 menu_item active">
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="#" class="fs-4 menu_item">
+                            <span>My Post</span>
+                        </a>
+                        <a href="#" class="fs-4 menu_item">
+                            <span>Social</span>
+                        </a>
+                        <a href="#" class="fs-4 menu_item">
+                            <span>Settings</span>
+                        </a>
+                    </div>
+
+                    <div class="additional_menu mt-4">
+                        <a href="#">About</a>
+                        <a href="#">Contact Us</a>
+                        <span>&copy; 2023 Aivlary</span>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
