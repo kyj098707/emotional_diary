@@ -10,6 +10,17 @@ urlpatterns = [
     path("accounts/",include("accounts.urls")),
     path("api-auth", include("rest_framework.urls")),
     path("",include("diaryapp.urls")),
+    
+    #========================================================
+    #========================================================
+    #========================================================
+    
+    path("aivlary/", include("accounts.urls")),
+    path("aivlary/", include("diaryapp.urls")),
+    
+    
+    
+    
 ]
 
 if settings.DEBUG:

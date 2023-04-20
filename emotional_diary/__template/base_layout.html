@@ -1,0 +1,59 @@
+{% extends "./base.html" %}
+{% load static %}
+{% block contents %}
+        <div id='mainpage' class="row gx-5">
+            <!-- 좌측 사이드바 -->
+            <div class="col-xl-2 narrow-hide">
+                <div class="rounded-box" style="height: 40%;">
+                    {% block right-up %}
+                    {% endblock %}
+                </div>
+                <div class="rounded-box" style="height: calc(96.5% - 40%);">
+                    {% block right-down %}
+                    {% endblock %}
+                </div>
+            </div>
+
+            <!-- 중앙 컨텐츠 -->
+            <div id='main_contents' class="col-xl-8">
+                <div class="rounded-box" style="height: 100%;">
+                    {% block center %}
+                    {% endblock %}
+                </div>
+            </div>
+
+            <!-- 우측 사이드바 -->
+            <div id='right_sdb' class="col-xl-2">
+                <div class="rounded-box" style="height: 100%;">
+                <div class="text-center">
+                    {% include "./__side_profile.html" %}
+
+                    <div class='narrow-hide'>
+                    <!-- 일반 소셜 아이콘 -->
+                    <div class="d-flex justify-content-center my-3 mx-3 px-3">
+                        {% include "./__side_icon.html" %}
+                    </div>
+
+                    <!-- 메뉴 -->
+                    <hr class="sidebar-divider my-5">
+                    <div class="sidebar_menu menu_container ">
+                    
+                        <!-- user state에 따라 다른 메뉴 출력 필요 for문 -->
+                        {% include "./__side_menu.html" %}
+                        {% comment %} {% include "./__side_menu_other.html" %} {% endcomment %}
+                    </div>
+
+                    <!-- 하단 부가사항 -->
+                    <div class="additional_menu mt-4">
+                        <a href="#">About</a>
+                        <a href="#">Contact Us</a>
+                        <span>&copy; 2023 Aivlary</span>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+    
+{% endblock %}
