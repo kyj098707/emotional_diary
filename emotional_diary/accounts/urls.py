@@ -2,7 +2,7 @@ from django.urls import path,include
 from django.contrib.auth import get_user_model
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
-from accounts.views import UserViewSet, MyTokenObtainPairView
+from accounts.views import UserViewSet, MyTokenObtainPairView,user_suggestion
 from . import views, views_rf
 from .views import StatsRetrieveAPIView,UserRetrieveAPIView
 
@@ -22,6 +22,7 @@ urlpatterns = [
     path('statistics/',views.statistics_test, name='statistics'),
 
     # api
+    path('follow/suggestion/',views.user_suggestion, name="api_user_suggestion"),
     path('user/<int:pk>/follow/', views.user_follow, name="follow"),
     path('user/<int:pk>/stats/', views.StatsRetrieveAPIView.as_view(), name="stats"),
     path('user/mypage/', views.my_page ,name="mypage"),

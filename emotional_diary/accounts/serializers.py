@@ -17,6 +17,19 @@ class DiaryEmotionSerializers(serializers.ModelSerializer):
         model = Diary
         fields = ["happiness","angry","disgust","fear","neutral","sadness","surprise"]
 
+class UserSuggestionSerializer(serializers.ModelSerializer):
+    num_following = serializers.SerializerMethodField()
+    num_follower = serializers.SerializerMethodField()
+    class Meta:
+        model = User
+        fields = ["username", "num_following", "num_follower"]
+
+    def get_num_following(self,user):
+        return user.follower.count()
+
+    def get_num_follower(self,user):
+        user = User.objects.filter(follower=user)
+        return len(user)
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

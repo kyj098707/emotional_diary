@@ -8,11 +8,24 @@
 {% endblock %}
 
 {% block right-down %}
-우측하단
+<div id="follow-suggestion-list"></div>
 {% endblock %}
 
 
 {% block center %}
 중앙 컨텐츠
+{% endblock %}
+
+{% block sc %}
+let ajax_url = "{% url 'diary:diary-list' %}";
+let token = localStorage.getItem("access")
+response = request_ajax(ajax_url, "GET", {}, token)
+const element = document.getElementById('follow-suggestion-list');
+if (response == "error") {
+  document.getElementById("error_msg").style.display = "block";
+}
+else {
+  element.innerHTML = response;
+}
 {% endblock %}
 
