@@ -55,7 +55,7 @@ def login_page(request):
             return redirect('diary:intro')
         return HttpResponse('아이디와 비밀번호가 틀렸습니다.')
     """
-    return render(request, '__01_account/login.html')
+    return render(request, '_01_account/login.html')
 
 
 def activate(request,pk,token):
@@ -189,8 +189,10 @@ def user_suggestion(request):
     current_user_id = request.user.id
     following_ids = request.user.follower.values_list('id', flat=True)
     users = User.objects.exclude(id=current_user_id).exclude(id__in=following_ids)
+    users = users[:min(6,len(users))]
     serializer = UserSuggestionSerializer(users, many=True)
-    return Response(serializer.data)
+    return render(request,"_02_main/__addon/follow_suggestion_list.html", {"data_list" : list(serializer.data)})
+
 @api_view(['POST'])
 def user_follow(request,pk):
     user = get_object_or_404(User,pk=pk)

@@ -17,7 +17,27 @@
 {% endblock %}
 
 {% block sc %}
-let ajax_url = "{% url 'diary:diary-list' %}";
+      function request_ajax(url, method, data_dic, token) {
+        $.ajax({
+          url: url,
+          type: method,
+          beforeSend: function (xhr) {
+            xhr.setRequestHeader("Content-type", "application/json");
+            xhr.setRequestHeader("Authorization", "Bearer " + token);
+          },
+          async: false,
+          data: JSON.stringify(data_dic),
+          success: function (response) {
+            result = response
+          },
+          error: function (e) {
+            result = "error"
+          }
+        });
+        return result;
+      }
+let ajax_url = "{% url 'account:api_user_suggestion' %}";
+console.log(ajax_url)
 let token = localStorage.getItem("access")
 response = request_ajax(ajax_url, "GET", {}, token)
 const element = document.getElementById('follow-suggestion-list');
@@ -28,4 +48,3 @@ else {
   element.innerHTML = response;
 }
 {% endblock %}
-

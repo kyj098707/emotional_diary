@@ -9,6 +9,7 @@ from .views import StatsRetrieveAPIView,UserRetrieveAPIView
 
 app_name = 'account'
 
+
 urlpatterns = [
     # page
     path('login_page/', views.login_page, name='login_page'),

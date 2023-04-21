@@ -1,0 +1,100 @@
+{% load static %}
+
+<style>
+    .suggestion-container-list{
+            display: flex;
+        }
+    .userinfo{
+        margin: auto;
+        width : 60px;
+
+    }
+    .fs1{
+        width:150px;
+    }
+    .fs2{
+            font-size : 0.3rem;
+        }
+    .suggestion-name{
+            font-size : 0.8rem;
+            font-weight: 600;
+        }
+    .suggestion-image {
+    margin: auto;
+    width: 30px; height: 30px;
+    }
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.buttons {
+    margin: 10%;
+    text-align: center;
+}
+
+.btn-hover {
+    width: 50px;
+    font-size: 0.4rem;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin: 0.5px;
+    height: 25px;
+    text-align:center;
+    border: none;
+    background-size: 300% 100%;
+
+    border-radius: 3px;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:hover {
+    background-position: 100% 0;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:focus {
+    outline: none;
+}
+
+.btn-hover.color-4 {
+    background-image: linear-gradient(to right, #fc6076, #ff9a44, #ef9d43, #e75516);
+    box-shadow: 0 4px 15px 0 rgba(252, 104, 110, 0.75);
+}
+</style>
+
+<div class="suggestion-container">
+    {% for data in data_list %}
+    <div class="suggestion-container-list">
+        <img class="suggestion-image" src="{% static 'static/img/__profile(dummy)/profile_01.webp' %}"></img>
+        <div class="suggestion-info">
+
+            <div class="d-flex flex-row fs1">
+                <div class="d-flex flex-column userinfo">
+                    <div class="suggestion-name">
+                        {{data.username}}
+                    </div>
+
+                    <div class="d-flex flex-row fs2">
+                        <div class="suggestion-follower">
+                            팔로워 {{data.num_follower}}
+                        </div>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button class="btn-hover color-4">Follow</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+</div>
