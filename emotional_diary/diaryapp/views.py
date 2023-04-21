@@ -88,9 +88,6 @@ def profile_test(request,pk):
         })        
     return 
 
-@login_required
-def diary_new(request):
-    pass
 
 ######
 ## API
@@ -177,7 +174,6 @@ def diary_like(request,pk):
         diary.like.add(request.user)
     serializer = DiaryLikeNumSerializers(diary)
     return Response(serializer.data)
-
 
 
 ## 개인 블로그 페이지

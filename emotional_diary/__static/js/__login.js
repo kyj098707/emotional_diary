@@ -36,7 +36,8 @@ function request_ajax(url, method, data_dic) {
 function handleLoginClick(){
           const email = $("#email").val();
           const password = $("#password").val();
-          let ajax_url = "{% url 'account:token_obtain_pair' %}";
+          let ajax_url = "http://127.0.0.1:8000/accounts/token/"
+          console.log(ajax_url)
           const data_dic = {"email":email,"password":password};
 
           result = request_ajax(ajax_url,"POST",data_dic);
@@ -45,7 +46,7 @@ function handleLoginClick(){
               localStorage.setItem("refresh",result.refresh);
               localStorage.setItem("email",result.email);
               console.log("storage complete")
-              let intro_url = "{% url 'diary:intro' %}"
+              let intro_url = "http://127.0.0.1:8000/layout_test/"
               location.href = intro_url
               }
           else{

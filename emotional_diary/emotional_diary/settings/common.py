@@ -67,8 +67,8 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         #CHAGNGED
         "DIRS": [
-            # os.path.join(BASE_DIR,"__template")
-            os.path.join(BASE_DIR,"__templates")
+            os.path.join(BASE_DIR,"__template")
+            # os.path.join(BASE_DIR,"__templates")
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -157,7 +157,7 @@ REST_FRAMEWORK = {
 
 # SIMPLE_JWT 셋팅
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=300),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'AUTH_HEADER_TYPES': ('Bearer',),
 }

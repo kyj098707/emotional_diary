@@ -15,9 +15,7 @@ urlpatterns = [
     #========================================================
     #========================================================
     
-    path("aivlary/", include("accounts.urls")),
-    path("aivlary/", include("diaryapp.urls")),
-    
+
     
     
     
