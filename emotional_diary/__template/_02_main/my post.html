@@ -17,7 +17,7 @@
 {% endblock %}
 
 {% block sc %}
-      function request_ajax(url, method, data_dic, token) {
+function request_ajax(url, method, data_dic, token) {
         $.ajax({
           url: url,
           type: method,
@@ -36,15 +36,38 @@
         });
         return result;
       }
-let ajax_url = "{% url 'account:api_user_suggestion' %}";
-console.log(ajax_url)
-let token = localStorage.getItem("access")
-response = request_ajax(ajax_url, "GET", {}, token)
-const element = document.getElementById('follow-suggestion-list');
-if (response == "error") {
-  document.getElementById("error_msg").style.display = "block";
-}
-else {
-  element.innerHTML = response;
-}
+
+$( document ).ready( function() {
+      let ajax_url = "{% url 'account:api_user_suggestion' %}";
+      let token = localStorage.getItem("access")
+      response = request_ajax(ajax_url, "GET", {}, token)
+      const element = document.getElementById('follow-suggestion-list');
+      if (response == "error") {
+        document.getElementById("error_msg").style.display = "block";
+      }
+      else {
+        element.innerHTML = response;
+      }
+});
+
+const handleFollowClick = (buttonId) => {
+                id = buttonId.split("-").pop()
+                console.log(buttonId)
+                console.log(id)
+                let token = localStorage.getItem("access")
+                let ajax_url = "http://127.0.0.1:8000/accounts/user/"+id+"/follow/"
+                data_dic = {}
+                result = request_ajax(ajax_url,"POST",data_dic,token)
+                follower_elem = document.getElementById('suggestion-follower-'+id);
+                follower_elem.innerText = `팔로우 ` + result.num_follower
+                console.log(follower_elem)
+                console.log(result.num_follower)
+                follow_btn_elem = document.getElementById('follow-btn-'+id);
+                console.log()
+                if(follow_btn_elem.innerText=="Follow")
+                    {follow_btn_elem.innerText = `Following`}
+                else{follow_btn_elem.innerText = `Follow`}
+
+
+            }
 {% endblock %}

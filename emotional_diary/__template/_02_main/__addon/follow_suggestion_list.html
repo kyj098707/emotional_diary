@@ -35,14 +35,14 @@
 }
 
 .btn-hover {
-    width: 50px;
-    font-size: 0.4rem;
+    width: 60px;
+    font-size: 0.3rem;
     font-weight: 600;
     color: #fff;
     cursor: pointer;
     margin: 0.5px;
     height: 25px;
-    text-align:center;
+    text-align:left;
     border: none;
     background-size: 300% 100%;
 
@@ -84,13 +84,13 @@
                     </div>
 
                     <div class="d-flex flex-row fs2">
-                        <div class="suggestion-follower">
+                        <div class="suggestion-follower" id="suggestion-follower-{{data.id}}">
                             팔로워 {{data.num_follower}}
                         </div>
                     </div>
                 </div>
                 <div class="buttons">
-                    <button class="btn-hover color-4">Follow</button>
+                    <button class="btn-hover color-4 flw_btn" id="follow-btn-{{ data.id }}" onclick="handleFollowClick(this.id)">Follow</button>
                 </div>
             </div>
         </div>

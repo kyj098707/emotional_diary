@@ -195,13 +195,16 @@ def user_suggestion(request):
 
 @api_view(['POST'])
 def user_follow(request,pk):
-    user = get_object_or_404(User,pk=pk)
-    if user != request.user:
-        if not user.follower.filter(pk=request.user.pk).exists():
-            user.follower.add(request.user)
+    print(pk)
+    following_user = get_object_or_404(User,pk=pk)
+    cur_user = request.user
+    if cur_user != following_user:
+        if not cur_user.follower.filter(pk=pk).exists():
+            cur_user.follower.add(following_user)
         else:
-            user.follower.remove(request.user)
-    return HttpResponse(status=200)
+            cur_user.follower.remove(following_user)
+
+    return Response(UserSuggestionSerializer(following_user).data)
 
 
 class UserRetrieveAPIView(RetrieveAPIView):
