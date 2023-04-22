@@ -1,8 +1,6 @@
 {% extends "../base_layout.html" %}
 {% load static %}
 
-
-
 {% block right-up %}
 우측상단
 {% endblock %}
@@ -13,7 +11,8 @@
 
 
 {% block center %}
-중앙 컨텐츠
+<div id="center-content"></div>
+
 {% endblock %}
 
 {% block sc %}
@@ -60,13 +59,15 @@ follower_count = document.querySelector('.follower-count-value');
 following_count = document.querySelector('.following-count-value');
 
 name_element.innerText = response.username;
-follower_count.innerHTML = '<span class="count follower-count-value" id="follower-'+response.id+'onclick="handleFollowerListClick(this.id)">'+response.num_follower+'</span>';
-following_count.innerHTML = '<span class="count following-count-value" id="follower-'+response.id+'onclick="handleFollowingListClick(this.id)">'+response.num_following+'</span>';
+follower_count.innerHTML = `<span class="count follower-count-value" id="follower-'+response.id+'onclick="
+                                  handleFollowerListClick(this.id)">`+response.num_follower+`</span>`;
+following_count.innerHTML = `<span class="count following-count-value" id="follower-'+response.id+'onclick="
+                                   handleFollowingListClick(this.id)">`+response.num_following+`</span>`;
 }
 let diary_ajax_url = "{% url 'diary:diary-list' %}";
 
-       response = request_ajax(diary_ajax_url, "GET", {}, token)
-        const element = document.getElementById('content');
+response = request_ajax(diary_ajax_url, "GET", {}, token)
+        const element = document.getElementById('center-content');
         if (response == "error") {
           document.getElementById("error_msg").style.display = "block";
         }
