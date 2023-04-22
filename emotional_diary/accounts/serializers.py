@@ -28,6 +28,9 @@ class UserSuggestionSerializer(serializers.ModelSerializer):
         return len(user)
 
 
+    
+
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -35,9 +38,19 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserRetrieveSerializers(serializers.ModelSerializer):
+    num_follower = serializers.SerializerMethodField()
+    num_following = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = "__all__"
+        fields = ["id","username", "num_follower","num_following"]
+
+    def get_num_follower(self,user):
+        user = User.objects.filter(follower=user)
+        return len(user)
+
+    def get_num_following(self, user):
+        return user.follower.count()
 
 
 # Like 개수, Follower 수, Posting 수, 감정 추이

@@ -1,5 +1,40 @@
 {% load static %}
+<style>
+  .count {
+    font-size: 20px;
+    font-weight: bold;
+    width: 30px;
+    text-align: center;
+  }
+
+  .follow-count {
+    margin-bottom: -5px;
+  }
+
+  .label {
+    margin-top: 0.2px;
+    font-size: 14px;
+    color: #999;
+  }
+
+  .follow-wrapper {
+    margin: auto;
+  }
+</style>
+
 <!-- 프로필 -->
-<img class="w-25 img-fluid logo-img mb-4" src="{% static 'static/img/__logo/logo_test_bk.webp' %}" alt="Logo" ><br>
+<img class="w-25 img-fluid logo-img mb-4" src="{% static 'static/img/__logo/logo_test_bk.webp' %}" alt="Logo"><br>
 <img class="profile-img mb-3" src="{% static 'static/img/__profile(dummy)/profile_01.webp' %}" alt="Profile picture">
-<div class="profile-name fs-3 my-4">닉네임</div>
+<div class="profile-name fs-3 my-4" id="right-profile-name"> 더미이름 </div>
+
+<div class="follow-wrapper">
+  <div class="follow-count">
+    <span class="count follower-count-value">33</span>
+    <span class="count following-count-value">33</span>
+
+  </div>
+  <div class="follow-name">
+    <span class="label">팔로워</span>
+    <span class="label">팔로잉</span>
+  </div>
+</div>
