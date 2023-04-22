@@ -1,0 +1,31 @@
+{% load static %}
+
+{% for i in data %}
+    <div class="diary id=">
+        <div class="title">
+    {{i.title}}
+    <button class="delete-button" id=del-{{i.id}} onclick="handleDelClick(this.id)">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+    <path d="M10.07 8l3.965-3.965a.25.25 0 0 0 0-.354L13.32 3.07a.25.25 0 0 0-.354 0L8 6.93 4.035 3.965a.25.25 0 0 0-.354 0L2.68 4.32a.25.25 0 0 0 0 .354L6.93 8l-3.965 3.965a.25.25 0 0 0 0 .354l1.354 1.354a.25.25 0 0 0 .354 0L8 9.07l3.965 3.965a.25.25 0 0 0 .354 0l1.354-1.354a.25.25 0 0 0 0-.354L10.07 8z"/>
+    </svg>
+    </button>
+    <button class="edit-button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+    <path d="M12.5 2a2.5 2.5 0 0 1 2.5 2.5c0 .646-.255 1.244-.67 1.68l-8.06 8.06a1.03 1.03 0 0 1-.697.315H2.5a1 1 0 0 1-1-1V9.527c0-.256.1-.512.293-.705l8.06-8.06A2.348 2.348 0 0 1 12.5 2zm-1.414 1.414a1.5 1.5 0 0 0-2.122 0l-.793.793L11.793 7l.793-.793a1.5 1.5 0 0 0 0-2.122l-.793-.793zm-1.414 1.414l-.793.793-4.586 4.586-1.586.402.402-1.586 4.586-4.586.793-.793a.5.5 0 0 1 .707 0l.586.586a.5.5 0 0 1 0 .707z"/>
+    </svg>
+    </button>
+    </div>
+        <div class="content">
+    {{i.content}} 
+    </div>
+    <div class="add">
+    &hearts;
+    <span class="heart__count" onclick="handleLikeClick(this.id)" id=like-{{i.id}}>
+     좋아요 
+     <div id=num_like_{{i.id}} > {{i.num_like}} 개</div></span>    
+    
+    <i class="fas fa-envelope"><span>댓글 {{i.num_comment}} </span></i>
+    </div>
+        <div class="date">April 12, 2023</div>
+    </div>
+{% endfor %}

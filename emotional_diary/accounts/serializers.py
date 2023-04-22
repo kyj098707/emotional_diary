@@ -48,7 +48,6 @@ class UserRetrieveSerializers(serializers.ModelSerializer):
     def get_num_follower(self,user):
         user = User.objects.filter(follower=user)
         return len(user)
-
     def get_num_following(self, user):
         return user.follower.count()
 

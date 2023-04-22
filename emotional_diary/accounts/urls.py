@@ -25,7 +25,9 @@ urlpatterns = [
     # api
     path('follow/suggestion/',views.user_suggestion, name="api_user_suggestion"),
     path('user/myprofile/', views.my_profile_info, name="api_my_profile_info"),
-
+    path('user/profile/info/', views.profile_info, name="api_profile_info"),
+    path('user/profile/', views.profile, name="profile"),
+    path('user/profile/<int:pk>/', views.profile_info, name="api_profile_detail"),
     path('user/<int:pk>/follow/', views.user_follow, name="follow"),
     path('user/<int:pk>/stats/', views.StatsRetrieveAPIView.as_view(), name="stats"),
     path('user/mypage/', views.my_page ,name="mypage"),

@@ -4,35 +4,10 @@ body {
   overflow: hidden;
 }
 .main_container {
-  margin: 15px; 
+  margin: 15px;
 }
-#left-container {
-  border: 3px solid black;
-  background-color: white;
-  width: 20%; 
-  float: left; 
-  margin-left : 5px;
-  margin-right: 10px; 
-  border-radius: 10px; 
-}
-#middle-container {
-  border: 3px solid black;
-  background-color: white;
-  width: 55%; 
-  float: left;
-  margin-right: 10px; 
-  margin-left: 25px; 
-  border-radius: 10px; 
-  overflow:scroll;
-}
-#right-container {
-  border: 3px solid black;
-  background-color: white;
-  width: 20%; 
-  float: left; 
-  margin-left: 25px; 
-  border-radius: 10px; 
-}
+
+
 #diary_create {
   margin-top: 10px;
   font-weight: bold;
@@ -40,19 +15,9 @@ body {
   font-size : 20px;
 }
 #diary_create span {
-  margin-left: 40px; 
+  margin-left: 40px;
 }
 
-.btn-primary {
-  background-color: white;
-  color: black; 
-  border: 2px solid black;
-}
-.btn-secondary {
-  background-color: white;
-  color: black; 
-  border: 2px solid black;
-}
 .diary {
   margin-top:30px;
   background-color: white;
