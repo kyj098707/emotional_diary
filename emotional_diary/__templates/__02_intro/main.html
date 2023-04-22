@@ -8,95 +8,76 @@
 
 <style>
     .go-back:hover svg {
-        fill: #bbbbbb;
+        fill: #bbb;
     }
 
-    .diary-slider {
-        z-index: 2;
-        max-width: 1300px;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 60px;
-    }
-    .diary-slider__wrp {
-      display: flex;
-      align-items: flex-start;
-      position: relative;
-      z-index: 2;
-    }
-
-    .diary-slider__item, .diary_hover  {
+    .newsfeed-slider__item  {
         background-color: white;
-        border-radius: 20px;
+        border-radius: 10px;
         height: 550px;
         flex-shrink: 0;
         margin: 20px;
-        padding: 40px;
         transition: all .3s;
-    }
-
-    .diary-hover:hover {
-        transform: scale(1.05);
-    }
-
-    .line_limit {
-      width: inherit;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-      display:inline-block;
-    }
-
-    .diary-slider__ctr {
+        overflow: hidden;
         position: relative;
-        z-index: 12;
-    }
-
-    .diary-slider__arrow {
-      background: #fff;
-      border: none;
-      display: inline-flex;
-      width: 50px;
-      height: 50px;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 6px 26px 6px rgba(0,0,0,0.25);
-      border-radius: 50%;
-      z-index: 12;
-      cursor: pointer;
-      outline: none!important;
-    }
-
-
-    .diary__title {
-          font-size: 24px;
-          font-weight: bold;
-          margin-bottom: 10px;
-    }
-
-    .diary__txt {
-        font-size: 18px;
-        line-height: 1.5;
-    }
-
-    .diary-comment__more {
-        color: rgba(0, 0, 0, 0.5)
-    }
-    .diary-comment__more:hover {
-        color: rgba(0, 0, 0, 1)
-    }
-
-    .diary-date {
-        font-size: 15px;
-    }
-
-    .heart:hover {
-        fill: red;
     }
 
     .diary-user__img {
         border-radius: 50%;
     }
+
+    .diary-contents {
+        height: 300px;
+        position: relative;
+    }
+
+    .diary-contents__date_emoji {
+        font-size: 15px;
+    }
+
+    .diary-contents__date {
+        color: rgba(0,0,0,0.5);
+    }
+
+    .diary-contents__title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .diary-contents__txt {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 12;
+        overflow: hidden;
+    }
+
+    .diary-contents__tag {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+    }
+
+    .diary-response {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+    }
+
+    .diary-contents__more {
+        color: rgba(0, 0, 0, 0.5)
+    }
+    .diary-contents__more:hover {
+        color: rgba(0, 0, 0, 1)
+    }
+
+    .liked:hover {
+        fill: red;
+    }
+
+
+    /* diary_modal.html */
 
     .modal-content {
         animation: animations 0.3s linear;
@@ -110,25 +91,39 @@
             opacity: 1;
         }
     }
-
-
-    /* diary_detail.html modal css */
-
-    .comment-txtarea {
-        resize: none;
-        border-radius: 10px;
+    
+    .diary-modal-content {
+        height: 600px;
     }
 
-    .comment-txtarea:focus {
+    .diary-modal-content__main {
+        width: 70%;
+    }
+
+    .add-comment {
+        position: absolute;
+        width: 70%;
+        bottom: 0;
+    }
+
+    .add-comment__txtarea {
+        resize: none;
+        border-radius: 20px;
+    }
+
+    .add-comment__txtarea:focus {
         outline: none;
     }
 
-    .comment-btn {
+    .add-comment__btn {
         border:0;
         background-color: transparent;
     }
 
-
+    .diary-comments {
+        position: relative;
+        width: 30%;
+    }
 </style>
 
 {% endblock %}
@@ -143,91 +138,80 @@
     </a>
 </div>
 
-<!-- news feed -->
-<div class="slider"  data-slick='{"slidesToShow": 3, "slidesToScroll": 1}'>
+<div class="newsfeed-slider"  data-slick='{"slidesToShow": 3, "slidesToScroll": 1}'>
     {% if diary_list %}
         {% for diary in diary_list %}
-        <div class="diary-slider__item diary-hover swiper-slide" id="to_detail">
-            <div class="diary-user d-flex">
-                <img src="{% static 'static/img/account/profile_on.webp' %}" class="diary-user__img" width="30"></img>
-                <span class="diary-user__name mx-2"><strong>{{ diary.user }}</strong></span>
-                <button class="btn dropdown-button d-flex" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <svg width="20" height="20" fill="gray">
-                        <use xlink:href="#three-dots"></use>
-                    </svg>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><div class="dropdown-item">수정 중</div></li>
-                    <li><div class="dropdown-item">Follower 99</div></li>
-                    <li><div class="dropdown-item">Following 77</div></li>
-                </ul>
+        <!-- a diary -->
+        <div class="newsfeed-slider__item">
+
+            <!-- 유저 정보 -->
+            <div class="diary-user d-flex border-bottom p-2 align-items-center" >
+                <img src="{% static 'static/img/account/profile_on.webp' %}" class="diary-user__img" width="30" height="30"></img>
+                <span class="diary-user__name mx-2"><strong>{{ diary.user.username }}</strong></span>
             </div>
-            <div class="diary__title">
-                {{ diary.title }}
+
+            <!-- 다이어리 내용 -->
+            <div calss="diary-contents">
+                <div class="diary-contents__date_emoji p-2 d-flex justify-content-between">
+                    <span class="diary-contents__date">
+                        {{diary.create_at}}
+                    </span>
+                    <div class="diary-contents__emoji d-flex align-items-center">
+                        <svg width="20" height="20" class="emoji">
+                            <use xlink:href="#emoji-happy"></use>
+                        </svg>
+                        <span class="mx-2">Happiness</span>
+                    </div>
+                </div>
+                <p class="diary-contents__title px-2">
+                    {{ diary.title }}
+                </p>
+                <p class="diary-contents__txt px-2">
+                    {{ diary.content }}
+                </p>
+                <p class="diary-contents__tag px-2">
+                    {% for tag in data.tag %}
+                        #{{tag.name}}
+                    {% endfor %}
+                </p>
+                <p class="diary-contents__more px-2" id="to_detail">
+                    자세히 보기
+                </p>
             </div>
-            <p class="diary__txt">
-                {{ diary.content }}
-            </p>
-            <div class="add mt-4">
-                <svg width="16" height="16" class="heart">
-                    <use xlink:href="#heart"></use>
+
+            <!-- 다이어리 반응 -->
+            <div class="diary-response p-2 border-top">
+                <svg width="16" height="16" class="liked">
+                    <use xlink:href="#liked"></use>
                 </svg>
-                <span class="heart__count">좋아요 {{ diary.like }}개</span>
-                <i class="fas fa-envelope"></i><span>댓글 n개</span>
-            </div>
+                <span class="liked__count">{{ diary.num_like }}</span>
+                <svg width="16" height="16" class="comments">
+                    <use xlink:href="#comments"></use>
+                </svg>
+                <span class="comments__count">{{ diary.num_comment }}</span>
 
-            <div class="diary-comments my-3">
-                <div class="diary-comment">
-                    <div class="diary-comment-user d-flex">
-                        <img src="{% static 'static/img/account/profile1.jpg' %}" class="diary-user__img" width="18" height="18"></img>
-                        <span class="diary-user__name mx-2"><strong>ahyun</strong></span>
-                    </div>
-                    <p class="diary-comment__txt my-0">
-                        Lorem Ipsum is simply dummy text of the printing
-                    </p>
-                    <p class="diary-comment__more">
-                        ... 더보기
-                    </p>
-                </div>
-                <div class="diary-comment">
-                    <div class="diary-comment-user d-flex">
-                        <img src="{% static 'static/img/account/profile2.jpg' %}" class="diary-user__img" width="18" height="18"></img>
-                        <span class="diary-user__name mx-2"><strong>hyunju</strong></span>
-                    </div>
-                    <p class="diary-comment__txt my-0">
-                        Lorem Ipsum is simply dummy text of the printing
-                    </p>
-                    <p class="diary-comment__more">
-                        ... 더보기
-                    </p>
-                </div>
+                <span class="diary-date__time mx-2">1시간 전</span>
             </div>
-
-            <div class="diary-date">
-                <span class="diary-date__time">1시간 전</span>
-                <span class="diary-date" style="display: none;">2023.04.15</span>
-            </div>  
         </div>
         {% endfor %}
     {% endif %}
 </div>
 
 
-
 <script>
-    $( document ).ready( function() {
-        $(".slider").slick({
+    $( function() {
+        $(".newsfeed-slider").slick({
             infinite: false,
             responsive: [{
                 breakpoint: 1024,
                 settings: {
-                slidesToShow: 3,
+                slidesToShow: 2,
                 infinite: true
                 }
             }, {
                 breakpoint: 600,
                 settings: {
-                slidesToShow: 2,
+                slidesToShow: 1,
                 dots: true
                 }
             }, {
@@ -242,5 +226,16 @@
         let modal = bootstrap.Modal.getOrCreateInstance(modals)  
         modal.show()
     })
+
+
+    $(function() {
+        $('textarea').on('keydown', function(event) {
+            if (event.keyCode == 13)
+                if (!event.shiftKey){
+                    event.preventDefault();
+                    $('#comment-form').submit();
+                }
+        });
+    });
 </script>
 {% endblock %}
