@@ -68,7 +68,7 @@ TEMPLATES = [
         #CHAGNGED
         "DIRS": [
             os.path.join(BASE_DIR,"__template")
-            # os.path.join(BASE_DIR,"__templates")
+            #os.path.join(BASE_DIR,"__templates")
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -148,7 +148,7 @@ INTERNAL_IPS = [
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',    ],
+        'rest_framework_simplejwt.authentication.JWTAuthentication',],
     "DEFAULT_PERMISSION_CLASSES":[
         'rest_framework.permissions.IsAuthenticated',
 ],
