@@ -128,7 +128,7 @@
 
             <div class="d-flex flex-row fs1">
                 <div class="d-flex flex-column userinfo">
-                    <div class="suggestion-name">
+                    <div class="suggestion-name" id="suggestion-{{data.id}}" onclick="handleNameClick(this.id)">
                         {{data.username}}
                     </div>
 
@@ -148,4 +148,4 @@
     </div>
 </div>
 {% endfor %}
-</div>
+
