@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import redirect, render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from .models import User
@@ -192,6 +192,27 @@ def user_suggestion(request):
     users = users[:min(6,len(users))]
     serializer = UserSuggestionSerializer(users, many=True)
     return render(request,"_02_main/__addon/follow_suggestion_list.html", {"data_list" : list(serializer.data)})
+
+
+@api_view(['GET'])
+def my_profile_info(request):
+    user = request.user
+    serializer = UserRetrieveSerializers(user)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def profile(request, pk):
+    pass
+
+@api_view(['GET'])
+def profile_info(request, pk):
+    user = get_object_or_404(User,id=pk)
+    serializer = UserRetrieveSerializers(user)
+    flw_message = "Follow"
+    if pk in request.user.follower.values_list('id', flat=True):
+        flw_message = "Following"
+    data = {'flw_message': flw_message, 'data': serializer.data}
+    return JsonResponse(data)
 
 @api_view(['POST'])
 def user_follow(request,pk):
