@@ -106,6 +106,13 @@ if(follow_btn_elem.innerText=="Follow")
 {follow_btn_elem.innerText = `Following`}
 else{follow_btn_elem.innerText = `Follow`}
 }
+const handleNameClick = (buttonId) => {
+    id = buttonId.split("-").pop()
+    console.log(buttonId)
+    console.log(id)
+
+    location.href = "http://127.0.0.1:8000/profile/"+id+"/"
+};
 const handleFollowerListClick = (buttonId) => {
 const modals = document.querySelector('#follow_modal_detail');
 let modal = bootstrap.Modal.getOrCreateInstance(modals)
