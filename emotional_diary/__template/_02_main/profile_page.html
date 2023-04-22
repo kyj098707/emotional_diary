@@ -1,0 +1,115 @@
+{% extends "../base_layout.html" %}
+{% load static %}
+
+{% block right-up %}
+우측상단
+{% endblock %}
+
+{% block right-down %}
+<div id="follow-suggestion-list"></div>
+
+{% endblock %}
+
+
+{% block center %}
+<div id="content">중앙 컨텐츠</div>
+{% endblock %}
+
+{% block sc %}
+function request_ajax(url, method, data_dic, token) {
+$.ajax({
+url: url,
+type: method,
+beforeSend: function (xhr) {
+xhr.setRequestHeader("Content-type", "application/json");
+xhr.setRequestHeader("Authorization", "Bearer " + token);
+},
+async: false,
+data: JSON.stringify(data_dic),
+success: function (response) {
+result = response
+},
+error: function (e) {
+result = "error"
+}
+});
+return result;
+}
+
+$( document ).ready( function() {
+let suggest_ajax_url = "{% url 'account:api_user_suggestion' %}";
+let token = localStorage.getItem("access")
+response = request_ajax(suggest_ajax_url, "GET", {}, token)
+if (response == "error") {
+document.getElementById("error_msg").style.display = "block";
+}
+else {
+const element = document.getElementById('follow-suggestion-list');
+element.innerHTML = response;
+}
+let profile_ajax_url = "{% url 'account:profile' %}" + {{data}} +"/";
+response = request_ajax(profile_ajax_url, "GET", {}, token)
+if (response == "error") {
+document.getElementById("error_msg").style.display = "block";
+}
+else {
+name_element = document.getElementById('right-profile-name');
+follower_count = document.querySelector('.follower-count-value');
+following_count = document.querySelector('.following-count-value');
+profile_follow_btn = document.querySelector('.profile-follow-buttons');
+
+name_element.innerText = response.data.username;
+follower_count.innerHTML = '<span class="count follower-count-value" id="follower-'+response.id+'" onclick="handleFollowerListClick(this.id)">'+response.data.num_follower+'</span>';
+following_count.innerHTML = '<span class="count following-count-value" id=follower-'+response.id+'" onclick="handleFollowingListClick(this.id)">'+response.data.num_following+'</span>';
+profile_follow_btn.innerHTML = `<div class="profile-follow-buttons"><button class="profile-btn-hover color-4 flw_btn" id="profile-follow-btn-`+{{data}}+`"onclick="handleProfileFollowClick(this.id)">`+response.flw_message+`</button></div>`;
+
+}
+
+
+let diary_ajax_url = "{% url 'diary:diary-list' %}";
+
+<!--        response = request_ajax(diary_ajax_url, "GET", {}, token)-->
+<!--        const element = document.getElementById('content');-->
+<!--        if (response == "error") {-->
+<!--          document.getElementById("error_msg").style.display = "block";-->
+<!--        }-->
+<!--        else {-->
+<!--          element.innerHTML = response;-->
+<!--        }-->
+
+});
+
+const handleFollowClick = (buttonId) => {
+id = buttonId.split("-").pop()
+let token = localStorage.getItem("access")
+let ajax_url = "http://127.0.0.1:8000/accounts/user/"+id+"/follow/"
+data_dic = {}
+result = request_ajax(ajax_url,"POST",data_dic,token)
+follower_elem = document.getElementById('suggestion-follower-'+id);
+follower_elem.innerText = `팔로우 ` + result.num_follower
+follow_btn_elem = document.getElementById('follow-btn-'+id);
+if(follow_btn_elem.innerText=="Follow")
+{follow_btn_elem.innerText = `Following`}
+else{follow_btn_elem.innerText = `Follow`}
+}
+const handleProfileFollowClick = (buttonId) => {
+id = buttonId.split("-").pop()
+let token = localStorage.getItem("access")
+let ajax_url = "http://127.0.0.1:8000/accounts/user/"+id+"/follow/"
+data_dic = {}
+result = request_ajax(ajax_url,"POST",data_dic,token)
+follower_elem = document.getElementById('follower-count-value');
+follower_elem.innerText = result.num_follower
+
+follow_btn_elem = document.getElementById('profile-follow-btn-'+id);
+if(follow_btn_elem.innerText=="Follow")
+{follow_btn_elem.innerText = `Following`}
+else{follow_btn_elem.innerText = `Follow`}
+}
+const handleFollowerListClick = (buttonId) => {
+const modals = document.querySelector('#follow_modal_detail');
+let modal = bootstrap.Modal.getOrCreateInstance(modals)
+modal.show()
+}
+
+{% endblock %}

@@ -78,17 +78,19 @@ def layout_test(request):
     
 
 def profile_test(request,pk):
-    if User.objects.filter(pk=pk).exists():
+    user = get_object_or_404(User,id=pk)
+    return render(request, "_02_main/profile_page.html", {
+        "data": pk,
+    })
 
-        user = User.objects.get(pk=pk)
-        diary_list = Diary.objects.filter(user=user)
-        return render(request,"__01_account/profile.html",{
-            "user":User.objects.get(pk=pk),
-            "diary_list":diary_list
-        })        
-    return 
-
-
+@api_view(['GET'])
+def profile_info(request,pk):
+    follow_message = "Follow"
+    user = get_object_or_404(User, id=pk)
+    print(request.user)
+    if pk in request.user.follower.values_list('id', flat=True):
+        follow_message = "Following"
+    return Response({"data":pk,"follow_message":follow_message})
 ######
 ## API
 ######
@@ -118,7 +120,7 @@ class DiaryListCreateAPIView(ListCreateAPIView):
             return self.get_paginated_response(serializer.data)
 
         serializer = self.get_serializer(queryset, many=True)
-        return render(request,"__02_intro/__addon/intro_post.html", {"data" : list(serializer.data)})
+        return render(request,"_02_main/__addon/center_post_list.html", {"data" : list(serializer.data)})
 
 
 class DiaryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
