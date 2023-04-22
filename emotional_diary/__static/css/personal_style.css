@@ -1,4 +1,6 @@
 /* personal_blog.html */
+}
+
 body {
   background-image: url('../img/account/background.webp');
   overflow: hidden;
@@ -53,7 +55,7 @@ body {
   color: black; 
   border: 2px solid black;
 }
-.diary {
+.diary-list {
   margin-top:30px;
   background-color: white;
   padding: 20px;
@@ -79,8 +81,6 @@ body {
   border: none;
   color: black;
   float: right;
-}
-
 
 
 .diary .content {

@@ -1,8 +1,5 @@
 {% extends "../base_layout.html" %}
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'static/css/style.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'static/css/personal_style.css' %}">
-
 
 {% block right-up %}
 우측상단
@@ -14,32 +11,8 @@
 
 
 {% block center %}
-<div class="col-sm-8" id = middle-container style="background-color: white; height: 920px">
-        <button type="button" class="btn btn-primary" id="diary_create" data-bs-toggle="modal" data-bs-target="#modal_diary_create">+ <span>diary</span></button>
-        <div class="diary">
-            <div class="diary_list_title">
-            <a>asdastrtrtrtrtrt</a>
-            <button class="delete-button" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                <path d="M10.07 8l3.965-3.965a.25.25 0 0 0 0-.354L13.32 3.07a.25.25 0 0 0-.354 0L8 6.93 4.035 3.965a.25.25 0 0 0-.354 0L2.68 4.32a.25.25 0 0 0 0 .354L6.93 8l-3.965 3.965a.25.25 0 0 0 0 .354l1.354 1.354a.25.25 0 0 0 .354 0L8 9.07l3.965 3.965a.25.25 0 0 0 .354 0l1.354-1.354a.25.25 0 0 0 0-.354L10.07 8z"/>
-                </svg>
-            </button>
-            <button class="edit-button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                <path d="M12.5 2a2.5 2.5 0 0 1 2.5 2.5c0 .646-.255 1.244-.67 1.68l-8.06 8.06a1.03 1.03 0 0 1-.697.315H2.5a1 1 0 0 1-1-1V9.527c0-.256.1-.512.293-.705l8.06-8.06A2.348 2.348 0 0 1 12.5 2zm-1.414 1.414a1.5 1.5 0 0 0-2.122 0l-.793.793L11.793 7l.793-.793a1.5 1.5 0 0 0 0-2.122l-.793-.793zm-1.414 1.414l-.793.793-4.586 4.586-1.586.402.402-1.586 4.586-4.586.793-.793a.5.5 0 0 1 .707 0l.586.586a.5.5 0 0 1 0 .707z"/>
-                </svg>
-            </button>
-          </div>
-            <div class="content">
-                Today, I met up with some friends and we went to a new restaurant in town. The food was amazing and we had a great time catching up with each other. Later, I went to the gym and did a workout.
-            </div>
-          <div class="add">
-            &hearts;<span class="heart__count">좋아요 n개</span>
-            <i class="fas fa-envelope"><span>댓글 n개</span></i>
-          </div>
-            <div class="date"></div>
-        </div>
-      </div>
+<div id="center-content"></div>
+
 {% endblock %}
 
 {% block sc %}
@@ -86,19 +59,21 @@ follower_count = document.querySelector('.follower-count-value');
 following_count = document.querySelector('.following-count-value');
 
 name_element.innerText = response.username;
-follower_count.innerHTML = '<span class="count follower-count-value" id="follower-'+response.id+'onclick="handleFollowerListClick(this.id)">'+response.num_follower+'</span>';
-following_count.innerHTML = '<span class="count following-count-value" id="follower-'+response.id+'onclick="handleFollowingListClick(this.id)">'+response.num_following+'</span>';
+follower_count.innerHTML = `<span class="count follower-count-value" id="follower-'+response.id+'onclick="
+                                  handleFollowerListClick(this.id)">`+response.num_follower+`</span>`;
+following_count.innerHTML = `<span class="count following-count-value" id="follower-'+response.id+'onclick="
+                                   handleFollowingListClick(this.id)">`+response.num_following+`</span>`;
 }
-<!--let diary_ajax_url = "{% url 'diary:diary-list' %}";-->
+let diary_ajax_url = "{% url 'diary:diary-list' %}";
 
-<!--       response = request_ajax(diary_ajax_url, "GET", {}, token)-->
-<!--        const element = document.getElementById('content');-->
-<!--        if (response == "error") {-->
-<!--          document.getElementById("error_msg").style.display = "block";-->
-<!--        }-->
-<!--        else {-->
-<!--          element.innerHTML = response;-->
-<!--        }-->
+response = request_ajax(diary_ajax_url, "GET", {}, token)
+        const element = document.getElementById('center-content');
+        if (response == "error") {
+          document.getElementById("error_msg").style.display = "block";
+        }
+        else {
+          element.innerHTML = response;
+        }
 
 });
 
