@@ -57,16 +57,16 @@ $(document).on("click","#submit_join", function(){
   email = $("#join_email").val();
   nickname = $("#join_username").val();
   password = $("#join_password").val();
-  let ajax_url = "{% url 'account:password_validate' %}"
+  let ajax_url = "http://127.0.0.1:8000/accounts/signup/validate/"
   data_dic = {"email":email, "nickname":nickname, "password":password}
   console.log(data_dic)
   result = request_ajax(ajax_url,"GET",data_dic);
   console.log(result)
   if (result.validation=="True"){
-      let ajax_url = "{% url 'account:signup' %}";
+      let ajax_url = "http://127.0.0.1:8000/accounts/signup/";
       data_dic = {"email":email,"password":password,"username":nickname};
       result = request_ajax(ajax_url,"POST",data_dic);
-      element.innerHTML = '<div id="error">' + result.message + '</div>';
+
   }
   else {
       const element = document.getElementById('error');

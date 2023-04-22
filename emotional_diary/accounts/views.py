@@ -193,6 +193,15 @@ def user_suggestion(request):
     serializer = UserSuggestionSerializer(users, many=True)
     return render(request,"_02_main/__addon/follow_suggestion_list.html", {"data_list" : list(serializer.data)})
 
+
+@api_view(['GET'])
+def my_profile_info(request):
+    user = request.user
+    serializer = UserRetrieveSerializers(user)
+    print(serializer.data)
+    return Response(serializer.data)
+
+
 @api_view(['POST'])
 def user_follow(request,pk):
     print(pk)

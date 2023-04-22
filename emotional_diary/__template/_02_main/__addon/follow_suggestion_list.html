@@ -1,74 +1,90 @@
 {% load static %}
 
 <style>
-    .suggestion-container-list{
-            display: flex;
-        }
-    .userinfo{
-        margin: auto;
-        width : 60px;
+    .suggestion-container-list {
+        display: flex;
+    }
+
+    .userinfo {
+        width: 60px;
 
     }
-    .fs1{
-        width:150px;
+
+    .suggestion-name {
+        margin: 10px auto 0;
+        margin-left: 7px;
     }
-    .fs2{
-            font-size : 0.3rem;
-        }
-    .suggestion-name{
-            font-size : 0.8rem;
-            font-weight: 600;
-        }
+
+    .suggestion-follower {
+        margin: auto 0;
+        margin-left: 7px;
+    }
+
+    .fs1 {
+        width: 150px;
+    }
+
+    .fs2 {
+        font-size: 0.3rem;
+    }
+
+    .suggestion-name {
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
     .suggestion-image {
-    margin: auto;
-    width: 30px; height: 30px;
+        margin: auto;
+        width: 30px;
+        height: 30px;
     }
-* {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
 
-.buttons {
-    margin: 10%;
-    text-align: center;
-}
+    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
 
-.btn-hover {
-    width: 60px;
-    font-size: 0.3rem;
-    font-weight: 600;
-    color: #fff;
-    cursor: pointer;
-    margin: 0.5px;
-    height: 25px;
-    text-align:left;
-    border: none;
-    background-size: 300% 100%;
+    .buttons {
+        margin: 10%;
+        text-align: center;
+    }
 
-    border-radius: 3px;
-    moz-transition: all .4s ease-in-out;
-    -o-transition: all .4s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out;
-}
+    .btn-hover {
+        width: 60px;
+        font-size: 0.3rem;
+        font-weight: 600;
+        color: #fff;
+        cursor: pointer;
+        margin: 0.5px;
+        height: 25px;
+        text-align: left;
+        border: none;
+        background-size: 300% 100%;
 
-.btn-hover:hover {
-    background-position: 100% 0;
-    moz-transition: all .4s ease-in-out;
-    -o-transition: all .4s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out;
-}
+        border-radius: 3px;
+        moz-transition: all .4s ease-in-out;
+        -o-transition: all .4s ease-in-out;
+        -webkit-transition: all .4s ease-in-out;
+        transition: all .4s ease-in-out;
+    }
 
-.btn-hover:focus {
-    outline: none;
-}
+    .btn-hover:hover {
+        background-position: 100% 0;
+        moz-transition: all .4s ease-in-out;
+        -o-transition: all .4s ease-in-out;
+        -webkit-transition: all .4s ease-in-out;
+        transition: all .4s ease-in-out;
+    }
 
-.btn-hover.color-4 {
-    background-image: linear-gradient(to right, #fc6076, #ff9a44, #ef9d43, #e75516);
-    box-shadow: 0 4px 15px 0 rgba(252, 104, 110, 0.75);
-}
+    .btn-hover:focus {
+        outline: none;
+    }
+
+    .btn-hover.color-4 {
+        background-image: linear-gradient(to right, #fc6076, #ff9a44, #ef9d43, #e75516);
+        box-shadow: 0 4px 15px 0 rgba(252, 104, 110, 0.75);
+    }
 </style>
 
 <div class="suggestion-container">
@@ -90,7 +106,9 @@
                     </div>
                 </div>
                 <div class="buttons">
-                    <button class="btn-hover color-4 flw_btn" id="follow-btn-{{ data.id }}" onclick="handleFollowClick(this.id)">Follow</button>
+                    <button class="btn-hover color-4 flw_btn" id="follow-btn-{{ data.id }}"
+                        onclick="handleFollowClick(this.id)">Follow
+                    </button>
                 </div>
             </div>
         </div>
