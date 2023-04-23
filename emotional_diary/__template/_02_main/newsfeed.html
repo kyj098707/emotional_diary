@@ -1,12 +1,7 @@
 {% extends "../base.html" %}
 {% load static %}
 
-{% block style %}
-
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
-
-<style>
+{% block st %}
     .go-back:hover svg {
         fill: #bbb;
     }
@@ -35,8 +30,23 @@
         font-size: 15px;
     }
 
-    .diary-contents__date {
+    .diary-contents__date, .diary-comment__date, {
         color: rgba(0,0,0,0.5);
+    }
+
+    .diary-contents__emoji {
+        background-color: #fc829f;
+        border-radius: 10px;
+        color:white;
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .diary-contents__emoji:hover {
+        filter: brightness(0.9);
+    }
+
+    .emoji {
+        fill: white;
     }
 
     .diary-contents__title {
@@ -65,10 +75,10 @@
         bottom: 0;
     }
 
-    .diary-contents__more {
+    .diary-contents__more, .diary-comment__more {
         color: rgba(0, 0, 0, 0.5)
     }
-    .diary-contents__more:hover {
+    .diary-contents__more:hover, .diary-comment__more:hover {
         color: rgba(0, 0, 0, 1)
     }
 
@@ -120,16 +130,33 @@
         background-color: transparent;
     }
 
-    .diary-comments {
+    .diary-modal-content__comments {
+        height: inherit;
         position: relative;
         width: 30%;
     }
-</style>
+
+    .diary-comment {
+        height: 540px;
+        overflow-y: auto;
+    }
+
+    .diary-comment__txt {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+    }
+    
 
 {% endblock %}
 
-{% block content %}
-{% include '__02_intro/diary_detail.html' %}
+{% block modal %}
+    {% include './__addon/diary_modal.html' %} 
+{% endblock %}
+
+
+{% block contents %}
 <div class="back mx-3 my-4">
     <a href="/personal/personal_blog/" class="go-back">
         <svg width="50" height="50" fill="white">
@@ -154,11 +181,11 @@
             <div calss="diary-contents">
                 <div class="diary-contents__date_emoji p-2 d-flex justify-content-between">
                     <span class="diary-contents__date">
-                        {{diary.create_at}}
+                        {{diary.create_at}} 2023년 04월 12일 수요일
                     </span>
-                    <div class="diary-contents__emoji d-flex align-items-center">
+                    <div class="diary-contents__emoji d-flex align-items-center p-2" data-toggle="tooltip" title="기쁨 95%">
                         <svg width="20" height="20" class="emoji">
-                            <use xlink:href="#emoji-happy"></use>
+                            <use xlink:href="#emoji-happiness"></use>
                         </svg>
                         <span class="mx-2">Happiness</span>
                     </div>
@@ -184,21 +211,20 @@
                 <svg width="16" height="16" class="liked">
                     <use xlink:href="#liked"></use>
                 </svg>
-                <span class="liked__count">{{ diary.num_like }}</span>
+                <span class="liked__count">{{ diary.num_like }} 7</span>
                 <svg width="16" height="16" class="comments">
                     <use xlink:href="#comments"></use>
                 </svg>
-                <span class="comments__count">{{ diary.num_comment }}</span>
-
-                <span class="diary-date__time mx-2">1시간 전</span>
+                <span class="comments__count">{{ diary.num_comment }} 9</span>
             </div>
         </div>
         {% endfor %}
     {% endif %}
 </div>
+{% endblock %}
 
 
-<script>
+{% block sc %}
     $( function() {
         $(".newsfeed-slider").slick({
             infinite: false,
@@ -227,7 +253,6 @@
         modal.show()
     })
 
-
     $(function() {
         $('textarea').on('keydown', function(event) {
             if (event.keyCode == 13)
@@ -237,5 +262,12 @@
                 }
         });
     });
-</script>
+
+    $(document).on("click","#diary-comment__more", function(){
+        const more = document.querySelector('#diary-comment__more');
+        const text = document.querySelector('.diary-comment__txt');
+        more.style.display = 'none';
+        text.style.display = 'block';
+    })
+
 {% endblock %}

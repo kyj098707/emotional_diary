@@ -11,6 +11,10 @@
 
 
 {% block center %}
+<link rel="stylesheet" href="{% static 'static/css/personal_style.css' %}">
+<button type="button" class="btn diary-create-btn" id="diary_create" data-bs-toggle="modal"
+        data-bs-target="#modal_diary_create">+ <span>diary</span>
+</button>
 <div id="center-content"></div>
 
 {% endblock %}
@@ -64,9 +68,9 @@ follower_count.innerHTML = `<span class="count follower-count-value" id="followe
 following_count.innerHTML = `<span class="count following-count-value" id="follower-'+response.id+'onclick="
                                    handleFollowingListClick(this.id)">`+response.num_following+`</span>`;
 }
-let diary_ajax_url = "{% url 'diary:diary-list' %}";
+let my_diary_ajax_url = "{% url 'diary:my-diary-list' %}";
 
-response = request_ajax(diary_ajax_url, "GET", {}, token)
+response = request_ajax(my_diary_ajax_url, "GET", {}, token)
         const element = document.getElementById('center-content');
         if (response == "error") {
           document.getElementById("error_msg").style.display = "block";
@@ -97,4 +101,29 @@ console.log(id)
 
 location.href = "http://127.0.0.1:8000/profile/"+id+"/"
 };
+
+
+const handleDelClick = (buttonId) => {
+        token = localStorage.getItem("access")
+        id = buttonId.split("-").pop()
+        let ajax_url = "{% url 'diary:diary-list' %}" + id
+        data_dic = { "diary_id": id }
+        response = request_ajax(ajax_url, "DELETE", data_dic, token)
+        const element = document.getElementById("center-content");
+        element.innerHTML = response
+      }
+const handleLikeClick = (buttonId) => {
+            token = localStorage.getItem("access")
+            id = buttonId.split("-").pop()
+            let ajax_url = "{% url 'diary:diary-list' %}" + id + "/like/"
+            data_dic = { "diary_id": id }
+            response = request_ajax(ajax_url, "POST", data_dic, token)
+            console.log(response.num_like)
+            const element = document.getElementById("num_like_" + id);
+            console.log(element)
+            element.innerHTML = `<div id=num_like>` + response.num_like + `개</div>`
+
+          }
+
+
 {% endblock %}
