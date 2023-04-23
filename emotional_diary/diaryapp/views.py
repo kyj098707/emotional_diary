@@ -137,7 +137,7 @@ class DiaryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
         self.perform_destroy(instance)
         queryset = Diary.objects.order_by("-created_at")
         serializer = DiaryListSerializers(queryset,many=True)
-        return render(request,"__02_intro/__addon/intro_post.html", {"data" : list(serializer.data)})
+        return render(request,"_02_main/__addon/center_post_list.html", {"data" : list(serializer.data)})
 
 class TagListCreateAPIView(ListCreateAPIView):
     queryset = Tag.objects.all()

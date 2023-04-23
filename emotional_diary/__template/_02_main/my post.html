@@ -11,6 +11,7 @@
 
 
 {% block center %}
+<link rel="stylesheet" href="{% static 'static/css/personal_style.css' %}">
 <div id="center-content"></div>
 
 {% endblock %}
@@ -97,4 +98,16 @@ console.log(id)
 
 location.href = "http://127.0.0.1:8000/profile/"+id+"/"
 };
+
+
+const handleDelClick = (buttonId) => {
+        token = localStorage.getItem("access")
+        id = buttonId.split("-").pop()
+        let ajax_url = "{% url 'diary:diary-list' %}" + id
+        data_dic = { "diary_id": id }
+        response = request_ajax(ajax_url, "DELETE", data_dic, token)
+        const element = document.getElementById("center-content");
+        element.innerHTML = response
+      }
+
 {% endblock %}
