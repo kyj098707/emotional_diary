@@ -1,61 +1,44 @@
-/* personal_blog.html */
-}
-
-body {
-  background-image: url('../img/account/background.webp');
-  overflow: hidden;
-}
-.main_container {
-  margin: 15px; 
-}
-#left-container {
-  border: 3px solid black;
-  background-color: white;
-  width: 20%; 
-  float: left; 
-  margin-left : 5px;
-  margin-right: 10px; 
-  border-radius: 10px; 
-}
-#middle-container {
-  border: 3px solid black;
-  background-color: white;
-  width: 55%; 
-  float: left;
-  margin-right: 10px; 
-  margin-left: 25px; 
-  border-radius: 10px; 
-  overflow:scroll;
-}
-#right-container {
-  border: 3px solid black;
-  background-color: white;
-  width: 20%; 
-  float: left; 
-  margin-left: 25px; 
-  border-radius: 10px; 
-}
 #diary_create {
   margin-top: 10px;
   font-weight: bold;
   height : 50px;
   font-size : 20px;
 }
+
 #diary_create span {
-  margin-left: 40px; 
+  margin-left: 40px;
+}
+#middle-container {
+  border: 3px solid black;
+  background-color: white;
+  width: 55%;
+  float: left;
+  margin-right: 10px;
+  margin-left: 25px;
+  border-radius: 10px;
+  overflow:scroll;
+}
+.diary-create-btn {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
 }
 
-.btn-primary {
-  background-color: white;
-  color: black; 
-  border: 2px solid black;
-}
-.btn-secondary {
-  background-color: white;
-  color: black; 
-  border: 2px solid black;
-}
 .diary-list {
+height: 630px;
+    overflow-y:scroll;
+}
+.diary-list::-webkit-scrollbar {
+    width: 10px;
+  }
+.diary-list::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+  }
+.diary-list::-webkit-scrollbar-track {
+    background-color: grey;
+  }
+
+.diary-detail {
   margin-top:30px;
   background-color: white;
   padding: 20px;
@@ -64,32 +47,32 @@ body {
   margin-bottom: 20px;
 }
 
-.diary_list_title {
+.diary-list-title {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;
 }
 
-.edit-button {
+.diary-edit-button {
   border: none;
   background: none;
   float: right;
 }
 
-.delete-button {
+.diary-delete-button {
   background: none;
   border: none;
   color: black;
   float: right;
+}
 
-
-.diary .content {
+.diary-list-content {
 margin-top: 20px;
 font-size: 18px;
 line-height: 1.5;
 }
 
-.diary .date {
+.diary-list-date {
 font-size: 14px;
 color: gray;
 margin-top: 10px;
@@ -97,7 +80,7 @@ text-align: right;
 margin-right : 10px;
 }
 
-.add {
+.diary-list-add {
 margin-top : 20px;
 display: inline-block;
 color: red;
@@ -105,7 +88,7 @@ font-size: 18px;
 cursor: pointer;
 }
 
-.heart__count {
+.diary-heart__count {
 display: inline-block;
 font-weight:500;
 color: black;
@@ -131,38 +114,6 @@ font-size: 14px;
 color: #666;
 margin-left: 10px;
 }
-
-.top-title{
-font-weight: 600;
-margin-top : 30px;
-display: flex; 
-justify-content: center;
-font-size : 25px;
-}
-.bottom-title{
-font-weight: 600;
-margin-top : 80px;
-display: flex; 
-justify-content: center;
-font-size : 25px;
-}
-
-.user{
-display: flex; 
-justify-content: center;
-font-size : 20px;
-font-weight: bold;
-}
-
-
-.my-user{
-display: flex; 
-justify-content: center;
-font-size : 40px;
-
-}
-
-
 
 .icon {
 display: flex;
@@ -194,14 +145,6 @@ cursor: none;
   height : 200px;
 }
 
-
-/* diary_comment.html */
-
-
-
-/* diary_edit.html */
 .save-button {
   float: right;
-
-
 }

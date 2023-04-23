@@ -24,7 +24,9 @@ urlpatterns = [
     path('newsfeed/<int:pk>/test', views.newsfeed_test, name="newsfeed_test"),
 
     #api
-    path('diary/',views.DiaryListCreateAPIView.as_view(),name="diary-list"),
+    path('diary/mylist/',views.my_diary_list,name="my-diary-list"),
+    path('diary/', views.DiaryListCreateAPIView.as_view(), name="diary-list"),
+    path('diary/<int:pk>/list/', views.user_diary_list, name="user-diary-list"),
     path('diary/<int:pk>/like/',views.diary_like,name='diary-like'),
     path('diary/<int:pk>/',views.DiaryRetrieveUpdateDestroyAPIView.as_view(),name="diary-detail"),
     path('diary/<int:pk>/comment/',views.comment_create,name="comment-create"),
