@@ -104,11 +104,10 @@ class DiaryListCreateAPIView(ListCreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(user=request.user)
-        headers = self.get_success_headers(serializer.data)
         queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True)
 
-        return render(request, "__02_intro/__addon/intro_post.html", {"data":list(serializer.data)})
+        return render(request,"_02_main/__addon/center_post_list.html", {"data" : list(serializer.data)})
 
     def list(self, request, *args, **kwargs):
 
