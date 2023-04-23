@@ -1,0 +1,89 @@
+{% load static %}
+<div class="modal" id='modal_detail' tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content d-flex">
+
+            <!-- a diary -->
+            <div class="diary-modal-content d-flex">
+
+                <!-- 다이어리 메인 -->
+                <div class="diary-modal-content__main">
+
+                    <!-- 유저 정보 -->
+                    <div class="diary-user d-flex border-bottom p-2 align-items-center">
+                        <img src="{% static 'static/img/account/profile_on.webp' %}" class="diary-user__img" width="30" height="30"></img>
+                        <span class="diary-user__name mx-2"><strong>{{data.user.username}}</strong></span>
+                    </div>
+
+                    <!-- 다이어리 내용 및 댓글 추가 -->
+                    <div calss="diary-contents">
+                        <div class="diary-contents__date_emoji p-2 d-flex justify-content-between">
+                            <span class="diary-contents__date">2023년 04월 12일 수요일</span>
+                            <div class="diary-contents__emoji d-flex align-items-center">
+                                <svg width="20" height="20" class="emoji">
+                                    <use xlink:href="#emoji-happy"></use>
+                                </svg>
+                                <span class="mx-2">Happiness</span>
+                            </div>
+                        </div>
+                        <p class="diary-contents__title px-2">
+                            {{data.title}}
+                        </p>
+                        <p class="diary-contents__txt px-2">
+                            {{data.content}}
+                        </p>
+                        <p class="diary-contents__tag px-2">
+                            {% for tag in data.tag %}
+                                #{{tag.name}}
+                            {% endfor %}
+                        </p>
+
+                        <!-- 댓글 추가 -->
+                        <div class="add-comment">
+                            <form method="post" id="comment-form">
+                                {% csrf_token %}
+                                <div class="d-flex align-items-center px-2 my-3">
+                                    <textarea class="add-comment__txtarea flex-fill px-3" rows="1" placeholder="댓글 달기"></textarea>
+                                    <button class="add-comment__btn" type="submit">Post</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 다이어리 댓글 -->
+                <div class="diary-modal-content__comments border-start">
+                    {% for comment in data.comment %}
+                    <div class="diary-comment p-2">
+                        <div class="diary-comment-user d-flex">
+                            <img src="{% static 'static/img/account/profile1.jpg' %}" class="diary-user__img" width="18" height="18"></img>
+                            <span class="diary-user__name mx-2"><strong>{{comment.user.username}}</strong></span>
+                            <span class="diary-comment__date">5분 전</span>
+                        </div>
+                        <p class="diary-comment__txt my-0">
+                            {{comment.content}}
+                        </p>
+                        <p class="diary-comment__more my-0" id="diary-comment__more">
+                            더보기
+                        </p>
+                    </div>
+                    {% endfor %}
+
+                    <!-- 다이어리 반응 -->
+                    <div class="diary-response p-2 border-top">
+                        <svg width="16" height="16" class="liked">
+                            <use xlink:href="#liked"></use>
+                        </svg>
+                        <span class="liked__count">{{ diary.num_like }}</span>
+                        <svg width="16" height="16" class="comments">
+                            <use xlink:href="#comments"></use>
+                        </svg>
+                        <span class="comments__count">{{ diary.num_comment }}</span>
+        
+                        <span class="diary-date__time mx-2">1시간 전</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
