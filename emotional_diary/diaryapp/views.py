@@ -106,6 +106,7 @@ def my_diary_list(request):
 
 @api_view(['GET'])
 def user_diary_list(request,pk):
+    print(pk)
     user = get_object_or_404(User,id=pk)
     queryset = Diary.objects.filter(user=user).order_by("-created_at")
     serializer_class = DiaryListSerializers
@@ -120,7 +121,6 @@ class DiaryListCreateAPIView(ListCreateAPIView):
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        print(request.data)
 
         serializer.is_valid(raise_exception=True)
         obj = serializer.save(user=request.user)
@@ -129,8 +129,8 @@ class DiaryListCreateAPIView(ListCreateAPIView):
             if not Tag.objects.filter(name=tag_name).exists():
                 Tag.objects.create(name=tag_name)
             obj.tag.add(Tag.objects.get(name=tag_name))
-        queryset = self.filter_queryset(self.get_queryset())
-        serializer = self.get_serializer(queryset, many=True)
+        diary = Diary.objects.filter(user=request.user)
+        serializer = self.get_serializer(diary, many=True)
 
         return render(request,"_02_main/__addon/center_post_list.html", {"data" : list(serializer.data)})
 
@@ -154,7 +154,7 @@ class DiaryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
-        return render(request,"__02_intro/__addon/diary_detail_test.html", {"data" : list(serializer.data)})
+        return render(request,"_02_main/__addon/follow_suggestion_list.html", {"data" : list(serializer.data)})
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
