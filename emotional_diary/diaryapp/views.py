@@ -96,6 +96,24 @@ def profile_info(request,pk):
 ######
 
 
+@api_view(['GET'])
+def my_diary_list(request):
+    queryset = Diary.objects.filter(user=request.user).order_by("-created_at")
+    serializer_class = DiaryListSerializers
+
+    serializer = serializer_class(queryset, many=True)
+    return render(request, "_02_main/__addon/center_post_list.html", {"data": list(serializer.data)})
+
+@api_view(['GET'])
+def user_diary_list(request,pk):
+    user = get_object_or_404(User,id=pk)
+    queryset = Diary.objects.filter(user=user).order_by("-created_at")
+    serializer_class = DiaryListSerializers
+
+    serializer = serializer_class(queryset, many=True)
+    return render(request, "_02_main/__addon/center_post_list.html", {"data": list(serializer.data)})
+
+
 class DiaryListCreateAPIView(ListCreateAPIView):
     queryset = Diary.objects.order_by("-created_at")
     serializer_class = DiaryListSerializers

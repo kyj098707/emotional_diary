@@ -65,9 +65,9 @@ follower_count.innerHTML = `<span class="count follower-count-value" id="followe
 following_count.innerHTML = `<span class="count following-count-value" id="follower-'+response.id+'onclick="
                                    handleFollowingListClick(this.id)">`+response.num_following+`</span>`;
 }
-let diary_ajax_url = "{% url 'diary:diary-list' %}";
+let my_diary_ajax_url = "{% url 'diary:my-diary-list' %}";
 
-response = request_ajax(diary_ajax_url, "GET", {}, token)
+response = request_ajax(my_diary_ajax_url, "GET", {}, token)
         const element = document.getElementById('center-content');
         if (response == "error") {
           document.getElementById("error_msg").style.display = "block";
