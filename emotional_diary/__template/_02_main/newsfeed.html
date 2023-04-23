@@ -1,0 +1,273 @@
+{% extends "../base.html" %}
+{% load static %}
+
+{% block st %}
+    .go-back:hover svg {
+        fill: #bbb;
+    }
+
+    .newsfeed-slider__item  {
+        background-color: white;
+        border-radius: 10px;
+        height: 550px;
+        flex-shrink: 0;
+        margin: 20px;
+        transition: all .3s;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .diary-user__img {
+        border-radius: 50%;
+    }
+
+    .diary-contents {
+        height: 300px;
+        position: relative;
+    }
+
+    .diary-contents__date_emoji {
+        font-size: 15px;
+    }
+
+    .diary-contents__date, .diary-comment__date, {
+        color: rgba(0,0,0,0.5);
+    }
+
+    .diary-contents__emoji {
+        background-color: #fc829f;
+        border-radius: 10px;
+        color:white;
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .diary-contents__emoji:hover {
+        filter: brightness(0.9);
+    }
+
+    .emoji {
+        fill: white;
+    }
+
+    .diary-contents__title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .diary-contents__txt {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 12;
+        overflow: hidden;
+    }
+
+    .diary-contents__tag {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        overflow: hidden;
+    }
+
+    .diary-response {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+    }
+
+    .diary-contents__more, .diary-comment__more {
+        color: rgba(0, 0, 0, 0.5)
+    }
+    .diary-contents__more:hover, .diary-comment__more:hover {
+        color: rgba(0, 0, 0, 1)
+    }
+
+    .liked:hover {
+        fill: red;
+    }
+
+
+    /* diary_modal.html */
+
+    .modal-content {
+        animation: animations 0.3s linear;
+    }
+
+    @keyframes animations {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    
+    .diary-modal-content {
+        height: 600px;
+    }
+
+    .diary-modal-content__main {
+        width: 70%;
+    }
+
+    .add-comment {
+        position: absolute;
+        width: 70%;
+        bottom: 0;
+    }
+
+    .add-comment__txtarea {
+        resize: none;
+        border-radius: 20px;
+    }
+
+    .add-comment__txtarea:focus {
+        outline: none;
+    }
+
+    .add-comment__btn {
+        border:0;
+        background-color: transparent;
+    }
+
+    .diary-modal-content__comments {
+        height: inherit;
+        position: relative;
+        width: 30%;
+    }
+
+    .diary-comment {
+        height: 540px;
+        overflow-y: auto;
+    }
+
+    .diary-comment__txt {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+    }
+    
+
+{% endblock %}
+
+{% block modal %}
+    {% include './__addon/diary_modal.html' %} 
+{% endblock %}
+
+
+{% block contents %}
+<div class="back mx-3 my-4">
+    <a href="/personal/personal_blog/" class="go-back">
+        <svg width="50" height="50" fill="white">
+            <use xlink:href="#go-back"></use>
+        </svg>
+    </a>
+</div>
+
+<div class="newsfeed-slider"  data-slick='{"slidesToShow": 3, "slidesToScroll": 1}'>
+    {% if diary_list %}
+        {% for diary in diary_list %}
+        <!-- a diary -->
+        <div class="newsfeed-slider__item">
+
+            <!-- 유저 정보 -->
+            <div class="diary-user d-flex border-bottom p-2 align-items-center" >
+                <img src="{% static 'static/img/account/profile_on.webp' %}" class="diary-user__img" width="30" height="30"></img>
+                <span class="diary-user__name mx-2"><strong>{{ diary.user.username }}</strong></span>
+            </div>
+
+            <!-- 다이어리 내용 -->
+            <div calss="diary-contents">
+                <div class="diary-contents__date_emoji p-2 d-flex justify-content-between">
+                    <span class="diary-contents__date">
+                        {{diary.create_at}} 2023년 04월 12일 수요일
+                    </span>
+                    <div class="diary-contents__emoji d-flex align-items-center p-2" data-toggle="tooltip" title="기쁨 95%">
+                        <svg width="20" height="20" class="emoji">
+                            <use xlink:href="#emoji-happiness"></use>
+                        </svg>
+                        <span class="mx-2">Happiness</span>
+                    </div>
+                </div>
+                <p class="diary-contents__title px-2">
+                    {{ diary.title }}
+                </p>
+                <p class="diary-contents__txt px-2">
+                    {{ diary.content }}
+                </p>
+                <p class="diary-contents__tag px-2">
+                    {% for tag in data.tag %}
+                        #{{tag.name}}
+                    {% endfor %}
+                </p>
+                <p class="diary-contents__more px-2" id="to_detail">
+                    자세히 보기
+                </p>
+            </div>
+
+            <!-- 다이어리 반응 -->
+            <div class="diary-response p-2 border-top">
+                <svg width="16" height="16" class="liked">
+                    <use xlink:href="#liked"></use>
+                </svg>
+                <span class="liked__count">{{ diary.num_like }} 7</span>
+                <svg width="16" height="16" class="comments">
+                    <use xlink:href="#comments"></use>
+                </svg>
+                <span class="comments__count">{{ diary.num_comment }} 9</span>
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
+
+
+{% block sc %}
+    $( function() {
+        $(".newsfeed-slider").slick({
+            infinite: false,
+            responsive: [{
+                breakpoint: 1024,
+                settings: {
+                slidesToShow: 2,
+                infinite: true
+                }
+            }, {
+                breakpoint: 600,
+                settings: {
+                slidesToShow: 1,
+                dots: true
+                }
+            }, {
+                breakpoint: 300,
+                settings: "unslick"
+            }]
+        });
+    } );
+
+    $(document).on("click","#to_detail", function(){
+        const modals = document.querySelector('#modal_detail');
+        let modal = bootstrap.Modal.getOrCreateInstance(modals)  
+        modal.show()
+    })
+
+    $(function() {
+        $('textarea').on('keydown', function(event) {
+            if (event.keyCode == 13)
+                if (!event.shiftKey){
+                    event.preventDefault();
+                    $('#comment-form').submit();
+                }
+        });
+    });
+
+    $(document).on("click","#diary-comment__more", function(){
+        const more = document.querySelector('#diary-comment__more');
+        const text = document.querySelector('.diary-comment__txt');
+        more.style.display = 'none';
+        text.style.display = 'block';
+    })
+
+{% endblock %}
