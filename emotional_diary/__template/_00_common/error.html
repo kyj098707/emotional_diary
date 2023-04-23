@@ -1,0 +1,35 @@
+{% extends "../base.html" %}
+{% load static %}
+
+{% block st %}
+.container_error{
+    position : absolute;
+    top : 50%;
+    left : 50%;
+    transform : translate(-50%, -50%);
+}
+
+.to-intro {
+    color: white;
+    cursor : pointer;
+}
+
+.to-intro:hover {
+    color: #bbb;
+}
+
+{% endblock %}
+
+{% block contents %}
+<div class="container_forbidden text-light">
+    <div class="d-flex">
+        <svg width="50" height="50" fill="white">
+            <use xlink:href="#error"></use>
+        </svg>
+        <h1 class="error-title px-2">404 Not Found</h1>
+    </div>
+    <h5 class="error-text">요청하신 페이지를 찾을 수 없습니다.</h5>
+    
+    <a class="to-intro">메인 페이지로 돌아가기</a>
+</div>
+{% endblock %}
