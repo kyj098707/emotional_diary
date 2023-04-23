@@ -73,7 +73,7 @@
     // 해시태그 블록 생성 함수
     function createHashtagBlock(tag) {
       return $("<span>", {
-        "class": "badge bg-secondary me-1",
+        "class": "tag-badge bg-secondary me-1",
         "text": tag
       });
     }
@@ -97,7 +97,14 @@ $("#modal_diary_create form").submit(function (event) {
          let ajax_url = "{% url 'diary:diary-list' %}";
          const title = $("#diary_title").val();
          const contents = $("#diary_contents").val();
-         data_dic = {"title" : title, "content" : contents};
+         var tag_elements = document.querySelectorAll('.tag-badge');
+         var tags = [];
+        for (var i = 0; i < tag_elements.length; i++) {
+          var text = tag_elements[i].textContent;
+          tags.push(text);
+        }
+        console.log(tags);
+         data_dic = {"title" : title, "content" : contents,"tags":tags};
          let token = localStorage.getItem("access")
          response = request_ajax(ajax_url, "POST", data_dic, token)
          const element = document.getElementById('center-content');
@@ -106,15 +113,12 @@ $("#modal_diary_create form").submit(function (event) {
          }
          else {
            element.innerHTML = response;
-           console.log(response)
-           console.log("Dd")
-           console.log(element)
+           $("#modal_diary_create").modal("hide");
+
          }
 
-         console.log(response)
-         $("#modal_diary_create").modal("hide");
-
        });
+
 
 
 </script>

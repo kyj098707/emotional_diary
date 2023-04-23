@@ -102,8 +102,15 @@ class DiaryListCreateAPIView(ListCreateAPIView):
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
+        print(request.data)
+
         serializer.is_valid(raise_exception=True)
-        serializer.save(user=request.user)
+        obj = serializer.save(user=request.user)
+        for tag_name in request.data["tags"]:
+            tag_name = tag_name[1:] # #제거
+            if not Tag.objects.filter(name=tag_name).exists():
+                Tag.objects.create(name=tag_name)
+            obj.tag.add(Tag.objects.get(name=tag_name))
         queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True)
 
