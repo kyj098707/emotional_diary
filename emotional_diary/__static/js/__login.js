@@ -79,3 +79,9 @@ $(document).on("click","#to_signup", function(){
   let modal = bootstrap.Modal.getOrCreateInstance(modals)  
   modal.show()
 })
+
+$(document).on("click","#to_findpw", function(){
+    const modals = document.querySelector('#modal_findpw');
+    let modal = bootstrap.Modal.getOrCreateInstance(modals)  
+    modal.show()
+  })

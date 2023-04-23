@@ -25,6 +25,7 @@
 
 {% block modal %}
     {% include './__addon/signup_modal.html' %} 
+    {% include './forget_password.html' %} 
 {% endblock %}
 
 {% block contents %}
@@ -53,7 +54,7 @@
             </div>
             <input type="button" value="Login" onclick="handleLoginClick()">
             <div class="sub_link">
-                <a href="../forget_password">비밀번호 찾기</a>
+                <a id="to_findpw" class='to_signup'>비밀번호 찾기</a>
 
                 <a id="to_signup" class='to_signup'>회원가입</a>
             </div>
