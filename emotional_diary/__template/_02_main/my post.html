@@ -109,5 +109,18 @@ const handleDelClick = (buttonId) => {
         const element = document.getElementById("center-content");
         element.innerHTML = response
       }
+const handleLikeClick = (buttonId) => {
+            token = localStorage.getItem("access")
+            id = buttonId.split("-").pop()
+            let ajax_url = "{% url 'diary:diary-list' %}" + id + "/like/"
+            data_dic = { "diary_id": id }
+            response = request_ajax(ajax_url, "POST", data_dic, token)
+            console.log(response.num_like)
+            const element = document.getElementById("num_like_" + id);
+            console.log(element)
+            element.innerHTML = `<div id=num_like>` + response.num_like + `개</div>`
+
+          }
+
 
 {% endblock %}

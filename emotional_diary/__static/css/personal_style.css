@@ -28,6 +28,15 @@
 height: 630px;
     overflow-y:scroll;
 }
+.diary-list::-webkit-scrollbar {
+    width: 10px;
+  }
+.diary-list::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+  }
+.diary-list::-webkit-scrollbar-track {
+    background-color: grey;
+  }
 
 .diary-detail {
   margin-top:30px;
