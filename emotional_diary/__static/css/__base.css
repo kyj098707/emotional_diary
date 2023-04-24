@@ -32,7 +32,7 @@ background-color: gray;
 height: 1px;
 width: 85%;
 opacity : 40%;
-margin: 20px auto;
+margin: 10px auto;
 }
 
 @media (max-width: 1200px) {
@@ -103,7 +103,7 @@ color: #fff;
     padding: 10px;
     background-color: #ffeeee;
     border-radius: 10px;
-    margin-bottom: 50px;
+    margin-bottom: 25px;
 }
 
 .additional_menu a {
@@ -142,3 +142,41 @@ color: #fff;
     width: 30px;
     margin: 0 5px;
 }
+
+.follow-wrapper {
+    width:100%;
+    display: flex;
+    
+  }
+  
+  .follow-box {
+    display: flex;
+    font-size : 1rem;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 8px;
+    border: 1px solid #999;
+    border-radius: 16px;
+    background-color: transparent;
+    color: #999;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    margin-right: 8px;
+  }
+  
+  .follow-box:last-child {
+    margin-right: 0;
+  }
+  
+  .follow-box:hover {
+    background-color: #999;
+    color: #fff;
+  }
+  
+  .follow-text {
+    margin: 0 3px;
+  }
+  
+  .follow-count {
+    margin: 0 3px;
+  }

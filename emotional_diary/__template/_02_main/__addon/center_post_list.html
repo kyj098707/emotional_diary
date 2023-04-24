@@ -2,7 +2,9 @@
 <div center-content>
 <div class="diary-list">
     {% for i in data %}
-    <div class="diary-detail">
+
+
+    <div class="diary-detail mx-3">
         <div class="diary-list-title">
             {{i.title}}
             <button class="diary-delete-button" id=del-{{i.id}} onclick="handleDelClick(this.id)">
@@ -23,19 +25,23 @@
             {{i.content}}
         </div>
 
-        <div class="diary-list-add">
-            &hearts;<span class="diary-heart__count" onclick="handleLikeClick(this.id)" id=like-{{i.id}}>좋아요
-            <div id=num_like_{{i.id}}> {{i.num_like}} 개</div>
-                </span>
-
-            <i class="fas fa-envelope"><span>댓글 {{i.num_comment}} </span></i>
+        <div class="mt-3 d-flex align-items-center">
+            <div class="d-flex align-items-center">
+                <svg width="16" height="16"><use xlink:href="#fill_liked"></use></svg>
+                <span class="diary-heart__count" onclick="handleLikeClick(this.id)" id=like-{{i.id}}>좋아요 {{i.num_like}} 개</span>
+            </div>
+            <div class="ms-3 d-flex align-items-center">
+                <svg width="16" height="16"><use xlink:href="#comments"></use></svg>
+                <span class='diary-comment__count'>댓글 {{i.num_comment}}</span>
+            </div>
         </div>
-        <div class="date">April 12, 2023</div>
+        
+        <div class="d-flex justify-content-between align-items-center mt-1">
+            <div class="diary-list-date">#임시 #임시 #임시2 #임시3</div>
+            <div class="diary-list-date">April 12, 2023</div>
+        </div>
     </div>
 
     {% endfor %}
 </div>
 </div>
-
-
-

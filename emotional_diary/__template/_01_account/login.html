@@ -4,7 +4,7 @@
 
 {% block load %}
     <link href="{% static 'static/css/__login.css' %}" rel="stylesheet">
-<script type="text/javascript" src="{% static 'static/js/__login.js' %}"></script>
+    <script type="text/javascript" src="{% static 'static/js/__login.js' %}"></script>
 
 {% endblock %}
 
@@ -25,7 +25,7 @@
 
 {% block modal %}
     {% include './__addon/signup_modal.html' %} 
-    {% include './forget_password.html' %} 
+    {% include './__addon/forget_password_modal.html' %} 
 {% endblock %}
 
 {% block contents %}
@@ -66,4 +66,45 @@
 
 {% block sc %}
 
+    function handleLoginClick(){
+            const email = $("#email").val();
+            const password = $("#password").val();
+            let ajax_url = "{% url 'account:token_obtain_pair' %}"
+            console.log(ajax_url)
+            const data_dic = {"email":email,"password":password};
+
+            result = request_ajax(ajax_url,"POST",data_dic);
+            if (result.response=="complete"){
+                localStorage.setItem("access",result.access);
+                localStorage.setItem("refresh",result.refresh);
+                localStorage.setItem("email",result.email);
+                console.log("storage complete")
+                location.href = "{% url 'diary:home' %}"
+                }
+            else{
+                console.log("email activate");
+            }
+        }
+
+
+    $(document).on("click","#submit_join", function(){
+        alert("A")
+        email = $("#join_email").val();
+        nickname = $("#join_username").val();
+        password = $("#join_password").val();
+        let ajax_url = "{% url 'account:signup_validate' %}"
+        data_dic = {"email":email, "nickname":nickname, "password":password}
+        console.log(data_dic)
+        result = request_ajax(ajax_url,"GET",data_dic);
+        console.log(result)
+        if (result.validation=="True"){
+            let ajax_url = "{% url 'account:signup' %}";
+            data_dic = {"email":email,"password":password,"username":nickname};
+            result = request_ajax(ajax_url,"POST",data_dic);
+        }
+        else {
+            const element = document.getElementById('error_modal');
+            element.innerHTML = '<div id="error_modal">' + result.message + '</div>';
+        }
+    })
 {% endblock %}

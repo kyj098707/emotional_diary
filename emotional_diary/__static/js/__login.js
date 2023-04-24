@@ -33,47 +33,7 @@ function request_ajax(url, method, data_dic) {
   return result;
 }
 
-function handleLoginClick(){
-          const email = $("#email").val();
-          const password = $("#password").val();
-          let ajax_url = "http://127.0.0.1:8000/accounts/token/"
-          console.log(ajax_url)
-          const data_dic = {"email":email,"password":password};
 
-          result = request_ajax(ajax_url,"POST",data_dic);
-          if (result.response=="complete"){
-              localStorage.setItem("access",result.access);
-              localStorage.setItem("refresh",result.refresh);
-              localStorage.setItem("email",result.email);
-              console.log("storage complete")
-              let intro_url = "http://127.0.0.1:8000/layout_test/"
-              location.href = intro_url
-              }
-          else{
-              console.log("email activate");
-          }
-      }
-$(document).on("click","#submit_join", function(){
-  email = $("#join_email").val();
-  nickname = $("#join_username").val();
-  password = $("#join_password").val();
-  let ajax_url = "http://127.0.0.1:8000/accounts/signup/validate/"
-  data_dic = {"email":email, "nickname":nickname, "password":password}
-  console.log(data_dic)
-  result = request_ajax(ajax_url,"GET",data_dic);
-  console.log(result)
-  if (result.validation=="True"){
-      let ajax_url = "http://127.0.0.1:8000/accounts/signup/";
-      data_dic = {"email":email,"password":password,"username":nickname};
-      result = request_ajax(ajax_url,"POST",data_dic);
-
-  }
-  else {
-      const element = document.getElementById('error');
-      element.innerHTML = '<div id="error">' + result.message + '</div>';
-  }
-
-})
 $(document).on("click","#to_signup", function(){
   const modals = document.querySelector('#modal_signup');
   let modal = bootstrap.Modal.getOrCreateInstance(modals)  
