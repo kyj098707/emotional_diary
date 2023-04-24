@@ -2,7 +2,7 @@
   margin-top: 10px;
   font-weight: bold;
   height : 50px;
-  font-size : 20px;
+  font-size : 1.2rem;
 }
 
 #diary_create span {
@@ -18,15 +18,12 @@
   border-radius: 10px;
   overflow:scroll;
 }
-.diary-create-btn {
-  background-color: white;
-  color: black;
-  border: 2px solid black;
-}
+
 
 .diary-list {
-height: 630px;
+height: 80vh;
     overflow-y:scroll;
+    margin-top:1rem;
 }
 .diary-list::-webkit-scrollbar {
     width: 10px;
@@ -41,7 +38,7 @@ height: 630px;
 .diary-detail {
   margin-top:30px;
   background-color: white;
-  padding: 20px;
+  padding:18px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,0.2);
   margin-bottom: 20px;
@@ -92,10 +89,19 @@ cursor: pointer;
 display: inline-block;
 font-weight:500;
 color: black;
-font-size: 18px;
+font-size: 16px;
 margin-left: 5px;
 vertical-align: middle;
 }
+
+.diary-comment__count {
+  display: inline-block;
+  font-weight:500;
+  color: black;
+  font-size: 16px;
+  margin-left: 5px;
+  vertical-align: middle;
+  }
 
 .fa-envelope {
 display: inline-block;

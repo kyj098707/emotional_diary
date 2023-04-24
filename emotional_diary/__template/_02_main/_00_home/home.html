@@ -1,0 +1,417 @@
+{% extends "../../base_layout.html" %}
+{% load static %}
+
+{% block load %}
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+{% endblock %}
+
+{% block st %}
+    .statistics {
+<!--        background-color: #fff;-->
+        border-radius: 10px;
+        transition: all 0.5s;
+        height: 100%;
+        z-index : -1;
+    }
+    .stats-row {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .stats-item {
+        text-align: center;
+    }
+
+    .chart-container {
+        border-radius: 10px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        padding: 10px;
+        padding-right : 35px !important;
+        padding-left : 35px !important;
+        margin-bottom: 15px;
+    }
+
+    .chart-title {
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+{% endblock %}
+
+
+{% block center %}
+    <div class="col statistics">
+        <div class="chart-container p-0 pt-3">
+            <div class="stats-row">
+                <div class="stats-item">
+                    <h6>Followers</h6>
+                    <p>5</p>
+                </div>
+                <div class="stats-item">
+                    <h6>Likes</h6>
+                    <p>6</p>
+                </div>
+                <div class="stats-item">
+                    <h6>Following</h6>
+                    <p>8</p>
+                </div>
+                <div class="stats-item">
+                    <h6>Posts</h6>
+                    <p>4</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container p-0">
+            <div class="chart-container p-2">
+            <div id="calendar-chart"></div>
+        </div>
+        </div>
+        <div class="container p-0">
+            <div class="chart-container p-2">
+                <div class="row">
+                    <div class="col-md-8">
+                            <h5 class="chart-title">방문자 및 포스팅 추이 (가제)</h5>
+                            <canvas id="lineChart" height='50px'></canvas>
+                    </div>
+                    <div class="col-md-4 stats-row">
+                        <table class="table table-hover w-75">
+                            <tr>
+                                <td>yesterday's visitor</td>
+                                <td>10</td>
+                            </tr>
+                            <tr>
+                                <td>today's visitor</td>
+                                <td>15</td>
+                            </tr>
+                            <tr>
+                                <td>total visitor</td>
+                                <td>25</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="chart-container p-1">
+                        <h5 class="chart-title">최근 감정점수 CNT (가제)</h5>
+                            <canvas id="barChart" class='dash_chart' height='197px'></canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="chart-container p-1">
+                        <h5 class="chart-title">분포 추이</h5>
+                            <canvas id="doughnutChart" class='dash_chart'></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block sc %}
+    function delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    document.addEventListener("DOMContentLoaded", function () {
+        const parentWidth = document.querySelector('#calendar-chart').clientWidth;
+        drawCalendarChart(parentWidth);
+
+
+        <!-- BAR -->
+        const barctx = document.getElementById("barChart").getContext("2d");
+
+        const bardata = {
+            labels: ["Bar 1", "Bar 2", "Bar 3", "Bar 4", "Bar 5"],
+            datasets: [
+                {
+                    label: "Data",
+                    data: [10, 20, 30, 40, 50],
+                    backgroundColor: [
+                        "rgba(75, 192, 192, 0.2)",
+                        "rgba(255, 206, 86, 0.2)",
+                        "rgba(255, 99, 132, 0.2)",
+                        "rgba(255, 159, 64, 0.2)",
+                        "rgba(153, 102, 255, 0.2)",
+                    ],
+                    borderColor: [
+                        "rgba(75, 192, 192, 1)",
+                        "rgba(255, 206, 86, 1)",
+                        "rgba(255, 99, 132, 1)",
+                        "rgba(255, 159, 64, 1)",
+                        "rgba(153, 102, 255, 1)",
+                    ],
+                    borderWidth: 1,
+                },
+            ],
+        };
+
+        const baroptions = {
+            legend: {
+                position: 'left'
+            },
+            scales: {
+                y: {
+                beginAtZero: true,
+                },
+            },
+        };
+
+
+        <!-- BAR LOAD + Delay -->
+        async function loadbarChart() {
+            await delay(500);
+            const barChart = new Chart(barctx, {
+                type: "bar",
+                data: bardata,
+                options: baroptions,
+            });
+        }
+        loadbarChart();
+
+
+        <!-- DN CHART -->
+        const doughnutCtx = document.getElementById("doughnutChart").getContext("2d");
+
+        const doughnutData = {
+            labels: ["Label 1", "Label 2", "Label 3"],
+            datasets: [
+                {
+                data: [50, 30, 20],
+                backgroundColor: [
+                    "rgba(255, 99, 132, 0.2)",
+                    "rgba(54, 162, 235, 0.2)",
+                    "rgba(255, 206, 86, 0.2)",
+                ],
+                borderColor: [
+                    "rgba(255, 99, 132, 1)",
+                    "rgba(54, 162, 235, 1)",
+                    "rgba(255, 206, 86, 1)",
+                ],
+                borderWidth: 1,
+                },
+            ],
+        };
+
+        const doughnutOptions = {
+            legend: {
+                position: 'left',
+            },
+        };
+
+
+        <!-- DN LOAD + Delay -->
+        async function loadDNChart() {
+            await delay(500);
+            const doughnutChart = new Chart(doughnutCtx, {
+            type: "doughnut",
+            data: doughnutData,
+            options: doughnutOptions,
+        });
+        }
+        loadDNChart();
+
+
+    const lineCtx = document.getElementById("lineChart").getContext("2d");
+
+    const lineData = {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [
+            {
+                label: "Line 1",
+                data: [10, 15, 40, 25, 30, 27, 40, 63, 50, 21, 60, 65],
+                fill: false,
+                borderColor: "rgb(255, 99, 132)",
+                tension: 0.1
+            },
+            {
+                label: "Line 2",
+                data: [45, 10, 15, 30, 5, 30, 55, 10, 45, 22, 55, 46],
+                fill: false,
+                borderColor: "rgb(54, 162, 235)",
+                tension: 0.1
+            }
+        ]
+    };
+
+    const lineOptions = {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    };
+
+    const lineChart = new Chart(lineCtx, {
+        type: "line",
+        data: lineData,
+        options: lineOptions
+    });
+
+    });
+
+    window.addEventListener("resize", function () {
+        const parentWidth = document.querySelector('#calendar-chart').clientWidth;
+        d3.select("#calendar-chart").selectAll("svg").remove();
+        drawCalendarChart(parentWidth);
+    });
+
+
+    function resizeCharts() {
+        if (window.innerWidth < 768) {
+            $('#doughnutChart').hide();
+            $('#barChart').css('height', 'auto');
+        } else {
+            $('#doughnutChart').show();
+            $('#barChart').css('height', '300px');
+        }
+    }
+
+
+    $(document).ready(function() {
+        resizeCharts();
+
+        $(window).resize(function() {
+            resizeCharts();
+        });
+    });
+
+
+
+<!--  ===================================================  -->
+<!--  ===================================================  -->
+<!--  d3 git  -->
+<!--  ===================================================  -->
+<!--  ===================================================  -->
+
+const data = [
+    {"date": "2023-01-01", "count": 3},
+    {"date": "2023-01-05", "count": 1},
+];
+
+    function drawCalendarChart(parentWidth) {
+        const width = parentWidth - 25; // 40: padding 값
+        const cellSize = Math.floor(width / 53);
+        const height = cellSize * 7 + 50;
+
+        const formatPercent = d3.format(".1%");
+        const formatDay = d => "SMTWTFS"[d.getDay()];
+        const formatDate = d3.timeFormat("%Y-%m-%d");
+        const parseDate = d3.timeParse("%Y-%m-%d");
+        const monthPathWidth = (width - 40) / 53;
+
+
+        const color = d3.scaleSequential(d3.interpolateYlGn).domain([-0.05, 0.05]);
+
+        const svg = d3.select("#calendar-chart")
+            .selectAll("svg")
+            .data(d3.range(2023, 2024))
+            .join("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", "translate(40, 20)");
+
+        svg.append("text")
+            .attr("transform", "translate(-38, 0)rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", ".71em")
+            .style("text-anchor", "end")
+            .text(d => d);
+
+        const rect = svg.append("g")
+            .attr("fill", "none")
+            .attr("stroke", "#ccc")
+            .selectAll("rect")
+            .data(d => d3.timeDays(new Date(d, 0, 1), new Date(d + 1, 0, 1)))
+            .join("rect")
+            .attr("width", cellSize)
+            .attr("height", cellSize)
+            .attr("x", d => d3.timeSunday.count(d3.timeYear(d), d) * cellSize)
+            .attr("y", d => d.getDay() * cellSize)
+            .datum(formatDate);
+
+        rect.filter(d => d.slice(5, 7) === "01")
+            .attr("fill", "#e0e0e0")
+            .attr("stroke", "#bdbdbd");
+
+        svg.append("g")
+            .attr("fill", "none")
+            .attr("stroke", "#000")
+            .selectAll("path")
+            .data(d => d3.timeMonths(new Date(d, 0, 1), new Date(d + 1, 0, 1)))
+            .join("path")
+            .attr("d", pathMonth);
+
+        rect.attr("data-count", d => {
+            const found = data.find(item => item.date === d);
+            return found ? found.count : 0;
+        });
+
+        function pathMonth(t0) {
+            const t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0);
+            const d0 = t0.getDay(), w0 = d3.timeSunday.count(d3.timeYear(t0), t0) * monthPathWidth;
+            const d1 = t1.getDay(), w1 = d3.timeSunday.count(d3.timeYear(t1), t1) * monthPathWidth;
+            return `M${w0 + monthPathWidth},${d0 * cellSize}H${w0}V${7 * cellSize}H${w1}V${(d1 + 1) * cellSize}H${w1 + monthPathWidth}V0H${w0 + monthPathWidth}Z`;
+        }
+
+function showTooltip(d, count, event) {
+    const tooltip = d3.select("#calendar-chart")
+        .append("div")
+        .attr("class", "tooltip")
+        .style("position", "absolute")
+        .style("background-color", "#eee")
+        .style("border", "1px solid #999")
+        .style("border-radius", "3px")
+        .style("padding", "3px")
+        .style("z-index", "999")
+        .style("pointer-events", "none")
+        .style("opacity", "0.9")
+        .html(`날짜: ${d}<br/>포스트 개수: ${count}`)
+        .style("left", (event.pageX + 15) + "px")
+        .style("top", (event.pageY - 28) + "px");
+}
+
+function hideTooltip() {
+    d3.select("#calendar-chart .tooltip").remove();
+}
+
+rect.on("mouseover", function (event, d) {
+    const date = d;
+    const postCount = Math.floor(Math.random() * 10); // 무작위 포스트 개수, 실제 데이터로 대체 필요
+
+    d3.select(this).attr("stroke", "#000");
+
+    showTooltip(date, postCount, event);
+        const xPos = event.clientX;
+        const yPos = event.clientY;
+
+        tooltip
+            .style("left", `${xPos + 10}px`)
+            .style("top", `${yPos + 10}px`);
+})
+
+    .on("mouseout", function () {
+        d3.select(this).attr("stroke", "#ccc");
+
+        hideTooltip();
+    });
+
+
+
+    }
+
+
+
+
+
+{% endblock %}
