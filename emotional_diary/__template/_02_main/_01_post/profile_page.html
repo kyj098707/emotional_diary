@@ -1,4 +1,4 @@
-{% extends "../base_layout.html" %}
+{% extends "../../base_layout.html" %}
 {% load static %}
 
 {% block right-up %}
@@ -82,7 +82,7 @@ response = request_ajax(user_diary_ajax_url, "GET", {}, token)
 const handleFollowClick = (buttonId) => {
 id = buttonId.split("-").pop()
 let token = localStorage.getItem("access")
-let ajax_url = "http://127.0.0.1:8000/accounts/user/"+id+"/follow/"
+let ajax_url = "http://127.0.0.1:8000/aivlary/user/"+id+"/follow/"
 data_dic = {}
 result = request_ajax(ajax_url,"POST",data_dic,token)
 follower_elem = document.getElementById('suggestion-follower-'+id);
@@ -95,7 +95,7 @@ else{follow_btn_elem.innerText = `Follow`}
 const handleProfileFollowClick = (buttonId) => {
 id = buttonId.split("-").pop()
 let token = localStorage.getItem("access")
-let ajax_url = "http://127.0.0.1:8000/accounts/user/"+id+"/follow/"
+let ajax_url = "http://127.0.0.1:8000/aivlary/user/"+id+"/follow/"
 data_dic = {}
 result = request_ajax(ajax_url,"POST",data_dic,token)
 follower_elem = document.getElementById('follower-count-value');
@@ -111,7 +111,7 @@ const handleNameClick = (buttonId) => {
     console.log(buttonId)
     console.log(id)
 
-    location.href = "http://127.0.0.1:8000/profile/"+id+"/"
+    location.href = "{% url 'diary:post' %}" + id + "/"
 };
 const handleFollowerListClick = (buttonId) => {
 const modals = document.querySelector('#follow_modal_detail');

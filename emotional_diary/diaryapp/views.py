@@ -47,11 +47,7 @@ def intro_test(request):
     # return render(request, "__02_intro/intro_test.html")
     return render(request, "base_layout.html")
 
-def profile_test(request,pk):
-    user = get_object_or_404(User,id=pk)
-    return render(request, "_02_main/profile_page.html", {
-        "data": pk,
-    })
+
 
 
 ## main
@@ -65,3 +61,9 @@ def post(request):
 
 def social(request):
     return render(request, "base_layout.html")
+
+def user_profile(request,pk):
+    user = get_object_or_404(User,id=pk)
+    return render(request, "_02_main/_01_post/profile_page.html", {
+        "data": pk,
+    })
