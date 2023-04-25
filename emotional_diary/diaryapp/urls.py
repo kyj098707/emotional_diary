@@ -15,14 +15,15 @@ urlpatterns = [
     path('home/',views.home,name='home'),
     path('social/',views.social,name='social'),
     path('profile/', views.post,name="post"),
-    
+    path('profile/<int:pk>/', views.user_profile, name="user-profile"),
+
     path('personal/personal_blog/',views.personal_page, name ='personal_blog'),
     path('newsfeed/list', views.newsfeed_list, name="newsfeed_list"),
     path('newsfeed/<int:pk>/test', views.newsfeed_test, name="newsfeed_test"),
 
     #api
-    path('diary/mylist/',api.my_diary_list,name="my-diary-list"),
     path('diary/', api.DiaryListCreateAPIView.as_view(), name="diary-list"),
+    path('diary/mylist/',api.my_diary_list,name="my-diary-list"),
     path('diary/<int:pk>/list/', api.user_diary_list, name="user-diary-list"),
     path('diary/<int:pk>/like/',api.diary_like,name='diary-like'),
     path('diary/<int:pk>/',api.DiaryRetrieveUpdateDestroyAPIView.as_view(),name="diary-detail"),
