@@ -3,7 +3,7 @@
 {% block contents %}
         <div id='mainpage' class="row gx-5">
             <!-- 좌측 사이드바 -->
-            <div class="col-xl-2 narrow-hide">
+            <div class="col-xl-2 narrow-hide" style="height: 95vh;">
                 <div class="rounded-box" style="height: 40%;">
                     {% block right-up %}
                     {% endblock %}
@@ -16,7 +16,7 @@
 
             <!-- 중앙 컨텐츠 -->
             <div id='main_contents' class="col-xl-8">
-                <div class="rounded-box" style="height: 100%;">
+                <div class="rounded-box" style="height: 95vh;">
                     {% block center %}
                     {% endblock %}
                 </div>
@@ -24,7 +24,7 @@
 
             <!-- 우측 사이드바 -->
             <div id='right_sdb' class="col-xl-2">
-                <div class="rounded-box" style="height: 100%;">
+                <div class="rounded-box" style="height: 95vh;">
                 <div class="text-center">
                     {% include "./__side_profile.html" %}
 
@@ -35,7 +35,7 @@
                     </div>
 
                     <!-- 메뉴 -->
-                    <hr class="sidebar-divider my-5">
+                    <hr class="sidebar-divider my-2">
                     <div class="sidebar_menu menu_container ">
                     
                         <!-- user state에 따라 다른 메뉴 출력 필요 for문 -->
@@ -44,7 +44,7 @@
                     </div>
 
                     <!-- 하단 부가사항 -->
-                    <div class="additional_menu mt-4">
+                    <div class="additional_menu mt-2">
                         <a href="#">About</a>
                         <a href="#">Contact Us</a>
                         <span>&copy; 2023 Aivlary</span>
@@ -56,4 +56,46 @@
         </div>
 
     
+{% endblock %}
+
+
+{% block sc_main %}
+
+    function setActiveMenu() {
+      const currentUrl = window.location.href;
+      const menuLinks = document.querySelectorAll('.sideitem');
+
+      menuLinks.forEach(link => {
+        if (currentUrl === link.href) {
+          link.classList.add('active');
+        }
+      });
+    }
+    
+
+    $(document).ready(function() {
+        
+        setActiveMenu();
+
+        token = localStorage.getItem("access")
+            
+        let profile_mn_url = "{% url 'account:api_my_profile_mn_info' %}"
+        response = request_ajax(profile_mn_url, "GET", {}, token)
+        if (response == "error") {
+            document.getElementById("error_msg").style.display = "block";
+        } else {
+            main_pack = document.querySelector('.main-info-pack');
+            main_pack.innerHTML = response
+        }
+
+        let profile_fw_url = "{% url 'account:api_my_profile_fw_info' %}"
+        response = request_ajax(profile_fw_url, "GET", {}, token)
+        if (response == "error") {
+            document.getElementById("error_msg").style.display = "block";
+        } else {
+            follow_pack = document.querySelector('.follow-wrapper');
+            follow_pack.innerHTML = response
+        }
+
+    });
 {% endblock %}

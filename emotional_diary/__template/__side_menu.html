@@ -1,13 +1,13 @@
 {% load static %}
-<a href="#" class="fs-5 menu_item active">
-    <span>Dashboard</span>
+<a href="{% url 'diary:home' %}" class="fs-6 menu_item sideitem">
+    <span>Home</span>
 </a>
-<a href="#" class="fs-5 menu_item">
+<a href="{% url 'diary:post' %}" class="fs-6 menu_item sideitem">
     <span>My Post</span>
 </a>
-<a href="#" class="fs-5 menu_item">
+<a href="{% url 'diary:social' %}" class="fs-6 menu_item sideitem">
     <span>Social</span>
 </a>
-<a href="#" class="fs-5 menu_item">
+<a href="#" class="fs-6 menu_item sideitem">
     <span>Settings</span>
 </a>

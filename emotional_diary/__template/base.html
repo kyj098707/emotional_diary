@@ -40,7 +40,6 @@
 
 <body>
     {% block modal %}
-    {% include "./_02_main/diary_create.html" %}
     {% endblock %}
     
     <div class="container-fluid">
@@ -50,6 +49,29 @@
     </div>
 
     <script type="text/javascript">
+        function request_ajax(url, method, data_dic, token) {
+            $.ajax({
+                url: url,
+                type: method,
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader("Content-type", "application/json");
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                },
+                async: false,
+                data: JSON.stringify(data_dic),
+                success: function(response) {
+                    result = response
+                },
+                error: function(e) {
+                    result = "error"
+                }
+            });
+            return result;
+        }
+
+        {% block sc_main %}
+        {% endblock %}
+
         {% block sc %}
         {% endblock %}
     </script>
