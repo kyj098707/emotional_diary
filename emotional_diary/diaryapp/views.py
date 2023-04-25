@@ -4,6 +4,8 @@ from django.db import transaction
 from django.urls import reverse
 from django.http import HttpResponse
 from rest_framework.response import Response
+from transformers import AutoTokenizer
+
 from .models import Diary,Comment,Tag
 from .serializers import DiaryListSerializers,DiaryRetrieveSerializers,CommentSerializers,DiaryLikeNumSerializers,TagSerializers
 from accounts.models import User
@@ -14,6 +16,8 @@ from rest_framework.generics import get_object_or_404, ListAPIView, RetrieveAPIV
     ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import status
 from rest_framework.views import APIView
+
+import torch
 
 
 ################
@@ -120,6 +124,11 @@ class DiaryListCreateAPIView(ListCreateAPIView):
     serializer_class = DiaryListSerializers
 
     def create(self, request, *args, **kwargs):
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        tokenizers = AutoTokenizer.from_pretrained("klue/roberta-small")
+        print("start")
+        model = torch.load("./best_roberta_model.pt", map_location=torch.device(device))
+
         serializer = self.get_serializer(data=request.data)
 
         serializer.is_valid(raise_exception=True)
@@ -129,7 +138,19 @@ class DiaryListCreateAPIView(ListCreateAPIView):
             if not Tag.objects.filter(name=tag_name).exists():
                 Tag.objects.create(name=tag_name)
             obj.tag.add(Tag.objects.get(name=tag_name))
-        diary = Diary.objects.filter(user=request.user)
+        input_tokens = tokenizers(request.data["content"], return_tensors='pt')
+        attention_mask = input_tokens['attention_mask'].to(device)
+        input_ids = input_tokens['input_ids'].squeeze(1).to(device)
+        fear_output, disgust_output, surprise_output, happiness_output, sadness_output, angry_output = model(input_ids,
+                                                                                                             attention_mask)
+        obj.fear = fear_output.item()
+        obj.disgust = disgust_output.item()
+        obj.surprise = surprise_output.item()
+        obj.happiness = happiness_output.item()
+        obj.sadness = sadness_output.item()
+        obj.angry = angry_output.item()
+        obj.save()
+        diary = Diary.objects.filter(user=request.user).order_by("-created_at")
         serializer = self.get_serializer(diary, many=True)
 
         return render(request,"_02_main/__addon/center_post_list.html", {"data" : list(serializer.data)})
