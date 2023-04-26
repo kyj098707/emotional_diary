@@ -3,6 +3,8 @@
 
 {% block modal %}
   {% include "./diary_create.html" %}
+{% include "../../__my_follow_modal.html" %}
+
 {% endblock %}
 
 
@@ -40,7 +42,6 @@ $(document).ready(function() {
         const element = document.getElementById('follow-suggestion-list');
         element.innerHTML = response;
     }
-
     let my_diary_ajax_url = "{% url 'diary:my-diary-list' %}";
     response = request_ajax(my_diary_ajax_url, "GET", {}, token)
     const element = document.getElementById('center-content');
@@ -49,8 +50,12 @@ $(document).ready(function() {
     } else {
         element.innerHTML = response;
     }
-
-    
+    let my_follow_list_ajax_url = "{% url 'account:api-my-followlist' %}";
+    response = request_ajax(my_follow_list_ajax_url, "GET", {}, token)
+    flw_element = document.getElementById('my-flwer-modal-content');
+    console.log(response)
+    flw_element.innerHTML = response
+response
 
 });
 

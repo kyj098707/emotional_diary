@@ -119,3 +119,17 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         except Exception as e:
             data['response'] = 'error'
         return data
+
+class FollowSerializer(serializers.ModelSerializer):
+    following = serializers.SerializerMethodField()
+    follower = UserSerializer(many=True)
+    class Meta:
+        model = User
+        fields = ["follower", "following"]
+
+    def get_following(self,obj):
+        user = User.objects.filter(follower=obj)
+        user_serializers = UserSerializer(user,many=True)
+
+        return user_serializers.data
+
