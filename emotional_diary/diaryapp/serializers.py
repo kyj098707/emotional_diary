@@ -13,15 +13,24 @@ class DiaryLikeNumSerializers(serializers.ModelSerializer):
     def get_num_like(self, diary):
         return diary.like.count()
 
+
+
+
+class TagSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ["name"]
+
+
 class DiaryListSerializers(serializers.ModelSerializer):
     user = UserSerializer(required=False)
     num_like = serializers.SerializerMethodField()
     num_comment = serializers.SerializerMethodField()
     comment = serializers.SerializerMethodField()
-
+    tag = TagSerializers(many=True)
     class Meta:
         model = Diary
-        fields = ["id","title","content","user","num_like", "num_comment","created_at","comment"]
+        fields = ["id","title","content","user","num_like", "num_comment","created_at","comment","tag"]
 
     def get_num_comment(self, diary):
         comment_list = Comment.objects.filter(diary=diary)
@@ -33,15 +42,6 @@ class DiaryListSerializers(serializers.ModelSerializer):
         comment = Comment.objects.filter(diary=diary).order_by("-created_at")
         serializers = DiaryCommentSerializers(instance=comment, many=True)
         return serializers.data
-
-
-class TagSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = Tag
-        fields = ["name"]
-
-
-
 
 class DiaryRetrieveSerializers(serializers.ModelSerializer):
     comment = serializers.SerializerMethodField()

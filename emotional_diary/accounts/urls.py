@@ -35,7 +35,7 @@ urlpatterns = [
     path('user/<int:pk>/stats/', api.StatsRetrieveAPIView.as_view(), name="stats"),
     path('user/mypage/', api.my_page ,name="mypage"),
     path('user/<int:pk>/', api.UserRetrieveAPIView.as_view(), name="user_detail"),
-    
+    path('user/followlist/',api.my_follow_list,name="api-my-followlist"),
     # ====================================================
     # ====================================================
     # ====================================================

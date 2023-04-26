@@ -22,7 +22,7 @@ from rest_framework.response import Response
 from rest_framework import status, permissions
 from rest_framework.viewsets import ModelViewSet
 from .serializers import UserSerializer, SignupSerializer, StatsSerializer, UserRetrieveSerializers, \
-    MyTokenObtainPairSerializer, UserSuggestionSerializer
+    MyTokenObtainPairSerializer, UserSuggestionSerializer, FollowSerializer
 
 from accounts.validators import MyCommonPasswordValidator, MyNumericPasswordValidator, MyMinimumLengthValidator, \
     EmailNicknameValidator
@@ -166,6 +166,14 @@ class StatsRetrieveAPIView(RetrieveAPIView):
 class MyTokenObtainPairView(TokenObtainPairView):
     permission_classes = (permissions.AllowAny,)
     serializer_class = MyTokenObtainPairSerializer
+
+@api_view(['GET'])
+def my_follow_list(request):
+    user = request.user
+    serializer = FollowSerializer(user)
+    print(serializer.data)
+    return render(request,"_02_main/__addon/my-flw-modal.html", {"data":serializer.data})
+
 
 """
 @api_view(['GET'])
