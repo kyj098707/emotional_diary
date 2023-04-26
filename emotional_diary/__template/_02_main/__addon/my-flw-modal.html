@@ -1,0 +1,11 @@
+{% load static %}
+
+<div class="my-flw-modal-body" id="my-flwer-modal-content">
+    {% for follower in data.follower %}
+    <div>
+    <img class="suggestion-image" src="{% static 'static/img/__profile(dummy)/profile_01.webp' %}"></img>
+    {{follower.username}}
+    </div>
+</div>
+{% endfor %}
+
