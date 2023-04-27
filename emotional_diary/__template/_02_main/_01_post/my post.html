@@ -3,8 +3,8 @@
 
 {% block modal %}
   {% include "./diary_create.html" %}
-{% include "../../__my_follow_modal.html" %}
-
+  {% include "../../__my_follow_modal.html" %}
+  {% include "../__addon/diary_modal.html" %}
 {% endblock %}
 
 
@@ -23,7 +23,6 @@
   <button type="button" class="btn btn-outline-dark diary_create_btn"  id="diary_create" data-bs-toggle="modal"
           data-bs-target="#modal_diary_create">+ diary</button>
   <div id="center-content"></div>
-
 {% endblock %}
 
 

@@ -1,5 +1,5 @@
 {% load static %}
-<div class="modal" id='modal_detail' tabindex="-1">
+<div class="modal" id='modal_diary_detail' tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content d-flex">
 
@@ -87,3 +87,16 @@
         </div>
     </div>
 </div>
+
+<script>
+  $(document).ready(function() {
+
+const modal = new bootstrap.Modal(document.getElementById('modal_diary_detail'), {
+});
+$("#diary_detail").click(function() {
+  modal.show();
+});
+
+
+
+</script>
