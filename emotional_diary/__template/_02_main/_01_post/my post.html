@@ -1,6 +1,10 @@
 {% extends "../../base_layout.html" %}
 {% load static %}
 
+{% block load %}
+    <link href="{% static 'static/css/__diary.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block modal %}
   {% include "./diary_create.html" %}
   {% include "../../__my_follow_modal.html" %}
