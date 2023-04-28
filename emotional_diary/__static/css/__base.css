@@ -180,3 +180,9 @@ color: #fff;
   .follow-count {
     margin: 0 3px;
   }
+
+  .mx-2{
+    font-size: 14px;
+     color : red; 
+     font-weight: bold;
+  }
