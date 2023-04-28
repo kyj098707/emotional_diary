@@ -24,8 +24,8 @@ class UserSuggestionSerializer(serializers.ModelSerializer):
         fields = ["id","username", "num_follower"]
 
     def get_num_follower(self,user):
-        user = User.objects.filter(follower=user)
-        return len(user)
+        return user.follower.count()
+
 
 
     
@@ -45,10 +45,9 @@ class UserRetrieveSerializers(serializers.ModelSerializer):
         model = User
         fields = ["id","username", "num_follower","num_following"]
 
-    def get_num_follower(self,user):
-        user = User.objects.filter(follower=user)
-        return len(user)
-    def get_num_following(self, user):
+    def get_num_following(self,user):
+        return user.following.count()
+    def get_num_follower(self, user):
         return user.follower.count()
 
 
@@ -128,8 +127,12 @@ class FollowSerializer(serializers.ModelSerializer):
         fields = ["follower", "following"]
 
     def get_following(self,obj):
-        user = User.objects.filter(follower=obj)
-        user_serializers = UserSerializer(user,many=True)
+        users = obj.following.all()
+        user_serializers = UserSerializer(users,many=True)
 
         return user_serializers.data
+    def get_follower(self,obj):
+        users = obj.follower.all()
+        user_serializers = UserSerializer(users,many=True)
 
+        return user_serializers.data

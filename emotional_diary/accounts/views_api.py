@@ -98,7 +98,7 @@ def email_validate(request):
 @api_view(['GET'])
 def user_suggestion(request):
     current_user_id = request.user.id
-    following_ids = request.user.follower.values_list('id', flat=True)
+    following_ids = request.user.following.values_list('id', flat=True)
     users = User.objects.exclude(id=current_user_id).exclude(id__in=following_ids)
     users = users[:min(6,len(users))]
     serializer = UserSuggestionSerializer(users, many=True)
@@ -127,23 +127,24 @@ def profile_info(request, pk):
     user = get_object_or_404(User,id=pk)
     serializer = UserRetrieveSerializers(user)
     flw_message = "Follow"
-    if pk in request.user.follower.values_list('id', flat=True):
+    if request.user.following.filter(pk=pk).exists():
         flw_message = "Following"
     data = {'flw_message': flw_message, 'data': serializer.data}
     return JsonResponse(data)
 
 @api_view(['POST'])
 def user_follow(request,pk):
-    print(pk)
-    following_user = get_object_or_404(User,pk=pk)
+    follower_user = get_object_or_404(User,pk=pk)
     cur_user = request.user
-    if cur_user != following_user:
-        if not cur_user.follower.filter(pk=pk).exists():
-            following_user.follower.add(cur_user)
+    if cur_user != follower_user:
+        if not cur_user.following.filter(pk=pk).exists():
+            follower_user.follower.add(cur_user)
+            cur_user.following.add(follower_user)
         else:
-            following_user.follower.remove(following_user)
+            follower_user.follower.remove(cur_user)
+            cur_user.following.remove(follower_user)
 
-    return Response(UserSuggestionSerializer(following_user).data)
+    return Response(UserSuggestionSerializer(follower_user).data)
 
 
 class UserRetrieveAPIView(RetrieveAPIView):

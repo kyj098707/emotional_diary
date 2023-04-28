@@ -52,11 +52,12 @@ class DiaryListSerializers(serializers.ModelSerializer):
         return serializers.data
 
     def get_emotion(self,diary):
-        emoji = {"fear":"😖","disgust":"🤐","surprise":"😵","happiness":"😊","sadness":"😥","angry":"😡"}
+        emoji = {"fear":"😖","disgust":"🤐","surprise":"😵","happiness":"😊","sadness":"😥","angry":"😡","neutral":"😶"}
         emotion = sorted([(diary.fear, "fear"), (diary.disgust, "disgust"), (diary.surprise, "surprise"), \
                           (diary.happiness, "happiness"), (diary.sadness, "sadness"), (diary.angry, "angry")],
-                         reverse=True)[0][1]
-
+                         reverse=True)
+        print(emotion)
+        emotion = emotion[0][1] if emotion[0][0] > 0.5 else "neutral"
         return {"emoji":emoji[emotion], "emotion":emotion}
 
 class DiaryRetrieveSerializers(serializers.ModelSerializer):

@@ -45,7 +45,6 @@ def my_diary_list(request):
 
 @api_view(['GET'])
 def user_diary_list(request,pk):
-    print(pk)
     user = get_object_or_404(User,id=pk)
     queryset = Diary.objects.filter(user=user).order_by("-created_at")
     serializer_class = DiaryListSerializers
@@ -87,19 +86,6 @@ class DiaryListCreateAPIView(ListCreateAPIView):
         diary = Diary.objects.filter(user=request.user).order_by("-created_at")
         serializer = self.get_serializer(diary, many=True)
         return render(request,"_02_main/__addon/center_post_list.html", {"data": list(serializer.data)})
-
-
-    def list(self, request, *args, **kwargs):
-
-        queryset = self.filter_queryset(self.get_queryset())
-
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(queryset, many=True)
-        return render(request,"_02_main/__addon/center_post_list.html", {"data" : list(serializer.data)})
 
 
     def list(self, request, *args, **kwargs):
