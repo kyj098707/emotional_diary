@@ -8,7 +8,8 @@ from rest_framework.response import Response
 from transformers import AutoTokenizer
 
 from .models import Diary,Comment,Tag
-from .serializers import DiaryListSerializers,DiaryRetrieveSerializers,CommentSerializers,DiaryLikeNumSerializers,TagSerializers
+from .serializers import DiaryListSerializers, DiaryRetrieveSerializers, CommentSerializers, DiaryLikeNumSerializers, \
+    TagSerializers, DiaryCreateSerializers
 from accounts.models import User
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -60,23 +61,21 @@ class DiaryListCreateAPIView(ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         device = "cuda" if torch.cuda.is_available() else "cpu"
         tokenizers = AutoTokenizer.from_pretrained("klue/roberta-small")
-        print("start")
         model = torch.load("./best_roberta_model.pt", map_location=torch.device(device))
-
-        serializer = self.get_serializer(data=request.data)
-
-        serializer.is_valid(raise_exception=True)
-        obj = serializer.save(user=request.user)
+        create_serializer = DiaryCreateSerializers(data=request.data)
+        create_serializer.is_valid(raise_exception=True)
+        obj = create_serializer.save(user=request.user)
         for tag_name in request.data["tags"]:
             tag_name = tag_name[1:] # #제거
             if not Tag.objects.filter(name=tag_name).exists():
                 Tag.objects.create(name=tag_name)
             obj.tag.add(Tag.objects.get(name=tag_name))
+
         input_tokens = tokenizers(request.data["content"], return_tensors='pt')
         attention_mask = input_tokens['attention_mask'].to(device)
         input_ids = input_tokens['input_ids'].squeeze(1).to(device)
         fear_output, disgust_output, surprise_output, happiness_output, sadness_output, angry_output = model(input_ids,
-                                                                                                             attention_mask)
+                                                                                              attention_mask)
         obj.fear = fear_output.item()
         obj.disgust = disgust_output.item()
         obj.surprise = surprise_output.item()
@@ -86,7 +85,6 @@ class DiaryListCreateAPIView(ListCreateAPIView):
         obj.save()
         diary = Diary.objects.filter(user=request.user).order_by("-created_at")
         serializer = self.get_serializer(diary, many=True)
-
         return render(request,"_02_main/__addon/center_post_list.html", {"data" : list(serializer.data)})
 
     def list(self, request, *args, **kwargs):
