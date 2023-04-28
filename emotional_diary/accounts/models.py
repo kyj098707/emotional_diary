@@ -38,7 +38,8 @@ class User(AbstractBaseUser):
     username = models.CharField(max_length=10, unique=True)
     email = models.EmailField(unique=True)
     nickname = models.CharField(max_length=10)
-    follower = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
+    follower = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="userfollower",default=0)
+    following = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="userfollowing",default=0)
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
