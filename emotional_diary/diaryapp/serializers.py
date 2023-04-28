@@ -22,6 +22,12 @@ class TagSerializers(serializers.ModelSerializer):
         fields = ["name"]
 
 
+class DiaryCreateSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Diary
+        fields = ["title","content"]
+
+
 class DiaryListSerializers(serializers.ModelSerializer):
     user = UserSerializer(required=False)
     num_like = serializers.SerializerMethodField()

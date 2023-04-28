@@ -139,9 +139,9 @@ def user_follow(request,pk):
     cur_user = request.user
     if cur_user != following_user:
         if not cur_user.follower.filter(pk=pk).exists():
-            cur_user.follower.add(following_user)
+            following_user.follower.add(cur_user)
         else:
-            cur_user.follower.remove(following_user)
+            following_user.follower.remove(following_user)
 
     return Response(UserSuggestionSerializer(following_user).data)
 
@@ -168,11 +168,13 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 @api_view(['GET'])
-def my_follow_list(request):
+def my_follower_list(request):
     user = request.user
     serializer = FollowSerializer(user)
     print(serializer.data)
     return render(request,"_02_main/__addon/my-flw-modal.html", {"data":serializer.data})
+
+
 
 
 """
