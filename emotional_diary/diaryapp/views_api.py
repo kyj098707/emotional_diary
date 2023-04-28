@@ -83,9 +83,11 @@ class DiaryListCreateAPIView(ListCreateAPIView):
         obj.sadness = sadness_output.item()
         obj.angry = angry_output.item()
         obj.save()
+
         diary = Diary.objects.filter(user=request.user).order_by("-created_at")
         serializer = self.get_serializer(diary, many=True)
-        return render(request,"_02_main/__addon/center_post_list.html", {"data" : list(serializer.data)})
+        return render(request,"_02_main/__addon/center_post_list.html", {"data": list(serializer.data)})
+
 
     def list(self, request, *args, **kwargs):
 

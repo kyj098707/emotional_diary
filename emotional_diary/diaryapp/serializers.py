@@ -33,10 +33,12 @@ class DiaryListSerializers(serializers.ModelSerializer):
     num_like = serializers.SerializerMethodField()
     num_comment = serializers.SerializerMethodField()
     comment = serializers.SerializerMethodField()
+    emotion = serializers.SerializerMethodField()
     tag = TagSerializers(many=True)
+
     class Meta:
         model = Diary
-        fields = ["id","title","content","user","num_like", "num_comment","created_at","comment","tag"]
+        fields = ["id","title","content","user","num_like", "num_comment","created_at","comment","tag","emotion"]
 
     def get_num_comment(self, diary):
         comment_list = Comment.objects.filter(diary=diary)
@@ -48,6 +50,14 @@ class DiaryListSerializers(serializers.ModelSerializer):
         comment = Comment.objects.filter(diary=diary).order_by("-created_at")
         serializers = DiaryCommentSerializers(instance=comment, many=True)
         return serializers.data
+
+    def get_emotion(self,diary):
+        emoji = {"fear":"😖","disgust":"🤐","surprise":"😵","happiness":"😊","sadness":"😥","angry":"😡"}
+        emotion = sorted([(diary.fear, "fear"), (diary.disgust, "disgust"), (diary.surprise, "surprise"), \
+                          (diary.happiness, "happiness"), (diary.sadness, "sadness"), (diary.angry, "angry")],
+                         reverse=True)[0][1]
+
+        return {"emoji":emoji[emotion], "emotion":emotion}
 
 class DiaryRetrieveSerializers(serializers.ModelSerializer):
     comment = serializers.SerializerMethodField()
