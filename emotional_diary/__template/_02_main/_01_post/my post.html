@@ -3,8 +3,8 @@
 
 {% block modal %}
   {% include "./diary_create.html" %}
-{% include "../../__my_follow_modal.html" %}
-
+  {% include "../../__my_follow_modal.html" %}
+  {% include "../__addon/diary_modal.html" %}
 {% endblock %}
 
 
@@ -23,7 +23,6 @@
   <button type="button" class="btn btn-outline-dark diary_create_btn"  id="diary_create" data-bs-toggle="modal"
           data-bs-target="#modal_diary_create">+ diary</button>
   <div id="center-content"></div>
-
 {% endblock %}
 
 
@@ -52,10 +51,9 @@ $(document).ready(function() {
     }
     let my_follow_list_ajax_url = "{% url 'account:api-my-followlist' %}";
     response = request_ajax(my_follow_list_ajax_url, "GET", {}, token)
-    flw_element = document.getElementById('my-flwer-modal-content');
+    my_follow_modal_lists = document.getElementById('my_follow_modal_lists');
     console.log(response)
-    flw_element.innerHTML = response
-response
+    my_follow_modal_lists.innerHTML = response
 
 });
 
@@ -103,10 +101,9 @@ const handleLikeClick = (buttonId) => {
         "diary_id": id
     }
     response = request_ajax(ajax_url, "POST", data_dic, token)
-    console.log(response.num_like)
-    const element = document.getElementById("num_like_" + id);
+    const element = document.getElementById("like-" + id);
     console.log(element)
-    element.innerHTML = `<div id=num_like>` + response.num_like + `개</div>`
+    element.innerHTML = `<div id=num_like> 좋아요 ` + response.num_like + ` 개</div>`
 
 }
 
