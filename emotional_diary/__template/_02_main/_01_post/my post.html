@@ -107,4 +107,10 @@ const handleLikeClick = (buttonId) => {
 
 }
 
+$(document).on("click","#diary_detail", function(){
+    const modals = document.querySelector('#modal_diary_detail');
+    let modal = bootstrap.Modal.getOrCreateInstance(modals)  
+    modal.show()
+})
+
 {% endblock %}
