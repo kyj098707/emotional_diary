@@ -2,7 +2,6 @@
 <div class="modal" id='modal_diary_detail' tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content d-flex">
-
             <!-- a diary -->
             <div class="diary-modal-content d-flex">
 
@@ -10,33 +9,43 @@
                 <div class="diary-modal-content__main">
 
                     <!-- 유저 정보 -->
-                    <div class="diary-user d-flex border-bottom p-2 align-items-center">
-                        <img src="{% static 'static/img/account/profile_on.webp' %}" class="diary-user__img" width="30" height="30"></img>
-                        <span class="diary-user__name mx-2"><strong>{{data.user.username}}</strong></span>
+                    <div class="d-flex border-bottom p-2 align-items-center justify-content-between">
+                        <a href="../profile" class="diary-user d-flex align-items-center">
+                            <img src="{% static 'static/img/account/profile_on.webp' %}" class="diary-user__img" width="30" height="30"></img>
+                            <span class="diary-user__name mx-2"><strong>{{ diary.user.username }} minkycho</strong></span>
+                        </a>
+                        <div class="diary-user__detail d-flex">
+                            <svg width="20" height="20" fill="gray">
+                                <use xlink:href="#three-dots"></use>
+                            </svg>
+                        </div>
                     </div>
 
                     <!-- 다이어리 내용 및 댓글 추가 -->
                     <div calss="diary-contents">
-                        <div class="diary-contents__date_emoji p-2 d-flex justify-content-between">
-                            <span class="diary-contents__date">2023년 04월 12일 수요일</span>
-                            <div class="diary-contents__emoji d-flex align-items-center">
-                                <svg width="20" height="20" class="emoji">
-                                    <use xlink:href="#emoji-happy"></use>
-                                </svg>
-                                <span class="mx-2">Happiness</span>
+                        <div class="diary-contents_detail">
+                            <div class="diary-contents__date_emoji p-2 d-flex justify-content-between">
+                                <span class="diary-contents__date">{{diary.create_at}} 2023년 04월 12일 수요일</span>
+                                <div class="diary-contents__emoji d-flex align-items-center">
+                                    &#x1F601
+                                    <span class="mx-1">Happiness</span>
+                                </div>
                             </div>
+                            <p class="diary-contents__title px-2">
+                                {{data.title}} This is title
+                            </p>
+                            <p class="diary-contents__txt diary-contents__txt_detail px-2">
+                                {{data.content}} It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+
+                                There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+                            </p>
+                            <p class="diary-contents__tag px-2">
+                                {% for tag in data.tag %}
+                                    #{{tag.name}}
+                                {% endfor %}
+                                # butter
+                            </p>
                         </div>
-                        <p class="diary-contents__title px-2">
-                            {{data.title}}
-                        </p>
-                        <p class="diary-contents__txt px-2">
-                            {{data.content}}
-                        </p>
-                        <p class="diary-contents__tag px-2">
-                            {% for tag in data.tag %}
-                                #{{tag.name}}
-                            {% endfor %}
-                        </p>
 
                         <!-- 댓글 추가 -->
                         <div class="add-comment">
@@ -53,22 +62,37 @@
 
                 <!-- 다이어리 댓글 -->
                 <div class="diary-modal-content__comments border-start">
-                    {% for comment in data.comment %}
-                    <div class="diary-comment p-2">
-                        <div class="diary-comment-user d-flex">
-                            <img src="{% static 'static/img/account/profile1.jpg' %}" class="diary-user__img" width="18" height="18"></img>
-                            <span class="diary-user__name mx-2"><strong>{{comment.user.username}}</strong></span>
-                            <span class="diary-comment__date">5분 전</span>
+                    <div class="diary-comments">
+                        <!-- a comment -->
+                        <div class="diary-comment p-2">
+                            <div class="diary-comment-user d-flex align-items-center">
+                                <img src="{% static 'static/img/account/profile1.jpg' %}" class="diary-user__img" width="18" height="18"></img>
+                                <span class="diary-user__name mx-2"><strong>{{comment.user.username}} minkycho</strong></span>
+                                <span class="diary-comment__date">5분 전</span>
+                            </div>
+                            <p class="diary-comment__txt my-0">
+                                {{comment.content}} ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,
+                            </p>
+                            <p class="diary-comment__more my-0" id="diary-comment__more">
+                                더보기
+                            </p>
                         </div>
-                        <p class="diary-comment__txt my-0">
-                            {{comment.content}}
-                        </p>
-                        <p class="diary-comment__more my-0" id="diary-comment__more">
-                            더보기
-                        </p>
-                    </div>
-                    {% endfor %}
 
+                        <!-- a comment -->
+                        <div class="diary-comment p-2">
+                            <div class="diary-comment-user d-flex align-items-center">
+                                <img src="{% static 'static/img/account/profile1.jpg' %}" class="diary-user__img" width="18" height="18"></img>
+                                <span class="diary-user__name mx-2"><strong>{{comment.user.username}} minkycho</strong></span>
+                                <span class="diary-comment__date">5분 전</span>
+                            </div>
+                            <p class="diary-comment__txt my-0">
+                                {{comment.content}} ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,
+                            </p>
+                            <p class="diary-comment__more my-0" id="diary-comment__more">
+                                더보기
+                            </p>
+                        </div>
+                    </div>
                     <!-- 다이어리 반응 -->
                     <div class="diary-response p-2 border-top">
                         <svg width="16" height="16" class="liked">
@@ -87,16 +111,3 @@
         </div>
     </div>
 </div>
-
-<script>
-  $(document).ready(function() {
-
-const modal = new bootstrap.Modal(document.getElementById('modal_diary_detail'), {
-});
-$("#diary_detail").click(function() {
-  modal.show();
-});
-
-
-
-</script>
