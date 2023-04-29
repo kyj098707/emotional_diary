@@ -6,6 +6,14 @@
     --sub-color-a:#aee4ff;
     --sub-color-b: #b5c7ed;
     --sub-color-c: #c4f4fe;
+
+    --emoji-color-happiness: #fc829f;
+    --emoji-color-angry: #EE2C38;
+    --emoji-color-disgust: #24788f;
+    --emoji-color-fear: #2171B2;
+    --emoji-color-neutral: #64C887;
+    --emoji-color-sadness: #6E398D;
+    --emoji-color-surprise: #ff763c;
 }
 
 body,html {
