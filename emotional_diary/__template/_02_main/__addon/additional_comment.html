@@ -1,0 +1,30 @@
+{% load static %}
+<!-- a comment -->
+{% for comment in diary.comment %}
+<div class="diary-comment p-2">
+    <div class="diary-comment-user d-flex align-items-center">
+        <img src="{% static 'static/img/account/profile1.jpg' %}" class="diary-user__img" width="18" height="18"></img>
+        <span class="diary-user__name mx-2"><strong>{{comment.user.username}}</strong></span>
+        <span class="diary-comment__date">5분 전</span>
+    </div>
+    <p class="diary-comment__txt my-0">
+        {{comment.content}}
+    </p>
+    <p class="diary-comment__more my-0" id="diary-comment__more">
+        더보기
+    </p>
+</div>
+{% endfor %}
+<!-- 다이어리 반응 -->
+<div class="diary-response p-2 border-top">
+    <svg width="16" height="16" class="liked">
+        <use xlink:href="#liked"></use>
+    </svg>
+    <span class="liked__count">{{ diary.num_like }}</span>
+    <svg width="16" height="16" class="comments">
+        <use xlink:href="#comments"></use>
+    </svg>
+    <span class="comments__count">{{ diary.num_comment }}</span>
+
+    <span class="diary-date__time mx-2">1시간 전</span>
+</div>

@@ -61,6 +61,11 @@ $(document).ready(function() {
 
 });
 
+$(document).on("click","#add-comment__btn", function(){
+    const modals = document.querySelector('#modal_diary_detail');
+    let modal = bootstrap.Modal.getOrCreateInstance(modals)
+    modal.show()
+})
 const handleFollowClick = (buttonId) => {
     id = buttonId.split("-").pop()
     let token = localStorage.getItem("access")
@@ -106,9 +111,34 @@ const handleLikeClick = (buttonId) => {
     }
     response = request_ajax(ajax_url, "POST", data_dic, token)
     const element = document.getElementById("like-" + id);
-    console.log(element)
-    element.innerHTML = `<div id=num_like> 좋아요 ` + response.num_like + ` 개</div>`
+    element.innerHTML = `
+                <svg width="16" height="16"><use xlink:href="#fill_liked"></use></svg>
+                <span class="diary-heart__count">좋아요 `+ response.num_like +` 개</span>`
 
+}
+const handleCommentClick = (buttonId) => {
+id = buttonId.split("_").pop()
+diary_detail_url = "{% url 'diary:diary-list' %}" + id + "/"
+data_dic = {}
+result = request_ajax(diary_detail_url,"GET",data_dic,token)
+console.log(result)
+const element = document.getElementById('modal_detail_content');
+element.innerHTML=result
+}
+
+const handleCommentCreateClick = (buttonId) => {
+id = buttonId.split("-").pop()
+diary_detail_url = "{% url 'diary:diary-list' %}" + id + "/comment/"
+const content = $("#add-comment-field").val();
+data_dic = {
+        "content": content
+    }
+result = request_ajax(diary_detail_url,"POST",data_dic,token)
+
+const element = document.getElementById('diary-detail-comments');
+element.innerHTML=result
+console.log(element)
+console.log(result)
 }
 
 $(document).on("click","#diary_detail", function(){

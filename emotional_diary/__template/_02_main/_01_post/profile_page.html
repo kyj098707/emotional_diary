@@ -2,7 +2,12 @@
 {% load static %}
 
 {% block modal %}
+{% include "../../__my_follow_modal.html" %}
+{% include "../__addon/diary_modal.html" %}
+{% endblock %}
 
+{% block load %}
+    <link href="{% static 'static/css/__diary.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block right-up %}
@@ -42,46 +47,56 @@ return result;
 }
 
 $( document ).ready( function() {
-let suggest_ajax_url = "{% url 'account:api_user_suggestion' %}";
-let token = localStorage.getItem("access")
-response = request_ajax(suggest_ajax_url, "GET", {}, token)
-if (response == "error") {
-document.getElementById("error_msg").style.display = "block";
-}
-else {
-const element = document.getElementById('follow-suggestion-list');
-element.innerHTML = response;
-}
-let profile_ajax_url = "{% url 'account:profile' %}" + {{data}} +"/";
-response = request_ajax(profile_ajax_url, "GET", {}, token)
-if (response == "error") {
-document.getElementById("error_msg").style.display = "block";
-}
-else {
-name_element = document.getElementById('right-profile-name');
-follower_count = document.querySelector('.follower-count-value');
-following_count = document.querySelector('.following-count-value');
-profile_follow_btn = document.querySelector('.profile-follow-buttons');
+    let suggest_ajax_url = "{% url 'account:api_user_suggestion' %}";
+    let token = localStorage.getItem("access")
+    response = request_ajax(suggest_ajax_url, "GET", {}, token)
+    if (response == "error") {
+    document.getElementById("error_msg").style.display = "block";
+    }
+    else {
+    const element = document.getElementById('follow-suggestion-list');
+    element.innerHTML = response;
+    }
+    let profile_ajax_url = "{% url 'account:profile' %}" + {{data}} +"/";response = request_ajax(profile_ajax_url, "GET", {}, token)
+    if (response == "error") {
+    document.getElementById("error_msg").style.display = "block";
+    }
+    else {
+    name_element = document.getElementById('right-profile-name');
+    follower_count = document.querySelector('.follower-count-value');
+    following_count = document.querySelector('.following-count-value');
+    profile_follow_btn = document.querySelector('.profile-follow-buttons');
 
-name_element.innerText = response.data.username;
-follower_count.innerHTML = '<span class="count follower-count-value" id="follower-'+response.id+'" onclick="handleFollowerListClick(this.id)">'+response.data.num_follower+'</span>';
-following_count.innerHTML = '<span class="count following-count-value" id=follower-'+response.id+'" onclick="handleFollowingListClick(this.id)">'+response.data.num_following+'</span>';
-profile_follow_btn.innerHTML = `<div class="profile-follow-buttons"><button class="profile-btn-hover color-4 flw_btn" id="profile-follow-btn-`+{{data}}+`"onclick="handleProfileFollowClick(this.id)">`+response.flw_message+`</button></div>`;
+    name_element.innerText = response.data.username;
+    follower_count.innerHTML = `<span class="count follower-count-value" id="follower-`+response.id+`"
+                                      onclick="handleFollowerListClick(this.id)">`+response.data.num_follower+`</span>`;
+    following_count.innerHTML = `<span class="count following-count-value" id="follower-`+response.id+`"
+                                       onclick="handleFollowingListClick(this.id)">`+response.data.num_following+`</span>`;
+    profile_follow_btn.innerHTML = `
+    <div class="profile-follow-buttons">
+        <button class="profile-btn-hover color-4 flw_btn" id="profile-follow-btn-`+{{data}}+`"
+                onclick="handleProfileFollowClick(this.id)">`+response.flw_message+`
+        </button>
+    </div>`;
 
-}
+    }
 
-let user_diary_ajax_url = "{% url 'diary:diary-list' %}"+{{data}} +"/list/";
+    let user_diary_ajax_url = "{% url 'diary:diary-list' %}"+{{data}} +"/list/";
 
-response = request_ajax(user_diary_ajax_url, "GET", {}, token)
-        const element = document.getElementById('center-content');
-        if (response == "error") {
-          document.getElementById("error_msg").style.display = "block";
-        }
-        else {
-          element.innerHTML = response;
-        }
-
-});
+    response = request_ajax(user_diary_ajax_url, "GET", {}, token)
+    const element = document.getElementById('center-content');
+    if (response == "error") {
+    document.getElementById("error_msg").style.display = "block";
+    }
+    else {
+    element.innerHTML = response;
+    }
+    let user_follow_list_ajax_url = "{% url 'account:api-my-followlist' %}"+{{data}};
+    console.log(user_follow_list_ajax_url)
+    response = request_ajax(user_follow_list_ajax_url, "GET", {}, token)
+    my_follow_modal_lists = document.getElementById('my_follow_modal_lists');
+    my_follow_modal_lists.innerHTML = response
+    });
 
 const handleFollowClick = (buttonId) => {
 id = buttonId.split("-").pop()
@@ -111,12 +126,11 @@ if(follow_btn_elem.innerText=="Follow")
 else{follow_btn_elem.innerText = `Follow`}
 }
 const handleNameClick = (buttonId) => {
-    id = buttonId.split("-").pop()
-    console.log(buttonId)
-    console.log(id)
-
-    location.href = "{% url 'diary:post' %}" + id + "/"
+id = buttonId.split("-").pop()
+location.href = "{% url 'diary:post' %}" + id + "/"
 };
+
+
 const handleFollowerListClick = (buttonId) => {
 const modals = document.querySelector('#follow_modal_detail');
 let modal = bootstrap.Modal.getOrCreateInstance(modals)
@@ -124,26 +138,57 @@ modal.show()
 }
 
 const handleDelClick = (buttonId) => {
-        token = localStorage.getItem("access")
-        id = buttonId.split("-").pop()
-        let ajax_url = "{% url 'diary:diary-list' %}" + id
-        data_dic = { "diary_id": id }
-        response = request_ajax(ajax_url, "DELETE", data_dic, token)
-        const element = document.getElementById("center-content");
-        element.innerHTML = response
-      }
+token = localStorage.getItem("access")
+id = buttonId.split("-").pop()
+let ajax_url = "{% url 'diary:diary-list' %}" + id
+data_dic = { "diary_id": id }
+response = request_ajax(ajax_url, "DELETE", data_dic, token)
+const element = document.getElementById("center-content");
+element.innerHTML = response
+}
+
+const handleCommentClick = (buttonId) => {
+id = buttonId.split("_").pop()
+console.log(id)
+diary_detail_url = "{% url 'diary:diary-list' %}" + id + "/"
+data_dic = {}
+result = request_ajax(diary_detail_url,"GET",data_dic,token)
+console.log(result)
+const element = document.getElementById('modal_detail_content');
+element.innerHTML=result
+}
 
 const handleLikeClick = (buttonId) => {
-            token = localStorage.getItem("access")
-            id = buttonId.split("-").pop()
-            let ajax_url = "{% url 'diary:diary-list' %}" + id + "/like/"
-            data_dic = { "diary_id": id }
-            response = request_ajax(ajax_url, "POST", data_dic, token)
-            console.log(response.num_like)
-            const element = document.getElementById("num_like_" + id);
-            console.log(element)
-            element.innerHTML = `<div id=num_like>` + response.num_like + `개</div>`
+token = localStorage.getItem("access")
+id = buttonId.split("-").pop()
+let ajax_url = "{% url 'diary:diary-list' %}" + id + "/like/"
+data_dic = {
+"diary_id": id
+}
 
-          }
+response = request_ajax(ajax_url, "POST", data_dic, token)
+const element = document.getElementById("like-" + id);
+element.innerHTML = `
+<svg width="16" height="16">
+    <use xlink:href="#fill_liked"></use>
+</svg>
+<span class="diary-heart__count">좋아요 `+ response.num_like +` 개</span>`
+
+}
+
+const handleCommentCreateClick = (buttonId) => {
+id = buttonId.split("-").pop()
+diary_detail_url = "{% url 'diary:diary-list' %}" + id + "/comment/"
+const content = $("#add-comment-field").val();
+data_dic = {
+        "content": content
+    }
+result = request_ajax(diary_detail_url,"POST",data_dic,token)
+
+const element = document.getElementById('diary-detail-comments');
+element.innerHTML=result
+console.log(element)
+console.log(result)
+}
 
 {% endblock %}
