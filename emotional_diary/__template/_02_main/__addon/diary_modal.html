@@ -1,5 +1,7 @@
 {% load static %}
+
 <div class="modal" id='modal_diary_detail' tabindex="-1">
+    <div id="modal_detail_content">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content d-flex">
             <!-- a diary -->
@@ -12,7 +14,7 @@
                     <div class="d-flex border-bottom p-2 align-items-center justify-content-between">
                         <a href="../profile" class="diary-user d-flex align-items-center">
                             <img src="{% static 'static/img/account/profile_on.webp' %}" class="diary-user__img" width="30" height="30"></img>
-                            <span class="diary-user__name mx-2"><strong>{{ diary.user.username }} minkycho</strong></span>
+                            <span class="diary-user__name mx-2"><strong> {{ data.user.username }} </strong></span>
                         </a>
                         <div class="diary-user__detail d-flex">
                             <svg width="20" height="20" fill="gray">
@@ -25,14 +27,14 @@
                     <div calss="diary-contents">
                         <div class="diary-contents_detail">
                             <div class="diary-contents__date_emoji p-2 d-flex justify-content-between">
-                                <span class="diary-contents__date">{{diary.create_at}} 2023년 04월 12일 수요일</span>
+                                <span class="diary-contents__date"> {{data.create_at}} 2023년 04월 12일 수요일</span>
                                 <div class="diary-contents__emoji d-flex align-items-center">
-                                    &#x1F601
-                                    <span class="mx-1">Happiness</span>
+                                    {{data.emotion.emoji}}
+                                    <span class="mx-1">{{data.emotion.emotion}}</span>
                                 </div>
                             </div>
                             <p class="diary-contents__title px-2">
-                                {{data.title}} This is title
+                                {{data.title}}
                             </p>
                             <p class="diary-contents__txt diary-contents__txt_detail px-2">
                                 {{data.content}} It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
@@ -63,6 +65,9 @@
                 <!-- 다이어리 댓글 -->
                 <div class="diary-modal-content__comments border-start">
                     <div class="diary-comments">
+                        <!-- 추가 댓글 -->
+                        <div id="additional_comment">
+                        </div>
                         <!-- a comment -->
                         <div class="diary-comment p-2">
                             <div class="diary-comment-user d-flex align-items-center">
@@ -111,3 +116,5 @@
         </div>
     </div>
 </div>
+    </div>
+        </div>

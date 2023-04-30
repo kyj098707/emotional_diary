@@ -108,7 +108,8 @@ class DiaryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
-        return render(request,"_02_main/__addon/follow_suggestion_list.html", {"data" : list(serializer.data)})
+        print(serializer.data)
+        return render(request,"_02_main/__addon/change_diary_detail.html", {"data" : serializer.data})
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -127,11 +128,10 @@ class TagListCreateAPIView(ListCreateAPIView):
 def comment_create(request,pk):
     diary = get_object_or_404(Diary,pk=pk)
     comment_serializer = CommentSerializers(data=request.data)
-
     if comment_serializer.is_valid(raise_exception=True):
         comment_serializer.save(user=request.user,diary=diary)
-        diary_serializer = DiaryRetrieveSerializers(diary)
-    return Response(diary_serializer.data)
+    diary_serializer = DiaryRetrieveSerializers(diary)
+    return render(request, "_02_main/__addon/additional_comment.html", {"diary":diary_serializer.data})
 
 
 @api_view(['POST'])
