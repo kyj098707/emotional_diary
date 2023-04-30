@@ -3,6 +3,11 @@
 
 {% block modal %}
 {% include "../../__my_follow_modal.html" %}
+{% include "../__addon/diary_modal.html" %}
+{% endblock %}
+
+{% block load %}
+    <link href="{% static 'static/css/__diary.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block right-up %}
@@ -125,13 +130,6 @@ id = buttonId.split("-").pop()
 location.href = "{% url 'diary:post' %}" + id + "/"
 };
 
-const handleCommentClick = (buttonId) => {
-id = buttonId.split("-").pop()
-diary_detail_url = "{% url 'diary:diary-list %}" + id + "/"
-data_dic = {}
-result = request_ajax(diary_detail_url,"GET",data_dic,token)
-console.log(result)
-}
 
 const handleFollowerListClick = (buttonId) => {
 const modals = document.querySelector('#follow_modal_detail');
@@ -149,6 +147,17 @@ const element = document.getElementById("center-content");
 element.innerHTML = response
 }
 
+const handleCommentClick = (buttonId) => {
+id = buttonId.split("_").pop()
+console.log(id)
+diary_detail_url = "{% url 'diary:diary-list' %}" + id + "/"
+data_dic = {}
+result = request_ajax(diary_detail_url,"GET",data_dic,token)
+console.log(result)
+const element = document.getElementById('modal_detail_content');
+element.innerHTML=result
+}
+
 const handleLikeClick = (buttonId) => {
 token = localStorage.getItem("access")
 id = buttonId.split("-").pop()
@@ -156,6 +165,7 @@ let ajax_url = "{% url 'diary:diary-list' %}" + id + "/like/"
 data_dic = {
 "diary_id": id
 }
+
 response = request_ajax(ajax_url, "POST", data_dic, token)
 const element = document.getElementById("like-" + id);
 element.innerHTML = `
@@ -164,6 +174,21 @@ element.innerHTML = `
 </svg>
 <span class="diary-heart__count">좋아요 `+ response.num_like +` 개</span>`
 
+}
+
+const handleCommentCreateClick = (buttonId) => {
+id = buttonId.split("-").pop()
+diary_detail_url = "{% url 'diary:diary-list' %}" + id + "/comment/"
+const content = $("#add-comment-field").val();
+data_dic = {
+        "content": content
+    }
+result = request_ajax(diary_detail_url,"POST",data_dic,token)
+
+const element = document.getElementById('diary-detail-comments');
+element.innerHTML=result
+console.log(element)
+console.log(result)
 }
 
 {% endblock %}
