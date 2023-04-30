@@ -1,6 +1,10 @@
 {% extends "../../base_layout.html" %}
 {% load static %}
 
+{% block load %}
+    <link href="{% static 'static/css/__diary.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block modal %}
   {% include "./diary_create.html" %}
   {% include "../../__my_follow_modal.html" %}
@@ -102,8 +106,9 @@ const handleLikeClick = (buttonId) => {
     }
     response = request_ajax(ajax_url, "POST", data_dic, token)
     const element = document.getElementById("like-" + id);
-    console.log(element)
-    element.innerHTML = `<div id=num_like> 좋아요 ` + response.num_like + ` 개</div>`
+    element.innerHTML = `
+                <svg width="16" height="16"><use xlink:href="#fill_liked"></use></svg>
+                <span class="diary-heart__count">좋아요 `+ response.num_like +` 개</span>`
 
 }
 

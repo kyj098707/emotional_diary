@@ -60,6 +60,7 @@ class DiaryListSerializers(serializers.ModelSerializer):
         emotion = emotion[0][1] if emotion[0][0] > 0.5 else "neutral"
         return {"emoji":emoji[emotion], "emotion":emotion}
 
+
 class DiaryRetrieveSerializers(serializers.ModelSerializer):
     comment = serializers.SerializerMethodField()
     tag = TagSerializers(many=True)

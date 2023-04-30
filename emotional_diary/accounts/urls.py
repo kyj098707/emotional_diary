@@ -36,6 +36,7 @@ urlpatterns = [
     path('user/mypage/', api.my_page ,name="mypage"),
     path('user/<int:pk>/', api.UserRetrieveAPIView.as_view(), name="user_detail"),
     path('user/followlist/',api.my_follower_list,name="api-my-followlist"),
+    path('user/followlist/<int:pk>/', api.user_follower_list, name="api-user-followlist"),
     # ====================================================
     # ====================================================
     # ====================================================
