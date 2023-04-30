@@ -56,7 +56,7 @@ class DiaryListSerializers(serializers.ModelSerializer):
         emotion = sorted([(diary.fear, "fear"), (diary.disgust, "disgust"), (diary.surprise, "surprise"), \
                           (diary.happiness, "happiness"), (diary.sadness, "sadness"), (diary.angry, "angry")],
                          reverse=True)
-        print(emotion)
+
         emotion = emotion[0][1] if emotion[0][0] > 0.5 else "neutral"
         return {"emoji":emoji[emotion], "emotion":emotion}
 
@@ -67,6 +67,7 @@ class DiaryRetrieveSerializers(serializers.ModelSerializer):
     num_like = serializers.SerializerMethodField()
     num_comment = serializers.SerializerMethodField()
     user = UserSerializer()
+    emotion = serializers.SerializerMethodField()
 
     class Meta:
         model = Diary
@@ -81,6 +82,16 @@ class DiaryRetrieveSerializers(serializers.ModelSerializer):
         return len(comment_list)
     def get_num_like(self, diary):
         return diary.like.count()
+
+    def get_emotion(self,diary):
+        emoji = {"fear":"😖","disgust":"🤐","surprise":"😵","happiness":"😊","sadness":"😥","angry":"😡","neutral":"😶"}
+        emotion = sorted([(diary.fear, "fear"), (diary.disgust, "disgust"), (diary.surprise, "surprise"), \
+                          (diary.happiness, "happiness"), (diary.sadness, "sadness"), (diary.angry, "angry")],
+                         reverse=True)
+
+        emotion = emotion[0][1] if emotion[0][0] > 0.5 else "neutral"
+        return {"emoji":emoji[emotion], "emotion":emotion}
+
 
 
 

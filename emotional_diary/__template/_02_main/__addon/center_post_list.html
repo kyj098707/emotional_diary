@@ -37,7 +37,7 @@
                 <svg width="16" height="16"><use xlink:href="#fill_liked"></use></svg>
                 <span class="diary-heart__count">좋아요 {{i.num_like}} 개</span>
             </button>  
-            <button type = "button" class="btn diary-comment__button" id = diary_detail data-bs-toggle="modal" data-bs-target="#modal_diary_detail">
+            <button type = "button" class="btn diary-comment__button" id = diary_detail_{{i.id}} onclick="handleCommentClick(this.id)" data-bs-toggle="modal" data-bs-target="#modal_diary_detail" >
                 <svg width="16" height="16"><use xlink:href="#comments"></use></svg>
                 <span class="diary-comment__count">댓글 {{i.num_comment}}</span>
               </button>          
