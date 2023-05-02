@@ -9,6 +9,7 @@
   {% include "./diary_create.html" %}
   {% include "../../__my_follow_modal.html" %}
   {% include "../__addon/diary_modal.html" %}
+  {% include "./profile_upload.html" %}
 {% endblock %}
 
 
@@ -90,17 +91,25 @@ const handleNameClick = (buttonId) => {
 };
 
 
+
+
 const handleDelClick = (buttonId) => {
-    token = localStorage.getItem("access")
-    id = buttonId.split("-").pop()
-    let ajax_url = "{% url 'diary:diary-list' %}" + id
-    data_dic = {
-        "diary_id": id
+    const confirmed = confirm("삭제하시겠습니까?");
+    if (!confirmed) {
+        return; 
     }
-    response = request_ajax(ajax_url, "DELETE", data_dic, token)
+    const token = localStorage.getItem("access");
+    const id = buttonId.split("-").pop();
+    const ajax_url = "{% url 'diary:diary-list' %}" + id;
+    const data_dic = {
+        "diary_id": id
+    };
+    const response = request_ajax(ajax_url, "DELETE", data_dic, token);
     const element = document.getElementById("center-content");
-    element.innerHTML = response
+    element.innerHTML = response;
 }
+
+
 
 const handleLikeClick = (buttonId) => {
     token = localStorage.getItem("access")

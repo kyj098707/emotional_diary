@@ -3,9 +3,10 @@
 <!-- 프로필 -->
 <div class='main-info-pack'>
 <img class="w-25 img-fluid logo-img mb-4" src="{% static 'static/img/__logo/logo_test_bk.webp' %}" alt="Logo"><br>
-<img class="profile-img mb-3" src="{% static 'static/img/__profile(dummy)/profile_01.webp' %}" alt="Profile picture">
+<button type="button" id = "profile_button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#upload-modal" >
+  <img class="profile-img mb-3" src="{% static 'static/img/__profile(dummy)/profile_01.webp' %}" alt="Profile picture">
+</button>
 <div class="profile-follow-buttons"></div>
     <div class="profile-name fs-3 my-4" id="right-profile-name">{{data.username}} </div>
-
-
 </div>
+
