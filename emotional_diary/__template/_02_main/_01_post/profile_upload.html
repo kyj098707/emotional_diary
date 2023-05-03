@@ -1,0 +1,47 @@
+<!-- 모달 -->
+<div class="modal fade" id="upload-modal" tabindex="-1" role="dialog" aria-labelledby="upload-modal-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="upload-modal-label">Image Upload</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          
+        </div>
+        <div class="modal-body">
+          <img id="preview-img" src="#" style="max-width: 100%; height: auto;">
+          <form id="upload-form" enctype="multipart/form-data">
+            <div class="form-group">
+              <input type="file" class="form-control-file" id="profile-img" name="profile-img">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="upload-btn">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type = "text/javascript">
+    $(document).ready(function() {
+  $("#profile-img").change(function(){
+    readURL(this);
+  });
+});
+
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      $('#preview-img').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+  </script>

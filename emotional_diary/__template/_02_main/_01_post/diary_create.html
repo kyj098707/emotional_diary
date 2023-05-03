@@ -46,12 +46,10 @@
     $("#modal_diary_create button.btn-secondary").click(function(event) {
     event.preventDefault();
 
-    // check if title, contents, and hashtags have content
     const title = $("#diary_title").val().trim();
     const contents = $("#diary_contents").val().trim();
     const hashtags = $("#hashtags").val().trim();
     if (title.length === 0 && contents.length === 0 && hashtags.length === 0) {
-      // if any of the fields is empty, close the modal
       modal.hide();
       return;
     }
@@ -66,7 +64,7 @@
     $("#diary_contents").val("");
     $("#hashtags").val("");
     $(".hashtags-block").empty(); // 해시태그 블록 제거
-
+    modal.hide();
 });
 
 
@@ -114,9 +112,11 @@ $("#modal_diary_create form").submit(function (event) {
          else {
            element.innerHTML = response;
            $("#modal_diary_create").modal("hide");
-
+           $("#diary_title").val("");
+           $("#diary_contents").val("");
+           $("#hashtags").val("");
+           $(".hashtags-block").empty();
          }
-
        });
 
 
