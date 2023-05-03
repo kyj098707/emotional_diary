@@ -1,79 +1,132 @@
-{% extends "../base_layout.html" %}
+{% extends "../../base_layout.html" %}
 {% load static %}
 
 {% block load %}
 {% endblock %}
 
 {% block st %}
-/* 기본 스타일 */
-body {
-    font-family: 'Noto Sans KR', sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-}
-
-.wrapper {
-    display: flex;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-/* 컬럼 스타일 */
-.left-column, .center-column, .right-column {
-    flex: 1;
+    .friend-list-container {
+    height: 85vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border-radius: 5px;
     padding: 1rem;
-}
+    }
 
-/* 소셜 스탯 섹션 스타일 */
-.social-stats {
+    .friend {
     display: flex;
-    justify-content: space-around;
-    margin-bottom: 2rem;
-}
-
-.stat {
-    text-align: center;
-}
-
-/* 게시물 목록 스타일 */
-.post {
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 1rem;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 1rem;
-}
+    }
+
+    .profile-image {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 1rem;
+    }
+
+    .friend-info {
+    flex-grow: 1;
+    }
+
+    .username {
+    font-weight: bold;
+    }
+
+    .status {
+    color: #777;
+    }
+
+    .follow-btn {
+    background-color: #4a4a4a;
+    color: white;
+    border: none;
+    width : 7rem;
+    padding: 0.5rem 1rem;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: center;
+    }
+
+    .follow-btn:hover {
+    background-color: #ff4b4b;
+    content: "언팔로우";
+    }
+
+    /* 기존 코드에 추가 */
+    .new-updates {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 1rem;
+    }
+
+    .new-updates-btn {
+    background-color: #4a4a4a;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 3px;
+    cursor: pointer;
+    }
+
+    .new-updates-count {
+    position: absolute;
+    top: -7px;
+    left: -7px;
+    background-color: #FFA500;
+    color: black;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 50%;
+    }
+
+    .new-updates-btn:hover {
+    background-color: #ff4b4b;
+    content: "언팔로우";
+    }
 {% endblock %}
 
 
 {% block center %}
-            <!-- 팔로워, 팔로잉, 좋아요 섹션 -->
-            <div class="social-stats">
-                <div class="stat">
-                    <h3>팔로워</h3>
-                    <p>1234</p>
-                </div>
-                <div class="stat">
-                    <h3>팔로잉</h3>
-                    <p>567</p>
-                </div>
-                <div class="stat">
-                    <h3>좋아요</h3>
-                    <p>8910</p>
-                </div>
-            </div>
-            <!-- 게시물 목록 -->
-            <div class="post-list">
-                <!-- 각 게시물을 이 div로 표현하세요 -->
-                <div class="post">
-                    <h3>게시물 제목</h3>
-                    <p>게시물 내용</p>
-                    <span>게시일</span>
-                </div>
-            </div>
+
+    <div class="new-updates">
+      <button class="new-updates-btn">새 소식</button>
+      <div class="new-updates-count">5</div>
+    </div>
+
+    <div class="friend-list-container">
+
+    {% for i in '0123456789'|make_list %}
+      <div class="friend me-3 mt-1 my-3">
+        <img class="profile-image" src="{% static 'static/img/__profile(dummy)/profile_01.webp' %}" alt="프로필 사진">
+        <div class="friend-info">
+          <div class="username">사용자1</div>
+          <div class="status">온라인</div>
+        </div>
+        <button class="follow-btn">팔로우 중</button>
+      </div>
+      <hr class='text-secondary'>
+    {% endfor %}
+    </div>
 {% endblock %}
 
 
 {% block sc %}
+    document.addEventListener('DOMContentLoaded', function () {
+    const followButtons = document.querySelectorAll('.follow-btn');
+    
+    followButtons.forEach((button) => {
+        button.addEventListener('mouseover', function () {
+        this.textContent = '언팔로우';
+        });
+
+        button.addEventListener('mouseout', function () {
+        this.textContent = '팔로우 중';
+        });
+    });
+    });
 
 {% endblock %}
