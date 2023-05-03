@@ -44,6 +44,7 @@ class SignupView(CreateAPIView):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def signup_validate(request):
@@ -181,6 +182,15 @@ def user_follower_list(request, pk):
     serializer = FollowSerializer(user)
     return render(request,"_02_main/__addon/my-flw-modal.html", {"data":serializer.data})
 
+
+@api_view(['GET'])
+def check_pk(request,pk):
+    check = True if request.user.pk == pk else False
+    return JsonResponse({"check":check})
+
+@api_view(['GET'])
+def user(request):
+    pass
 
 
 """
