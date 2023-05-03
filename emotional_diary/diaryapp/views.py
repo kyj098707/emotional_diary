@@ -62,8 +62,10 @@ def post(request):
 def social(request):
     return render(request, "base_layout.html")
 
+
 def user_profile(request,pk):
-    user = get_object_or_404(User,id=pk)
+    if not User.objects.filter(pk=pk).exists():
+        return HttpResponse(status=404)
     return render(request, "_02_main/_01_post/profile_page.html", {
         "data": pk,
     })
