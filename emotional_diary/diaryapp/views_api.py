@@ -26,9 +26,9 @@ from rest_framework.views import APIView
 
 @api_view(['GET'])
 def profile_info(request, pk):
+    if not User.objects.filter(pk=pk).exists():
+        return HttpResponse(status=404)
     follow_message = "Follow"
-    user = get_object_or_404(User, id=pk)
-    print(request.user)
     if pk in request.user.follower.values_list('id', flat=True):
         follow_message = "Following"
     return Response({"data": pk, "follow_message": follow_message})
@@ -40,7 +40,7 @@ def my_diary_list(request):
     serializer_class = DiaryListSerializers
 
     serializer = serializer_class(queryset, many=True)
-    return render(request, "_02_main/__addon/center_post_list.html", {"data": list(serializer.data)})
+    return render(request, "_02_main/__addon/my_center_post_list.html", {"data": list(serializer.data)})
 
 
 @api_view(['GET'])
@@ -50,7 +50,7 @@ def user_diary_list(request,pk):
     serializer_class = DiaryListSerializers
 
     serializer = serializer_class(queryset, many=True)
-    return render(request, "_02_main/__addon/center_post_list.html", {"data": list(serializer.data)})
+    return render(request, "_02_main/__addon/user_center_post_list.html", {"data": list(serializer.data)})
 
 
 class DiaryListCreateAPIView(ListCreateAPIView):
@@ -85,7 +85,7 @@ class DiaryListCreateAPIView(ListCreateAPIView):
 
         diary = Diary.objects.filter(user=request.user).order_by("-created_at")
         serializer = self.get_serializer(diary, many=True)
-        return render(request,"_02_main/__addon/center_post_list.html", {"data": list(serializer.data)})
+        return render(request,"_02_main/__addon/my_center_post_list.html", {"data": list(serializer.data)})
 
 
     def list(self, request, *args, **kwargs):
@@ -98,7 +98,7 @@ class DiaryListCreateAPIView(ListCreateAPIView):
             return self.get_paginated_response(serializer.data)
 
         serializer = self.get_serializer(queryset, many=True)
-        return render(request, "_02_main/__addon/center_post_list.html", {"data": list(serializer.data)})
+        return render(request, "_02_main/__addon/my_center_post_list.html", {"data": list(serializer.data)})
 
 
 class DiaryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
@@ -113,10 +113,14 @@ class DiaryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        self.perform_destroy(instance)
-        queryset = Diary.objects.order_by("-created_at")
-        serializer = DiaryListSerializers(queryset,many=True)
-        return render(request,"_02_main/__addon/center_post_list.html", {"data" : list(serializer.data)})
+        if instance.user.pk == request.user.pk:
+            print("dd")
+            self.perform_destroy(instance)
+            queryset = Diary.objects.order_by("-created_at")
+            serializer = DiaryListSerializers(queryset,many=True)
+            return render(request,"_02_main/__addon/my_center_post_list.html", {"data" : list(serializer.data)})
+        else:
+            return HttpResponse(status=201)
 
 
 class TagListCreateAPIView(ListCreateAPIView):

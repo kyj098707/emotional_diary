@@ -1,0 +1,47 @@
+{% load static %}
+<div center-content>
+<div class="diary-list">
+    {% for i in data %}
+
+
+    <div class="diary-detail mx-3">
+        <div class="diary-list-title">
+            {{i.title}}
+        </div>
+        <div class="diary-contents__emoji d-flex align-items-center">
+            {{i.emotion.emoji}}  <span class="mx-2">{{i.emotion.emotion}}</span>
+
+        </div>
+        <div>
+            
+        </div>
+        <div class="diary-list-content">
+            {{i.content}}
+        </div>
+
+        <div class="mt-3 d-flex align-items-center">
+            <button class="btn diary-heart__button" onclick="handleLikeClick(this.id)" id=like-{{i.id}}>
+                <svg width="16" height="16"><use xlink:href="#fill_liked"></use></svg>
+                <span class="diary-heart__count">좋아요 {{i.num_like}} 개</span>
+            </button>  
+            <button type = "button" class="btn diary-comment__button" id = diary_detail_{{i.id}} onclick="handleCommentClick(this.id)" data-bs-toggle="modal" data-bs-target="#modal_diary_detail" >
+                <svg width="16" height="16"><use xlink:href="#comments"></use></svg>
+                <span class="diary-comment__count">댓글 {{i.num_comment}}</span>
+              </button>          
+        </div>
+
+        
+        <div class="d-flex justify-content-between align-items-center mt-1">
+            <div class="diary-list-date">
+                {% for t in i.tag %}
+                #{{t.name}}
+                {% endfor %}
+            </div>
+            <div class="diary-list-date">April 12, 2023</div>
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
+</div>
+
