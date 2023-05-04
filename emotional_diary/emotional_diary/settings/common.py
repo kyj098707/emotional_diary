@@ -18,7 +18,7 @@ SECRET_KEY = "django-insecure-_jl&pndl)d-3#+ik%nz$2w!9f%s&k$i^ih3*ld8u4bl_+sh)h$
 # SECURITY WARNING: don't run with debug turned on in production!
 # LOGIN 관련
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["ec2-15-164-224-122.ap-northeast-2.compute.amazonaws.com"]
 
 
 ## Email 관련
