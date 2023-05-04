@@ -60,7 +60,7 @@ def post(request):
 
 
 def social(request):
-    return render(request, "base_layout.html")
+    return render(request, "_02_main/_02_social/social.html")
 
 
 def user_profile(request,pk):
