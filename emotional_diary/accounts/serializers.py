@@ -119,6 +119,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
             data['response'] = 'error'
         return data
 
+
 class FollowSerializer(serializers.ModelSerializer):
     following = serializers.SerializerMethodField()
     follower = UserSerializer(many=True)
@@ -131,6 +132,7 @@ class FollowSerializer(serializers.ModelSerializer):
         user_serializers = UserSerializer(users,many=True)
 
         return user_serializers.data
+    
     def get_follower(self,obj):
         users = obj.follower.all()
         user_serializers = UserSerializer(users,many=True)

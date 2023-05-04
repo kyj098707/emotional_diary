@@ -1,79 +1,72 @@
-{% extends "../base_layout.html" %}
+{% extends "../../base_layout.html" %}
 {% load static %}
 
+
 {% block load %}
+
 {% endblock %}
 
 {% block st %}
-/* 기본 스타일 */
-body {
-    font-family: 'Noto Sans KR', sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-}
 
-.wrapper {
-    display: flex;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-/* 컬럼 스타일 */
-.left-column, .center-column, .right-column {
-    flex: 1;
-    padding: 1rem;
-}
-
-/* 소셜 스탯 섹션 스타일 */
-.social-stats {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 2rem;
-}
-
-.stat {
-    text-align: center;
-}
-
-/* 게시물 목록 스타일 */
-.post {
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
-}
 {% endblock %}
 
 
 {% block center %}
-            <!-- 팔로워, 팔로잉, 좋아요 섹션 -->
-            <div class="social-stats">
-                <div class="stat">
-                    <h3>팔로워</h3>
-                    <p>1234</p>
-                </div>
-                <div class="stat">
-                    <h3>팔로잉</h3>
-                    <p>567</p>
-                </div>
-                <div class="stat">
-                    <h3>좋아요</h3>
-                    <p>8910</p>
-                </div>
-            </div>
-            <!-- 게시물 목록 -->
-            <div class="post-list">
-                <!-- 각 게시물을 이 div로 표현하세요 -->
-                <div class="post">
-                    <h3>게시물 제목</h3>
-                    <p>게시물 내용</p>
-                    <span>게시일</span>
-                </div>
-            </div>
+
+
+    <div class="new-updates">
+      <button id='newsfeed_btn' class="new-updates-btn">새 소식</button>
+      <div class="new-updates-count">5</div>
+    </div>
+
+    <div class="friend-list-container">
+
+    {% for i in '0123456789'|make_list %}
+      <div class="friend me-3 mt-1 my-3">
+        <img class="profile-image" src="{% static 'static/img/__profile(dummy)/profile_01.webp' %}" alt="프로필 사진">
+        <div class="friend-info">
+          <div class="username">사용자1</div>
+          <div class="status">온라인</div>
+        </div>
+        <button class="follow-btn">팔로우 중</button>
+      </div>
+      <hr class='text-secondary'>
+    {% endfor %}
+    </div>
 {% endblock %}
 
 
 {% block sc %}
+    function animateOpacityAndMove(element, opacity, offsetX, offsetY, duration, callback) {
+        if (opacity === 1) {
+            element.style.visibility = "visible";
+        }
+      element.style.transition = `opacity ${duration}ms, transform ${duration}ms`;
+      element.style.opacity = opacity;
+      element.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+      setTimeout(() => {
+        element.style.transition = '';
+        element.style.transform = '';
+        callback && callback();
+        if (opacity === 0 ){
+            element.style.visibility = "hidden";
+        }
+      }, duration);
+    }
+
+    document.getElementById("newsfeed_btn").addEventListener("click", () => {
+        animateOpacityAndMove(document.getElementById("left_contents"), 0, -100, 0, 500);
+        animateOpacityAndMove(document.getElementById("main_contents"), 0, 0, -100, 500);
+        const back_btn = document.getElementById("social_back_btn");
+        back_btn.style.visibility = "visible";
+        back_btn.style.opacity = 1;
+        animateOpacityAndMove(document.getElementById("right_sdb"), 0, 100, 0, 500, () => {
+        setTimeout(() => {
+          const content = document.getElementById("content");
+          content.classList.remove("hidden");
+          animateOpacityAndMove(content, 1, 0, 100, 1000);
+        }, 500);
+      });
+    });
 
 {% endblock %}

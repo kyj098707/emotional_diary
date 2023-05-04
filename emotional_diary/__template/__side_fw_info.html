@@ -1,10 +1,10 @@
 {% load static %}
 <div class="follow-wrapper d-flex justify-content-center">
-  <div class="follow-box d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modal_flwer_list">
+  <div id="flwer_btn" class="follow-box d-flex align-items-center">
     <span class="follow-text">팔로우</span>
     <span class="follow-count follower-count-value" id="follower-count-value">{{data.num_follower}}</span>
   </div>
-  <div class="follow-box d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modal_fling_list">
+  <div id="fling_btn" class="follow-box d-flex align-items-center">
     <span class="follow-text">팔로잉</span>
     <span class="follow-count following-count-value" >{{data.num_following}}</span>
   </div>

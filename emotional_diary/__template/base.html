@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     <link href="{% static 'static/css/__base.css' %}" rel="stylesheet">
+    <link href="{% static 'static/css/__f_modal.css' %}" rel="stylesheet">
     
     {% block load %}
     {% endblock %}
@@ -30,14 +31,48 @@
         height: 100vh;
         width: 100vw;
         margin: 0 auto;
+        cursor : pointer;
     }
 
+    .back-arrow-container {
+      position: fixed;
+      top: 30px;
+      left: 30px;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      visibility : hidden;
+      opacity: 0;
+      transition: opacity 0.8s ease-out;
+      z-index:100;
+    }
+
+    .back-arrow {
+      fill: white;
+      width: 100%;
+      height: 100%;
+    }
+
+    .back-arrow-circle {
+      fill: transparent;
+      stroke: white;
+      stroke-width: 2;
+    }
     {% block st %}
     {% endblock %}
     </style>
 </head>
 
 <body>
+
+    <div id="social_back_btn" class="back-arrow-container">
+        <svg class="back-arrow" viewBox="0 0 24 24">
+        <circle class="back-arrow-circle" cx="12" cy="12" r="11"></circle>
+        <path d="M20.016 11.016v1.969h-12.188l5.578 5.625-1.406 1.406-8.016-8.016 8.016-8.016 1.406 1.406-5.578 5.625h12.188z"></path>
+        </svg>
+    </div>
+
+    {% include "./__my_follow_modal.html" %}
     {% block modal %}
     {% endblock %}
     
@@ -67,6 +102,54 @@
             });
             return result;
         }
+
+        $(document).on("click","#flwer_btn",function(){
+            let my_follow_list_ajax_url = "{% url 'account:api-my-followlist' %}";    
+            let token = localStorage.getItem("access")
+            response = request_ajax(my_follow_list_ajax_url, "GET", {}, token)
+            
+            f_title = document.getElementById('fl-modal-title');
+            f_title.innerHTML = "FOLLOWER";
+            f_lists = document.getElementById('fl-modal-content');
+            f_lists.innerHTML = response;
+
+            if (response !== 'error') {
+                const f_modal = document.querySelector('#modal_f_list');
+                var modal = bootstrap.Modal.getOrCreateInstance(f_modal) 
+                modal.show()
+            }
+        })
+
+        $(document).on("click","#fling_btn",function(){
+            let user_follow_list_ajax_url = "{% url 'account:api-user-followlist' 1 %}";    
+            let token = localStorage.getItem("access")
+            response = request_ajax(user_follow_list_ajax_url, "GET", {}, token)
+            
+            f_title = document.getElementById('fl-modal-title');
+            f_title.innerHTML = "FOLLOWING";
+            f_lists = document.getElementById('fl-modal-content');
+            f_lists.innerHTML = response;
+
+            if (response !== 'error') {
+                const f_modal = document.querySelector('#modal_f_list');
+                var modal = bootstrap.Modal.getOrCreateInstance(f_modal) 
+                modal.show()
+            }
+        })
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const followButtons = document.querySelectorAll('.follow-btn');
+            
+            followButtons.forEach((button) => {
+                button.addEventListener('mouseover', function () {
+                this.textContent = '언팔로우';
+                });
+
+                button.addEventListener('mouseout', function () {
+                this.textContent = '팔로우 중';
+                });
+            });
+        });
 
         {% block sc_main %}
         {% endblock %}
