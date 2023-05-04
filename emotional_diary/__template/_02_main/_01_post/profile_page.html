@@ -49,7 +49,7 @@ return result;
 $( document ).ready( function() {
     let suggest_ajax_url = "{% url 'account:api_user_suggestion' %}";
     let token = localStorage.getItem("access")
-    let check_url = "{% url 'account:api-user' %}"+{{data}}+"/check/";
+    let check_url = "{% url 'account:api-user' %}" + {{data}} + "/check/";
     check_response = request_ajax(check_url, "GET",{},token)
     if (check_response.check == true){window.location.href = '{% url "diary:post" %}';}
     response = request_ajax(suggest_ajax_url, "GET", {}, token)
