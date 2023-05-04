@@ -1,6 +1,21 @@
 {% extends "../../base_layout.html" %}
 {% load static %}
 
+{% block vt %}
+    <meta name="view-transition" content="same-origin" />
+    <style>
+        @keyframes fromRight {
+            from {
+                opacity : 0 ;
+                transform : translateX(30px);
+            }
+        }
+        ::view-transition-new(root) {
+            animation : 0.5s fromRight linear;
+        }
+    </style>
+{% endblock %}
+
 {% block load %}
 {% endblock %}
 

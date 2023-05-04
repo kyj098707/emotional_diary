@@ -2,6 +2,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% block vt %}
+    <meta name="view-transition" content="same-origin" />
+    {% endblock %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aivlary</title>
@@ -38,6 +41,8 @@
 </head>
 
 <body>
+
+    {% include "./__my_follow_modal.html" %}
     {% block modal %}
     {% endblock %}
     
@@ -68,6 +73,14 @@
             return result;
         }
 
+        $(document).ready(function() {
+            let my_follow_list_ajax_url = "{% url 'account:api-my-followlist' %}";    
+            let token = localStorage.getItem("access")
+            response = request_ajax(my_follow_list_ajax_url, "GET", {}, token)
+            my_follow_modal_lists = document.getElementById('my_follow_modal_lists');
+            console.log(response);
+            my_follow_modal_lists.innerHTML = response;
+        });
         {% block sc_main %}
         {% endblock %}
 

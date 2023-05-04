@@ -1,13 +1,27 @@
 {% extends "../../base_layout.html" %}
 {% load static %}
 
+{% block vt %}
+    <meta name="view-transition" content="same-origin" />
+    <style>
+        @keyframes toLeft {
+            to {
+                opacity : 0 ;
+                transform : translateX(-30px);
+            }
+        }
+        ::view-transition-old(root) {
+            animation : 0.5s toLeft linear;
+        }
+    </style>
+{% endblock %}
+
 {% block load %}
     <link href="{% static 'static/css/__diary.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block modal %}
   {% include "./diary_create.html" %}
-  {% include "../../__my_follow_modal.html" %}
   {% include "../__addon/diary_modal.html" %}
   {% include "./profile_upload.html" %}
 {% endblock %}
@@ -54,11 +68,7 @@ $(document).ready(function() {
     } else {
         element.innerHTML = response;
     }
-    let my_follow_list_ajax_url = "{% url 'account:api-my-followlist' %}";
-    response = request_ajax(my_follow_list_ajax_url, "GET", {}, token)
-    my_follow_modal_lists = document.getElementById('my_follow_modal_lists');
-    console.log(response)
-    my_follow_modal_lists.innerHTML = response
+
 
 });
 

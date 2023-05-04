@@ -173,14 +173,14 @@ class MyTokenObtainPairView(TokenObtainPairView):
 def my_follower_list(request):
     user = request.user
     serializer = FollowSerializer(user)
-    return render(request,"_02_main/__addon/my-flw-modal.html", {"data":serializer.data})
+    return render(request,"_00_common/__addon/my-flw-modal.html", {"data":serializer.data})
 
 
 @api_view(['GET'])
 def user_follower_list(request, pk):
     user = get_object_or_404(User, pk=pk)
     serializer = FollowSerializer(user)
-    return render(request,"_02_main/__addon/my-flw-modal.html", {"data":serializer.data})
+    return render(request,"_00_common/__addon/my-flw-modal.html", {"data":serializer.data})
 
 
 @api_view(['GET'])
