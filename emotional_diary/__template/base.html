@@ -73,14 +73,35 @@
             return result;
         }
 
-        $(document).ready(function() {
+        $(document).on("click","#flwer_btn",function(){
             let my_follow_list_ajax_url = "{% url 'account:api-my-followlist' %}";    
             let token = localStorage.getItem("access")
             response = request_ajax(my_follow_list_ajax_url, "GET", {}, token)
-            my_follow_modal_lists = document.getElementById('my_follow_modal_lists');
-            console.log(response);
+            my_follow_modal_lists = document.getElementById('my-fl-modal-content');
             my_follow_modal_lists.innerHTML = response;
-        });
+
+            if (response !== 'error') {
+                const f_modal = document.querySelector('#modal_f_list');
+                var modal = bootstrap.Modal.getOrCreateInstance(f_modal) 
+                modal.show()
+            }
+        })
+
+        
+        $(document).on("click","#fling_btn",function(){
+            let user_follow_list_ajax_url = "{% url 'account:api-user-followlist' 1 %}";    
+            let token = localStorage.getItem("access")
+            response = request_ajax(user_follow_list_ajax_url, "GET", {}, token)
+            user_follow_modal_lists = document.getElementById('my-fl-modal-content');
+            user_follow_modal_lists.innerHTML = response;
+
+            if (response !== 'error') {
+                const f_modal = document.querySelector('#modal_f_list');
+                var modal = bootstrap.Modal.getOrCreateInstance(f_modal) 
+                modal.show()
+            }
+        })
+
         {% block sc_main %}
         {% endblock %}
 
