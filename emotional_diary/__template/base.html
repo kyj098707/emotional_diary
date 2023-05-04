@@ -14,6 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     <link href="{% static 'static/css/__base.css' %}" rel="stylesheet">
+    <link href="{% static 'static/css/__f_modal.css' %}" rel="stylesheet">
     
     {% block load %}
     {% endblock %}
@@ -77,8 +78,11 @@
             let my_follow_list_ajax_url = "{% url 'account:api-my-followlist' %}";    
             let token = localStorage.getItem("access")
             response = request_ajax(my_follow_list_ajax_url, "GET", {}, token)
-            my_follow_modal_lists = document.getElementById('my-fl-modal-content');
-            my_follow_modal_lists.innerHTML = response;
+            
+            f_title = document.getElementById('fl-modal-title');
+            f_title.innerHTML = "FOLLOWER";
+            f_lists = document.getElementById('fl-modal-content');
+            f_lists.innerHTML = response;
 
             if (response !== 'error') {
                 const f_modal = document.querySelector('#modal_f_list');
@@ -87,13 +91,15 @@
             }
         })
 
-        
         $(document).on("click","#fling_btn",function(){
             let user_follow_list_ajax_url = "{% url 'account:api-user-followlist' 1 %}";    
             let token = localStorage.getItem("access")
             response = request_ajax(user_follow_list_ajax_url, "GET", {}, token)
-            user_follow_modal_lists = document.getElementById('my-fl-modal-content');
-            user_follow_modal_lists.innerHTML = response;
+            
+            f_title = document.getElementById('fl-modal-title');
+            f_title.innerHTML = "FOLLOWING";
+            f_lists = document.getElementById('fl-modal-content');
+            f_lists.innerHTML = response;
 
             if (response !== 'error') {
                 const f_modal = document.querySelector('#modal_f_list');
@@ -101,6 +107,20 @@
                 modal.show()
             }
         })
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const followButtons = document.querySelectorAll('.follow-btn');
+            
+            followButtons.forEach((button) => {
+                button.addEventListener('mouseover', function () {
+                this.textContent = '언팔로우';
+                });
+
+                button.addEventListener('mouseout', function () {
+                this.textContent = '팔로우 중';
+                });
+            });
+        });
 
         {% block sc_main %}
         {% endblock %}
