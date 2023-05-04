@@ -2,9 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% block vt %}
-    <meta name="view-transition" content="same-origin" />
-    {% endblock %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aivlary</title>
@@ -34,14 +31,46 @@
         height: 100vh;
         width: 100vw;
         margin: 0 auto;
+        cursor : pointer;
     }
 
+    .back-arrow-container {
+      position: fixed;
+      top: 30px;
+      left: 30px;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      visibility : hidden;
+      opacity: 0;
+      transition: opacity 0.8s ease-out;
+      z-index:100;
+    }
+
+    .back-arrow {
+      fill: white;
+      width: 100%;
+      height: 100%;
+    }
+
+    .back-arrow-circle {
+      fill: transparent;
+      stroke: white;
+      stroke-width: 2;
+    }
     {% block st %}
     {% endblock %}
     </style>
 </head>
 
 <body>
+
+    <div id="social_back_btn" class="back-arrow-container">
+        <svg class="back-arrow" viewBox="0 0 24 24">
+        <circle class="back-arrow-circle" cx="12" cy="12" r="11"></circle>
+        <path d="M20.016 11.016v1.969h-12.188l5.578 5.625-1.406 1.406-8.016-8.016 8.016-8.016 1.406 1.406-5.578 5.625h12.188z"></path>
+        </svg>
+    </div>
 
     {% include "./__my_follow_modal.html" %}
     {% block modal %}

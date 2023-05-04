@@ -1,22 +1,9 @@
 {% extends "../../base_layout.html" %}
 {% load static %}
 
-{% block vt %}
-    <meta name="view-transition" content="same-origin" />
-    <style>
-        @keyframes fromRight {
-            from {
-                opacity : 0 ;
-                transform : translateX(30px);
-            }
-        }
-        ::view-transition-new(root) {
-            animation : 0.5s fromRight linear;
-        }
-    </style>
-{% endblock %}
 
 {% block load %}
+
 {% endblock %}
 
 {% block st %}
@@ -26,8 +13,9 @@
 
 {% block center %}
 
+
     <div class="new-updates">
-      <button class="new-updates-btn">새 소식</button>
+      <button id='newsfeed_btn' class="new-updates-btn">새 소식</button>
       <div class="new-updates-count">5</div>
     </div>
 
@@ -49,6 +37,36 @@
 
 
 {% block sc %}
+    function animateOpacityAndMove(element, opacity, offsetX, offsetY, duration, callback) {
+        if (opacity === 1) {
+            element.style.visibility = "visible";
+        }
+      element.style.transition = `opacity ${duration}ms, transform ${duration}ms`;
+      element.style.opacity = opacity;
+      element.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+      setTimeout(() => {
+        element.style.transition = '';
+        element.style.transform = '';
+        callback && callback();
+        if (opacity === 0 ){
+            element.style.visibility = "hidden";
+        }
+      }, duration);
+    }
 
+    document.getElementById("newsfeed_btn").addEventListener("click", () => {
+        animateOpacityAndMove(document.getElementById("left_contents"), 0, -100, 0, 500);
+        animateOpacityAndMove(document.getElementById("main_contents"), 0, 0, -100, 500);
+        const back_btn = document.getElementById("social_back_btn");
+        back_btn.style.visibility = "visible";
+        back_btn.style.opacity = 1;
+        animateOpacityAndMove(document.getElementById("right_sdb"), 0, 100, 0, 500, () => {
+        setTimeout(() => {
+          const content = document.getElementById("content");
+          content.classList.remove("hidden");
+          animateOpacityAndMove(content, 1, 0, 100, 1000);
+        }, 500);
+      });
+    });
 
 {% endblock %}

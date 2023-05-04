@@ -178,7 +178,7 @@ def my_follower_list(request):
 
 
 @api_view(['GET'])
-def user_follower_list(request, pk):
+def user_follower_list(request, pk, seperator):
     user = get_object_or_404(User, pk=pk)
     serializer = FollowSerializer(user)
     return render(request,"_00_common/__addon/my_flw_contents.html", {"data":serializer.data,
