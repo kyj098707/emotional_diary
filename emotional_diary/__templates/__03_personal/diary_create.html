@@ -1,38 +1,41 @@
-diary_create.html<div class="modal fade" id="modal_diary_create" tabindex="-1" aria-labelledby="modal_diary_create_label" aria-hidden="true" data-backdrop="static">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h5 class="modal-title fw-bold fs-3 w-100" id="modal_diary_create_label">Create New Diary</h5>
-      </div>
-      
-      <div class="modal-body">
-        <form class="d-grid gap-2">
-          <div class="mb-3">
-            <label for="diary_title" class="form-label fw-bold fs-5">Title</label>
-            <input type="text" class="form-control" id="diary_title">
-          </div>
-          <div class="mb-3">
-            <label for="diary_contents" class="form-label fw-bold fs-5">Contents</label>
-            <textarea class="form-control" id="diary_contents" rows="6"></textarea>
-          </div>
-          <div class="mb-3">
-            <label for="hashtags" class="form-label fw-bold fs-5">Hashtags</label>
-            <input type="text" class="form-control" id="hashtags" placeholder="#를 활용하여 해시태그를 추가해보세요.">
-            <div class="hashtags-block"></div>
-          </div>
-          <div class="text-end">
-            <button type="button" class="btn btn-secondary">Close</button>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-        </form>
-      </div>
+<div class="modal fade" id="modal_diary_create" tabindex="-1" aria-labelledby="modal_diary_create_label"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title fw-bold fs-3 w-100" id="modal_diary_create_label">Create New Diary</h5>
+            </div>
+
+            <div class="modal-body">
+                <form class="d-grid gap-2">
+                    <div class="mb-3">
+                        <label for="diary_title" class="form-label fw-bold fs-5">Title</label>
+                        <input type="text" class="form-control" id="diary_title">
+                    </div>
+                    <div class="mb-3">
+                        <label for="diary_contents" class="form-label fw-bold fs-5">Contents</label>
+                        <textarea class="form-control" id="diary_contents" rows="6"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="hashtags" class="form-label fw-bold fs-5">Hashtags</label>
+                        <input type="text" class="form-control" id="hashtags" placeholder="#를 활용하여 해시태그를 추가해보세요.">
+                        <div class="hashtags-block"></div>
+                    </div>
+                    <div class="text-end">
+                        <button type="button" class="btn btn-secondary">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 
 <script type="text/javascript">
+
   $(document).ready(function() {
+
     const modal = new bootstrap.Modal(document.getElementById('modal_diary_create'), {
       backdrop: 'static' // 모달 외부 클릭시 닫히지 않도록 설정
     });
@@ -41,36 +44,34 @@ diary_create.html<div class="modal fade" id="modal_diary_create" tabindex="-1" a
     });
             
     $("#modal_diary_create button.btn-secondary").click(function(event) {
-  event.preventDefault();
+    event.preventDefault();
 
-  // check if title, contents, and hashtags have content
-  const title = $("#diary_title").val().trim();
-  const contents = $("#diary_contents").val().trim();
-  const hashtags = $("#hashtags").val().trim();
-  if (title.length === 0 && contents.length === 0 && hashtags.length === 0) {
-    // if any of the fields is empty, close the modal
-    modal.hide();
-    return;
-  }
+    const title = $("#diary_title").val().trim();
+    const contents = $("#diary_contents").val().trim();
+    const hashtags = $("#hashtags").val().trim();
+    if (title.length === 0 && contents.length === 0 && hashtags.length === 0) {
+      modal.hide();
+      return;
+    }
 
-  if (!confirm("작성을 취소하시겠습니까?")) {
-    // 취소 버튼을 누르면 모달창을 유지함
-    return false;
-  }
+    if (!confirm("작성을 취소하시겠습니까?")) {
+      // 취소 버튼을 누르면 모달창을 유지함
+      return false;
+    }
 
-  // 확인 버튼을 누르면 내용을 지우고 모달창을 닫음
-  $("#diary_title").val("");
-  $("#diary_contents").val("");
-  $("#hashtags").val("");
-  $(".hashtags-block").empty(); // 해시태그 블록 제거
-  modal.hide();
+    // 확인 버튼을 누르면 내용을 지우고 모달창을 닫음
+    $("#diary_title").val("");
+    $("#diary_contents").val("");
+    $("#hashtags").val("");
+    $(".hashtags-block").empty(); // 해시태그 블록 제거
+
 });
 
 
     // 해시태그 블록 생성 함수
     function createHashtagBlock(tag) {
       return $("<span>", {
-        "class": "badge bg-secondary me-1",
+        "class": "tag-badge bg-secondary me-1",
         "text": tag
       });
     }
@@ -87,5 +88,35 @@ diary_create.html<div class="modal fade" id="modal_diary_create" tabindex="-1" a
   }
 });
   });
+$("#modal_diary_create form").submit(function (event) {
+         console.log("dd")
+         event.preventDefault();
+
+         let ajax_url = "{% url 'diary:diary-list' %}";
+         const title = $("#diary_title").val();
+         const contents = $("#diary_contents").val();
+         var tag_elements = document.querySelectorAll('.tag-badge');
+         var tags = [];
+        for (var i = 0; i < tag_elements.length; i++) {
+          var text = tag_elements[i].textContent;
+          tags.push(text);
+        }
+        console.log(tags);
+         data_dic = {"title" : title, "content" : contents,"tags":tags};
+         let token = localStorage.getItem("access")
+         response = request_ajax(ajax_url, "POST", data_dic, token)
+         const element = document.getElementById('center-content');
+         if (response == "error") {
+           document.getElementById("error_msg").style.display = "block";
+         }
+         else {
+           element.innerHTML = response;
+           $("#modal_diary_create").modal("hide");
+
+         }
+
+       });
+
+
 
 </script>
