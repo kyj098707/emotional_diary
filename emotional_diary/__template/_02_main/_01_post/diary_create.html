@@ -22,8 +22,8 @@
                         <div class="hashtags-block"></div>
                     </div>
                     <div class="text-end">
-                        <button type="button" class="btn btn-secondary">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" id ="create_close" class="btn btn-secondary">Close</button>
+                        <button type="submit" id = "create_sublmit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
             </div>
@@ -43,7 +43,7 @@
       modal.show();
     });
             
-    $("#modal_diary_create button.btn-secondary").click(function(event) {
+    $("#modal_diary_create #create_close").click(function(event) {
     event.preventDefault();
 
     const title = $("#diary_title").val().trim();
@@ -88,6 +88,8 @@
   }
 });
   });
+
+
 $("#modal_diary_create form").submit(function (event) {
          console.log("dd")
          event.preventDefault();
@@ -119,6 +121,9 @@ $("#modal_diary_create form").submit(function (event) {
          }
        });
 
+$("#modal_diary_create").on("hidden.bs.modal", function() {
+    $(".hashtags-block").empty();
+ });
 
 
 </script>
