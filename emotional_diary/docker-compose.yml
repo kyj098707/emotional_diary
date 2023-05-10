@@ -6,9 +6,28 @@ services:
       - network
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
-      - static-volume:/data/static
+      - ./__collect_static:/data/static
     ports:
       - 80:80
+    depends_on:
+      - emotional_diary
+
+
+  mariadb:
+    image: mariadb
+    container_name:
+      mariadb
+    networks:
+      - network
+    volumes:
+      - mariadb-database:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: dbswhd12
+      MYSQL_DATABASE: django
+      MYSQL_USER: dbswhd
+      MYSQL_PASSWORD: dbswhd12
+    ports:
+      - "3306:3306"
 
   emotional_diary:
     image: emotional_diary
@@ -16,18 +35,19 @@ services:
     networks:
       - network
     volumes:
-      - static-volume:/djangoproject/__collect_static
+      - ./__collect_static:/djangoproject/__collect_static
     command: >
-      bash -c "gunicorn emotional_diary.wsgi -b 0.0.0.0:8000"
+      bash -c "
+      python3 manage.py migrate&& 
+      gunicorn emotional_diary.wsgi -b 0.0.0.0:8000"
     ports:
       - "8000:8000"
     expose:
       - "8000"
-               
-
+    depends_on:
+      - mariadb
 networks:
   network:
 
 volumes:
-  static-volume:
-  media-volume:
+  mariadb-database:

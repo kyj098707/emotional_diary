@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path,include
 from django.contrib.auth import get_user_model
 from rest_framework.routers import DefaultRouter
@@ -47,8 +49,5 @@ urlpatterns = [
     path('token/', MyTokenObtainPairView.as_view(), name="token_obtain_pair"),
     path('token/refresh/', TokenRefreshView.as_view(), name="token_refresh"),
     path('token/verify/', TokenVerifyView.as_view(), name="token_verify"),
-    
-    
-    
 
 ]
