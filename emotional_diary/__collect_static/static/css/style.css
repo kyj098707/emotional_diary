@@ -1,0 +1,40 @@
+:root {
+    --base-color: #ededed;
+    --secondary-color: #6768ab;
+    --accent-color: #ffcc00;
+
+    --sub-color-a:#aee4ff;
+    --sub-color-b: #b5c7ed;
+    --sub-color-c: #c4f4fe;
+
+    --emoji-color-happiness: #fc829f;
+    --emoji-color-angry: #EE2C38;
+    --emoji-color-disgust: #24788f;
+    --emoji-color-fear: #2171B2;
+    --emoji-color-neutral: #64C887;
+    --emoji-color-sadness: #6E398D;
+    --emoji-color-surprise: #ff763c;
+}
+
+body,html {
+    margin: 0;
+    padding: 0;
+}
+* {
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden; 
+    overflow-y: hidden;
+    background-image: url('../img/account/background.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 20px;
+    height: 100vh;
+}
+
+a, a:hover {
+    text-decoration: none;
+}
