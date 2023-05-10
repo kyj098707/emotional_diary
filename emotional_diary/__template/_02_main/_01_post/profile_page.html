@@ -103,7 +103,7 @@ $( document ).ready( function() {
 const handleFollowClick = (buttonId) => {
 id = buttonId.split("-").pop()
 let token = localStorage.getItem("access")
-let ajax_url = "http://127.0.0.1:8000/aivlary/user/"+id+"/follow/"
+let ajax_url = "{% url 'account:api-user' %}"+id+"/follow/"
 data_dic = {}
 result = request_ajax(ajax_url,"POST",data_dic,token)
 follower_elem = document.getElementById('suggestion-follower-'+id);
@@ -116,7 +116,7 @@ else{follow_btn_elem.innerText = `Follow`}
 const handleProfileFollowClick = (buttonId) => {
 id = buttonId.split("-").pop()
 let token = localStorage.getItem("access")
-let ajax_url = "http://127.0.0.1:8000/aivlary/user/"+id+"/follow/"
+let ajax_url = "{% url 'account:api-user' %}"+id+"/follow/"
 data_dic = {}
 result = request_ajax(ajax_url,"POST",data_dic,token)
 follower_elem = document.getElementById('follower-count-value');
