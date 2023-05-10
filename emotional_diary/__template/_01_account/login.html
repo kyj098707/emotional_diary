@@ -85,10 +85,24 @@
                 console.log("email activate");
             }
         }
-
+    function request_ajax(url, method, data_dic) {
+                $.ajax({
+                    url:url,
+                    type:method,
+                    async:false,
+                    data:data_dic,
+                    success: function (response) {
+                            result = response
+                            },
+                error: function (e) {
+                        alert("connenction error")
+                        result = "error"
+                        }
+                        });
+                    return result;
+            }
 
     $(document).on("click","#submit_join", function(){
-        alert("A")
         email = $("#join_email").val();
         nickname = $("#join_username").val();
         password = $("#join_password").val();

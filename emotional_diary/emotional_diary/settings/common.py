@@ -18,7 +18,7 @@ SECRET_KEY = "django-insecure-_jl&pndl)d-3#+ik%nz$2w!9f%s&k$i^ih3*ld8u4bl_+sh)h$
 # SECURITY WARNING: don't run with debug turned on in production!
 # LOGIN 관련
 DEBUG = True
-ALLOWED_HOSTS = ["ec2-15-164-224-122.ap-northeast-2.compute.amazonaws.com"]
+ALLOWED_HOSTS = ["ec2-15-164-224-122.ap-northeast-2.compute.amazonaws.com","127.0.0.1"]
 
 
 ## Email 관련
@@ -86,14 +86,19 @@ WSGI_APPLICATION = "emotional_diary.wsgi.application"
 
 
 # Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': "django",
+        'USER': "dbswhd",
+        'PASSWORD': "dbswhd12",
+        'HOST': "mariadb",
+        'PORT':  "3306",
     }
 }
+
+# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+
 
 AUTH_USER_MODEL = "accounts.User"
 
@@ -150,7 +155,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',],
     "DEFAULT_PERMISSION_CLASSES":[
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
 ],
 }
 

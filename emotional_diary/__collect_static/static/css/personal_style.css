@@ -1,0 +1,156 @@
+#diary_create {
+  margin-top: 10px;
+  font-weight: bold;
+  height : 50px;
+  font-size : 1.2rem;
+}
+
+#diary_create span {
+  margin-left: 40px;
+}
+#middle-container {
+  border: 3px solid black;
+  background-color: white;
+  width: 55%;
+  float: left;
+  margin-right: 10px;
+  margin-left: 25px;
+  border-radius: 10px;
+  overflow:scroll;
+}
+
+
+.diary-list {
+height: 80vh;
+    overflow-y:scroll;
+    margin-top:1rem;
+}
+.diary-list::-webkit-scrollbar {
+    width: 10px;
+  }
+.diary-list::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+  }
+.diary-list::-webkit-scrollbar-track {
+    background-color: grey;
+  }
+
+.diary-detail {
+  margin-top:30px;
+  background-color: white;
+  padding:18px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  margin-bottom: 20px;
+}
+
+.diary-list-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.diary-edit-button {
+  border: none;
+  background: none;
+  float: right;
+}
+
+.diary-delete-button {
+  background: none;
+  border: none;
+  color: black;
+  float: right;
+}
+
+.diary-list-content {
+margin-top: 20px;
+font-size: 18px;
+line-height: 1.5;
+}
+
+.diary-list-date {
+font-size: 14px;
+color: gray;
+margin-top: 10px;
+text-align: right;
+margin-right : 10px;
+}
+
+.diary-list-add {
+margin-top : 20px;
+display: inline-block;
+color: red;
+font-size: 18px;
+cursor: pointer;
+}
+
+.diary-heart__count {
+display: inline-block;
+font-weight:500;
+color: black;
+font-size: 16px;
+margin-left: 5px;
+vertical-align: middle;
+}
+
+.diary-comment__count {
+  display: inline-block;
+  font-weight:500;
+  color: black;
+  font-size: 16px;
+  margin-left: 5px;
+  vertical-align: middle;
+  }
+
+.fa-envelope {
+display: inline-block;
+font-weight:600;
+color: black;
+font-size: 18px;
+margin-left: 20px;
+vertical-align: middle;
+}
+.fa-envelope span {
+margin-left : 10px;
+font-weight: 500;
+}
+.comment {
+font-size: 14px;
+color: #666;
+margin-left: 10px;
+}
+
+.icon {
+display: flex;
+justify-content: center;
+margin-top: 50px;
+margin-bottom: 20px;
+}
+.icon i {
+margin: 0 30px;
+border: none;
+background-color: black;
+color: white;
+padding: 10px;
+font-size: 32px;
+border-radius: 50%;
+cursor: none;
+transition: all 0.2s ease-in-out;
+}
+.icon i:hover {
+transform: scale(1.1);
+cursor: pointer;
+}
+.icon i:active {
+cursor: none;
+}
+
+.edit-content-input {
+  width: 100%;
+  height : 200px;
+}
+
+.save-button {
+  float: right;
+}
