@@ -66,6 +66,9 @@
 
 {% block sc %}
 
+
+
+
     function handleLoginClick(){
             const email = $("#email").val();
             const password = $("#password").val();
@@ -85,40 +88,72 @@
                 console.log("email activate");
             }
         }
-    function request_ajax(url, method, data_dic) {
-                $.ajax({
-                    url:url,
-                    type:method,
-                    async:false,
-                    data:data_dic,
-                    success: function (response) {
-                            result = response
-                            },
-                error: function (e) {
-                        alert("connenction error")
-                        result = "error"
-                        }
-                        });
-                    return result;
-            }
+    
+    function openModal() {
+         $('#modal_signup').modal({
+            backdrop: 'static',
+            keyboard: false
+            });
+        }
 
-    $(document).on("click","#submit_join", function(){
-        email = $("#join_email").val();
-        nickname = $("#join_username").val();
-        password = $("#join_password").val();
-        let ajax_url = "{% url 'account:signup_validate' %}"
-        data_dic = {"email":email, "nickname":nickname, "password":password}
-        console.log(data_dic)
-        result = request_ajax(ajax_url,"GET",data_dic);
-        console.log(result)
-        if (result.validation=="True"){
-            let ajax_url = "{% url 'account:signup' %}";
-            data_dic = {"email":email,"password":password,"username":nickname};
-            result = request_ajax(ajax_url,"POST",data_dic);
+     $(document).ready(function() {
+        $('#to_signup').click(function() {
+              openModal();
+            });
+        $('#signup_close').click(function() {
+            closeModal();
+          });
+
+     });
+          
+
+    function closeModal() {
+        $('#modal_signup').modal('hide');
+        $('#join_email').val('');
+        $('#join_password').val('');
+        $('#join_password2').val('');
+        $('#join_username').val('');
+        $('select[name="gender"]').val('N');
+        $('#error_modal').empty();
+          }
+          
+
+    function request_ajax(url, method, data_dic) {
+        $.ajax({
+            url:url,
+            type:method,
+            async:false,
+            data:data_dic,
+            success: function (response) {
+                    result = response
+                        },
+            error: function (e) {
+                    alert("connenction error")
+                    result = "error"
+                    }
+                    });
+             return result;
         }
-        else {
-            const element = document.getElementById('error_modal');
-            element.innerHTML = '<div id="error_modal">' + result.message + '</div>';
-        }
-    })
+
+        $(document).on("click","#submit_join", function(){
+            email = $("#join_email").val();
+            nickname = $("#join_username").val();
+            password = $("#join_password").val();
+            let ajax_url = "{% url 'account:signup_validate' %}"
+            data_dic = {"email":email, "nickname":nickname, "password":password}
+            console.log(data_dic)
+            result = request_ajax(ajax_url,"GET",data_dic);
+            console.log(result)
+            if (result.validation=="True"){
+                let ajax_url = "{% url 'account:signup' %}";
+                data_dic = {"email":email,"password":password,"username":nickname};
+                result = request_ajax(ajax_url,"POST",data_dic);
+                closeModal();
+            }
+            else {
+                const element = document.getElementById('error_modal');
+                element.innerHTML = '<div id="error_modal">' + result.message + '</div>';
+            }
+        })
+        
 {% endblock %}
