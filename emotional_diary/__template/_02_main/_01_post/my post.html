@@ -68,7 +68,7 @@ $(document).on("click","#add-comment__btn", function(){
 const handleFollowClick = (buttonId) => {
     id = buttonId.split("-").pop()
     let token = localStorage.getItem("access")
-    let ajax_url =  + id + "/follow/"
+    let ajax_url =  '{% url "account:api-user" %}'+ id + "/follow/"
     data_dic = {}
     result = request_ajax(ajax_url, "POST", data_dic, token)
     follower_elem = document.getElementById('suggestion-follower-' + id);

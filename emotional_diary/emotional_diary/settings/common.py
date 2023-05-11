@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django_bootstrap5",
     "rest_framework",
     "rest_framework_simplejwt",
+    "corsheaders",
 
     #local apps
     "diaryapp",
@@ -58,7 +59,14 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+##
+CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:3000'
+                         ,'http://localhost:3000']
+CORS_ALLOW_CREDENTIALS = True
+
 
 ROOT_URLCONF = "emotional_diary.urls"
 
@@ -92,7 +100,7 @@ DATABASES = {
         'NAME': "django",
         'USER': "dbswhd",
         'PASSWORD': "dbswhd12",
-        'HOST': "mariadb",
+        'HOST': "",
         'PORT':  "3306",
     }
 }
